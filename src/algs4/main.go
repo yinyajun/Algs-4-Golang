@@ -32,6 +32,14 @@ func algorithmRoute(name string) {
 		fundamental.EgStack()
 	case "Queue":
 		fundamental.EgQueue()
+	case "QuickFindUF":
+		fundamental.EgQuickFindUF()
+	case "QuickUnionUF":
+		fundamental.EgQuickUnionUF()
+	case "WeightedQuickUnionUF":
+		fundamental.EgWeightedQuickUnionUF()
+	case "PCWeightedQuickUnionUF":
+		fundamental.EgPCWQUUF()
 	default:
 		fmt.Println(name, "not exists, check algorithm name.")
 	}

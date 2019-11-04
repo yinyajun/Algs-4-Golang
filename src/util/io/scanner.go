@@ -4,10 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 type In struct {
 	*bufio.Scanner
+	eof bool
 }
 
 func SplitFunc(name string) bufio.SplitFunc {
@@ -22,15 +24,26 @@ func SplitFunc(name string) bufio.SplitFunc {
 func NewIn(split bufio.SplitFunc) *In {
 	s := bufio.NewScanner(os.Stdin)
 	s.Split(split)
-	return &In{s}
+	return &In{s, false}
 }
 
 func (m *In) IsEmpty() bool {
-	return !m.Scan()
+	return m.eof
 }
 
 func (m *In) ReadString() string {
+	if m.Scan() {
+		m.eof = false
+	} else {
+		m.eof = true
+	}
 	return m.Text()
+}
+
+func (m *In) ReadInt() int {
+	s := m.ReadString()
+	i, _ := strconv.Atoi(s)
+	return i
 }
 
 func (m *In) ReadAllStrings() []string {
