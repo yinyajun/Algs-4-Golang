@@ -15,30 +15,28 @@ import (
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-//type Key interface{}
-
-type pq struct {
-	pq         []Key // pq[0] is not used
+type PQ struct {
+	pq         []Key // PQ[0] is not used
 	n          int
 	comparator Comparator
 }
 
-func NewMaxPQwithCapAndCom(capacity int, compartor Comparator) *pq {
-	pq := &pq{}
+func NewMaxPQwithCapAndCom(capacity int, compartor Comparator) *PQ {
+	pq := &PQ{}
 	pq.pq = make([]Key, capacity+1)
 	pq.comparator = compartor
 	return pq
 }
 
-func NewMaxPQwithCap(capacity int) *pq {
+func NewMaxPQwithCap(capacity int) *PQ {
 	return NewMaxPQwithCapAndCom(capacity, nil)
 }
 
-func NewMaxPQ() *pq {
+func NewMaxPQ() *PQ {
 	return NewMaxPQwithCap(1)
 }
 
-func NewMaxPQwithArray(keys []Key) *pq {
+func NewMaxPQwithArray(keys []Key) *PQ {
 	n := len(keys)
 	pq := NewMaxPQwithCap(n + 1)
 	for idx, key := range keys {
@@ -48,23 +46,23 @@ func NewMaxPQwithArray(keys []Key) *pq {
 	return pq
 }
 
-func (m *pq) isEmpty() bool {
+func (m *PQ) isEmpty() bool {
 	return m.n == 0
 }
 
-func (m *pq) size() int {
+func (m *PQ) size() int {
 	return m.n
 }
 
-func (m *pq) max() Key {
+func (m *PQ) max() Key {
 	if m.isEmpty() {
-		panic("max: pq underflows")
+		panic("max: PQ underflows")
 	}
 	return m.pq[1]
 }
 
 // helper function to double the size of the heap array
-func (m *pq) resize(capacity int) {
+func (m *PQ) resize(capacity int) {
 	tmp := make([]Key, capacity)
 	for i := 1; i <= m.n; i++ {
 		tmp[i] = m.pq[i]
@@ -72,7 +70,7 @@ func (m *pq) resize(capacity int) {
 	m.pq = tmp
 }
 
-func (m *pq) insert(x Key) {
+func (m *PQ) insert(x Key) {
 	// double size of array if necessary
 	if m.n == len(m.pq)-1 {
 		m.resize(2 * len(m.pq))
@@ -81,9 +79,12 @@ func (m *pq) insert(x Key) {
 	m.n++
 	m.pq[m.n] = x
 	m.swim(m.n)
+	if !m.isMaxHeap() {
+		panic("insert: insert failed")
+	}
 }
 
-func (m *pq) delMax() Key {
+func (m *PQ) delMax() Key {
 	if m.isEmpty() {
 		panic("maxPQ underflows")
 	}
@@ -95,16 +96,19 @@ func (m *pq) delMax() Key {
 	if m.n > 0 && m.n == (len(m.pq)-1)/4 {
 		m.resize(len(m.pq) / 2)
 	}
+	if !m.isMaxHeap() {
+		panic("delMax: delMax failed")
+	}
 	return max
 }
 
-func (m *pq) heapify() {
+func (m *PQ) heapify() {
 	for k := m.n / 2; k >= 1; k-- {
 		m.sink(k)
 	}
 }
 
-func (m *pq) heapAdjust(key Key) {
+func (m *PQ) heapAdjust(key Key) {
 	m.pq[1] = key
 	m.sink(1)
 }
@@ -112,7 +116,7 @@ func (m *pq) heapAdjust(key Key) {
 /***************************************************************************
  * Helper functions to restore the heap invariant.
  ***************************************************************************/
-func (m *pq) swim(k int) {
+func (m *PQ) swim(k int) {
 	// parent index = k/2
 	// 保证父节点存在,如果大于等于父节点，就和父节点交换
 	for k > 1 && m.less(k/2, k) {
@@ -121,7 +125,7 @@ func (m *pq) swim(k int) {
 	}
 }
 
-func (m *pq) sink(k int) {
+func (m *PQ) sink(k int) {
 	// left child index = 2k, right child index =2k+1
 	// 保证子节点存在，找到最大的子节点，如果小于之，则交换
 	for 2*k <= m.n {
@@ -141,19 +145,19 @@ func (m *pq) sink(k int) {
 /***************************************************************************
  * Helper functions for compares and swaps.
  ***************************************************************************/
-func (m *pq) less(i, j int) bool {
+func (m *PQ) less(i, j int) bool {
 	if m.comparator == nil {
-		return Compare(m.pq[i], m.pq[j])
+		return Less(m.pq[i], m.pq[j])
 	}
 	return m.comparator.Compare(m.pq[i], m.pq[j]) < 0
 }
 
-func (m *pq) exch(i, j int) {
+func (m *PQ) exch(i, j int) {
 	m.pq[i], m.pq[j] = m.pq[j], m.pq[i]
 }
 
-// is pq[1..n] a max heap?
-func (m *pq) isMaxHeap() bool {
+// is PQ[1..n] a max heap?
+func (m *PQ) isMaxHeap() bool {
 	for i := 1; i <= m.n; i++ {
 		if m.pq[i] == nil {
 			return false
@@ -170,8 +174,8 @@ func (m *pq) isMaxHeap() bool {
 	return m.isMaxHeapOrdered(1)
 }
 
-// is subtree of pq[1..n] rooted at k a max heap?
-func (m *pq) isMaxHeapOrdered(k int) bool {
+// is subtree of PQ[1..n] rooted at k a max heap?
+func (m *PQ) isMaxHeapOrdered(k int) bool {
 	if k > m.n {
 		return true
 	}
@@ -198,5 +202,5 @@ func main() {
 			fmt.Println(pq.delMax(), " ")
 		}
 	}
-	fmt.Println("(", pq.size(), " left on pq")
+	fmt.Println("(", pq.size(), " left on PQ")
 }
