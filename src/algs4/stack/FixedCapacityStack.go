@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"reflect"
-	"algs4/util"
 	"os"
+	"reflect"
+
+	. "algs4/util"
 )
 
 /**
@@ -51,7 +52,7 @@ func (m *FixedCapacityStack) pop() interface{} {
 
 func main() {
 	s := NewFixedCapacityStrings(100)
-	in := util.NewIn(os.Stdin)
+	in := NewIn(os.Stdin)
 	for in.HasNext() {
 		item := in.ReadString()
 		if item != "-" {

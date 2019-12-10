@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"algs4/util"
 	"os"
+
+	. "algs4/util"
 )
 
 /**
@@ -57,7 +58,7 @@ func (m *QuickUnionUF) union(p int, q int) {
 }
 
 func main() {
-	in := util.NewIn(os.Stdin)
+	in := NewIn(os.Stdin)
 	N := in.ReadInt()
 	uf := NewQuickUnionUF(N)
 	for in.HasNext() {

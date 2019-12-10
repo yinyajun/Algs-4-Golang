@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"algs4/util"
 	"os"
+
+	. "algs4/util"
 )
 
 /**
@@ -11,7 +12,7 @@ import (
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 type FixedCapStrStack struct {
 	a []string
@@ -46,7 +47,7 @@ func (m *FixedCapStrStack) pop() string {
 
 func main() {
 	s := NewFixedCapStrStack(100)
-	in := util.NewIn(os.Stdin)
+	in := NewIn(os.Stdin)
 	for in.HasNext() {
 		item := in.ReadString()
 		if item != "-" {

@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"algs4/util"
 	"os"
+
+	. "algs4/util"
 )
 
 /**
@@ -49,6 +50,9 @@ func (m *Queue) enqueue(item interface{}) {
 }
 
 func (m *Queue) dequeue() interface{} {
+	if m.isEmpty() {
+		panic("queue underflows")
+	}
 	// when queue is empty, call dequeue() will panic: invalid memory address or nil pointer dereference
 	item := m.first.item
 	m.first = m.first.next
@@ -61,7 +65,7 @@ func (m *Queue) dequeue() interface{} {
 
 func main() {
 	q := NewQueue()
-	in := util.NewIn(os.Stdin)
+	in := NewIn(os.Stdin)
 	for in.HasNext() {
 		item := in.ReadString()
 		if item != "-" {

@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
-	"algs4/util"
+
+	. "algs4/util"
 )
 
 /**
@@ -44,6 +45,9 @@ func (m *Stack) push(item interface{}) {
 }
 
 func (m *Stack) pop() interface{} {
+	if m.isEmpty() {
+		panic("stack underflows")
+	}
 	// 从栈顶删除元素
 	item := m.first.item
 	m.first = m.first.next
@@ -53,9 +57,9 @@ func (m *Stack) pop() interface{} {
 
 func main() {
 	s := NewStack()
-	in := util.NewIn(os.Stdin)
+	in := NewIn(os.Stdin)
 	for in.HasNext() {
-		item:= in.ReadString()
+		item := in.ReadString()
 		if item != "-" {
 			s.push(item)
 		} else if !s.isEmpty() {
