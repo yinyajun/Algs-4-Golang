@@ -1,9 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"os"
-	"reflect"
+	"fmt"
 
 	. "algs4/util"
 )
@@ -34,16 +33,10 @@ func (m *FixedCapacityStack) size() int {
 	return m.N
 }
 
-func (m *FixedCapacityStack) setArray(idx int, item interface{}) {
-	slice := reflect.ValueOf(m.a)
-	slice.Index(idx).Set(reflect.ValueOf(item))
-}
-
 func (m *FixedCapacityStack) push(item interface{}) {
-	m.setArray(m.N, item)
+	m.a[m.N] = item
 	m.N++
 }
-
 func (m *FixedCapacityStack) pop() interface{} {
 	m.N--
 	ret := m.a[m.N]
