@@ -199,3 +199,10 @@ func (m *IndexPQ) Iterator() []int {
 	}
 	return ret
 }
+
+func (m *IndexPQ) Next() (interface{}, bool) {
+	if !m.IsEmpty() {
+		return m.DelMax(), !m.IsEmpty()
+	}
+	return nil, false
+}
