@@ -1,6 +1,9 @@
 package main
 
-import . "algs4/util"
+import (
+	. "algs4/util"
+	"fmt"
+)
 
 /**
 * Index Max Priority Queue
@@ -186,11 +189,28 @@ func (m *indexPQ) sink(k int) {
 	}
 }
 
+func (m *indexPQ) iterator() []int {
+	ret := []int{}
+	cop := NewIndexPQ(len(m.pq) - 1)
+	for i := 1; i <= m.n; i++ {
+		cop.insert(m.pq[i], m.keys[m.pq[i]])
+	}
+	for !cop.isEmpty() {
+		ret = append(ret, cop.delMax())
+	}
+	return ret
+}
+
 func main() {
+	// insert a bunch of strings
 	strings := []string{"it", "was", "the", "best", "of", "times", "it", "was", "the", "worst"}
 	pq := NewIndexPQ(len(strings))
 	for idx, s := range strings {
 		pq.insert(idx, s)
 	}
 
+	// print each key using the iterator
+	for _, i := range pq.iterator() {
+		fmt.Println(i, strings[i])
+	}
 }
