@@ -1,9 +1,11 @@
-package main
+package graph
+
+import . "algs4/bag"
 
 // undirected graph
 type Graph interface {
 	V() int           // vertex num
 	E() int           // edge num
-	addEdge(v, w int) // add edge v-w
-	adj(v int) []int  // all adjacent vertex of v
+	AddEdge(v, w int) // add edge v-w
+	Adj(v int) Bag    // all adjacent vertex of v
 }
