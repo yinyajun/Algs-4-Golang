@@ -24,14 +24,17 @@ func NewGraph(V int) *graph {
 }
 
 func NewGraphWithIn(in *In) *graph {
-	g := NewGraph(in.ReadInt())
-	g.e = in.ReadInt()
-	if g.e < 0 {
+	v := in.ReadInt()
+	g := NewGraph(v)
+	e := in.ReadInt()
+	fmt.Println(v, e)
+	if e < 0 {
 		panic("NewGraphWithIn: invalid e")
 	}
-	for i := 0; i < g.e; i++ {
+	for i := 0; i < e; i++ {
 		v := in.ReadInt()
 		w := in.ReadInt()
+		fmt.Println(i, e, v, w)
 		g.AddEdge(v, w)
 	}
 	return g
