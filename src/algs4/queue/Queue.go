@@ -53,7 +53,6 @@ func (m *Queue) dequeue() interface{} {
 	if m.isEmpty() {
 		panic("queue underflows")
 	}
-	// when queue is empty, call dequeue() will panic: invalid memory address or nil pointer dereference
 	item := m.first.item
 	m.first = m.first.next
 	if m.isEmpty() {
