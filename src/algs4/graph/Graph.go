@@ -1,10 +1,11 @@
 package graph
 
 import (
-	. "algs4/bag"
-	. "util"
 	"strings"
 	"fmt"
+
+	. "algs4/bag"
+	. "util"
 )
 
 type graph struct {
@@ -27,7 +28,6 @@ func NewGraphWithIn(in *In) *graph {
 	v := in.ReadInt()
 	g := NewGraph(v)
 	e := in.ReadInt()
-	fmt.Println(v, e)
 	if e < 0 {
 		panic("NewGraphWithIn: invalid e")
 	}
