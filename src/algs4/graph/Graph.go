@@ -18,7 +18,7 @@ import (
 type graph struct {
 	v   int   // # vertex
 	e   int   // # edge
-	adj []Bag // Adjacency list
+	adj []*Bag // Adjacency list
 }
 
 func NewGraph(V int) *graph {
@@ -27,7 +27,7 @@ func NewGraph(V int) *graph {
 	}
 	g := &graph{}
 	g.v = V
-	g.adj = make([]Bag, V)
+	g.adj = make([]*Bag, V)
 	return g
 }
 
@@ -66,7 +66,7 @@ func (g *graph) AddEdge(v, w int) {
 }
 
 // Returns the vertices adjacent to vertex v
-func (g *graph) Adj(v int) Bag {
+func (g *graph) Adj(v int) *Bag {
 	g.validateVertex(v)
 	return g.adj[v]
 }
