@@ -5,7 +5,7 @@ type DepthFirstSearch struct {
 	count  int    // number of vertices connected to s
 }
 
-func NewDFS(g *graph, s int) *DepthFirstSearch {
+func NewDepthFirstSearch(g *graph, s int) *DepthFirstSearch {
 	m := &DepthFirstSearch{make([]bool, g.V()), 0}
 	m.validateVertex(s)
 	m.dfs(g, s)
@@ -19,6 +19,7 @@ func (m *DepthFirstSearch) validateVertex(v int) {
 	}
 }
 
+// depth first search from v
 func (m *DepthFirstSearch) dfs(g *graph, v int) {
 	m.count++
 	m.marked[v] = true
@@ -29,11 +30,13 @@ func (m *DepthFirstSearch) dfs(g *graph, v int) {
 	}
 }
 
+// Is there a path between the source vertex s and vertex v?
 func (m *DepthFirstSearch) Marked(v int) bool {
 	m.validateVertex(v)
 	return m.marked[v]
 }
 
+// Returns the number of vertices connected to the source vertex s
 func (m *DepthFirstSearch) Count() int {
 	return m.count
 }

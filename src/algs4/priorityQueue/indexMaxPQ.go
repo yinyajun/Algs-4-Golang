@@ -13,18 +13,18 @@ import (
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type indexPQ struct {
+type IndexPQ struct {
 	n    int
 	keys []Key
 	pq   []int // 1-based indexing
 	qp   []int // 1-based re-indexing
 }
 
-func NewIndexPQ(maxN int) *indexPQ {
+func NewIndexPQ(maxN int) *IndexPQ {
 	if maxN < 0 {
 		panic("NewIndexPQ: illegal argument")
 	}
-	m := &indexPQ{}
+	m := &IndexPQ{}
 	m.keys = make([]Key, maxN+1)
 	m.pq = make([]int, maxN+1)
 	m.qp = make([]int, maxN+1)
@@ -34,16 +34,16 @@ func NewIndexPQ(maxN int) *indexPQ {
 	return m
 }
 
-func (m *indexPQ) IsEmpty() bool { return m.n == 0 }
+func (m *IndexPQ) IsEmpty() bool { return m.n == 0 }
 
-func (m *indexPQ) Size() int { return m.n }
+func (m *IndexPQ) Size() int { return m.n }
 
-func (m *indexPQ) contains(i int) bool { return m.qp[i] != -1 }
+func (m *IndexPQ) contains(i int) bool { return m.qp[i] != -1 }
 
 // Associate key with index i
-func (m *indexPQ) Insert(i int, key Key) {
+func (m *IndexPQ) Insert(i int, key Key) {
 	if m.contains(i) {
-		panic("Insert: index already in pq")
+		panic("Insert: index already in pq ")
 	}
 	m.n++
 	m.keys[i] = key
@@ -53,7 +53,7 @@ func (m *indexPQ) Insert(i int, key Key) {
 }
 
 // Returns an index associated with a maximum key.
-func (m *indexPQ) MaxIndex() int {
+func (m *IndexPQ) MaxIndex() int {
 	if m.n == 0 {
 		panic("MaxIndex: priority queue underflows")
 	}
@@ -61,7 +61,7 @@ func (m *indexPQ) MaxIndex() int {
 }
 
 // Returns a maximum key.
-func (m *indexPQ) MaxKey() Key {
+func (m *IndexPQ) MaxKey() Key {
 	if m.n == 0 {
 		panic("MaxKey: priority queue underflows")
 	}
@@ -69,7 +69,7 @@ func (m *indexPQ) MaxKey() Key {
 }
 
 // Removes a maximum key and returns its associated index.
-func (m *indexPQ) DelMax() int {
+func (m *IndexPQ) DelMax() int {
 	if m.n == 0 {
 		panic("DelMax: priority queue underflows")
 	}
@@ -85,7 +85,7 @@ func (m *indexPQ) DelMax() int {
 }
 
 // Returns the key associated with index i
-func (m *indexPQ) KeyOf(i int) Key {
+func (m *IndexPQ) KeyOf(i int) Key {
 	if !m.contains(i) {
 		panic("KeyOf: index not exist")
 	}
@@ -93,7 +93,7 @@ func (m *indexPQ) KeyOf(i int) Key {
 }
 
 // Change the key associated with index i to the specified value.
-func (m *indexPQ) ChangeKey(i int, key Key) {
+func (m *IndexPQ) ChangeKey(i int, key Key) {
 	if !m.contains(i) {
 		panic("ChangeKey: index not exist")
 	}
@@ -103,12 +103,12 @@ func (m *indexPQ) ChangeKey(i int, key Key) {
 }
 
 // Change the key associated with index i to the specified value.
-func (m *indexPQ) Change(i int, key Key) {
+func (m *IndexPQ) Change(i int, key Key) {
 	m.ChangeKey(i, key)
 }
 
 // Increase the key associated with index i to the specified value.
-func (m *indexPQ) IncreaseKey(i int, key Key) {
+func (m *IndexPQ) IncreaseKey(i int, key Key) {
 	if !m.contains(i) {
 		panic("IncreaseKey: index not exist")
 	}
@@ -120,7 +120,7 @@ func (m *indexPQ) IncreaseKey(i int, key Key) {
 }
 
 // Decrease the key associated with index i to the specified value.
-func (m *indexPQ) DecreaseKey(i int, key Key) {
+func (m *IndexPQ) DecreaseKey(i int, key Key) {
 	if !m.contains(i) {
 		panic("DecreaseKey: index not exist")
 	}
@@ -132,7 +132,7 @@ func (m *indexPQ) DecreaseKey(i int, key Key) {
 }
 
 // Remove the key on the priority queue associated with index {@code i}.
-func (m *indexPQ) Delete(i int) {
+func (m *IndexPQ) Delete(i int) {
 	if !m.contains(i) {
 		panic("Delete: index not exist")
 	}
@@ -151,11 +151,11 @@ func (m *indexPQ) Delete(i int) {
 /***************************************************************************
  * General helper functions.
  ***************************************************************************/
-func (m *indexPQ) less(i, j int) bool {
+func (m *IndexPQ) less(i, j int) bool {
 	return Less(m.keys[m.pq[i]], m.keys[m.pq[j]])
 }
 
-func (m *indexPQ) exch(i, j int) {
+func (m *IndexPQ) exch(i, j int) {
 	m.pq[i], m.pq[j] = m.pq[j], m.pq[i]
 	m.qp[m.pq[i]], m.qp[m.pq[j]] = i, j
 }
@@ -163,7 +163,7 @@ func (m *indexPQ) exch(i, j int) {
 /***************************************************************************
 * Heap helper functions.
 ***************************************************************************/
-func (m *indexPQ) swim(k int) {
+func (m *IndexPQ) swim(k int) {
 	// parent index = k/2
 	// 保证父节点存在,如果大于等于父节点，就和父节点交换
 	for k > 1 && m.less(k/2, k) {
@@ -172,7 +172,7 @@ func (m *indexPQ) swim(k int) {
 	}
 }
 
-func (m *indexPQ) sink(k int) {
+func (m *IndexPQ) sink(k int) {
 	// left child index = 2k, right child index =2k+1
 	// 保证子节点存在，找到最大的子节点，如果小于之，则交换
 	for 2*k <= m.n {
@@ -188,7 +188,7 @@ func (m *indexPQ) sink(k int) {
 	}
 }
 
-func (m *indexPQ) Iterator() []int {
+func (m *IndexPQ) Iterator() []int {
 	ret := []int{}
 	cop := NewIndexPQ(len(m.pq) - 1)
 	for i := 1; i <= m.n; i++ {
