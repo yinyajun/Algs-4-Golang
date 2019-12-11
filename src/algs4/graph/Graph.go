@@ -16,8 +16,8 @@ import (
  */
 
 type graph struct {
-	v   int   // # vertex
-	e   int   // # edge
+	v   int    // # vertex
+	e   int    // # edge
 	adj []*Bag // Adjacency list
 }
 
@@ -28,6 +28,10 @@ func NewGraph(V int) *graph {
 	g := &graph{}
 	g.v = V
 	g.adj = make([]*Bag, V)
+	// initialize pointer
+	for idx := range g.adj {
+		g.adj[idx] = &Bag{}
+	}
 	return g
 }
 
