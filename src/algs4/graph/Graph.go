@@ -8,6 +8,13 @@ import (
 	. "util"
 )
 
+/**
+* undirected graph
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
+
 type graph struct {
 	v   int   // # vertex
 	e   int   // # edge
