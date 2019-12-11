@@ -34,7 +34,6 @@ func NewGraphWithIn(in *In) *graph {
 	for i := 0; i < e; i++ {
 		v := in.ReadInt()
 		w := in.ReadInt()
-		fmt.Println(i, e, v, w)
 		g.AddEdge(v, w)
 	}
 	return g
