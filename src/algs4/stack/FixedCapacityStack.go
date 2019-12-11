@@ -1,11 +1,4 @@
-package main
-
-import (
-	"os"
-	"fmt"
-
-	. "algs4/util"
-)
+package stack
 
 /**
 *
@@ -25,34 +18,22 @@ func NewFixedCapacityStrings(cap int) *FixedCapacityStack {
 	}
 }
 
-func (m *FixedCapacityStack) isEmpty() bool {
+func (m *FixedCapacityStack) IsEmpty() bool {
 	return m.N == 0
 }
 
-func (m *FixedCapacityStack) size() int {
+func (m *FixedCapacityStack) Size() int {
 	return m.N
 }
 
-func (m *FixedCapacityStack) push(item interface{}) {
+func (m *FixedCapacityStack) Push(item interface{}) {
 	m.a[m.N] = item
 	m.N++
 }
-func (m *FixedCapacityStack) pop() interface{} {
+func (m *FixedCapacityStack) Pop() interface{} {
 	m.N--
 	ret := m.a[m.N]
 	return ret
 }
 
-func main() {
-	s := NewFixedCapacityStrings(100)
-	in := NewIn(os.Stdin)
-	for in.HasNext() {
-		item := in.ReadString()
-		if item != "-" {
-			s.push(item)
-		} else if !s.isEmpty() {
-			fmt.Print(s.pop(), " ")
-		}
-	}
-	fmt.Println("(", s.size(), "left on stack)")
-}
+

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	. "algs4/util"
+	. "util"
 )
 
 /**

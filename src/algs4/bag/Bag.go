@@ -1,11 +1,4 @@
-package main
-
-import (
-	"os"
-	"fmt"
-
-	. "algs4/util"
-)
+package bag
 
 /**
 * Bag
@@ -30,18 +23,18 @@ func NewBag() *Bag {
 	return b
 }
 
-func (b *Bag) isEmpty() bool { return b.n == 0 }
+func (b *Bag) IsEmpty() bool { return b.n == 0 }
 
-func (b *Bag) size() int { return b.n }
+func (b *Bag) Size() int { return b.n }
 
-func (b *Bag) add(item interface{}) {
+func (b *Bag) Add(item interface{}) {
 	oldFirst := b.first
 	b.first = &Node{item, nil}
 	b.first.next = oldFirst
 	b.n++
 }
 
-func (b *Bag) iterator() []interface{} {
+func (b *Bag) Iterator() []interface{} {
 	ret := []interface{}{}
 	cur := b.first
 	for cur != nil {
@@ -49,16 +42,4 @@ func (b *Bag) iterator() []interface{} {
 		cur = cur.next
 	}
 	return ret
-}
-
-func main() {
-	bag := NewBag()
-	in := NewIn(os.Stdin)
-	for in.HasNext() {
-		bag.add(in.ReadString())
-	}
-	fmt.Println("size of bag = ", bag.size())
-	for _, i := range bag.iterator() {
-		fmt.Println(i)
-	}
 }

@@ -1,6 +1,6 @@
-package main
+package priorityQueue
 
-import . "algs4/util"
+import . "util"
 
 type MaxPQ interface {
 	insert(Key)

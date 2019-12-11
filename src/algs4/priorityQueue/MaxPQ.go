@@ -1,11 +1,7 @@
-package main
+package priorityQueue
 
 import (
-	"fmt"
-	"os"
-	"strconv"
-
-	. "algs4/util"
+	. "util"
 )
 
 /**
@@ -42,26 +38,26 @@ func NewMaxPQwithArray(keys []Key) *PQ {
 	for idx, key := range keys {
 		pq.pq[idx+1] = key
 	}
-	pq.heapify()
+	pq.Heapify()
 	return pq
 }
 
-func (m *PQ) isEmpty() bool {
+func (m *PQ) IsEmpty() bool {
 	return m.n == 0
 }
 
-func (m *PQ) size() int {
+func (m *PQ) Size() int {
 	return m.n
 }
 
-func (m *PQ) max() Key {
-	if m.isEmpty() {
-		panic("max: PQ underflows")
+func (m *PQ) Max() Key {
+	if m.IsEmpty() {
+		panic("Max: PQ underflows")
 	}
 	return m.pq[1]
 }
 
-// helper function to double the size of the heap array
+// helper function to double the Size of the heap array
 func (m *PQ) resize(capacity int) {
 	tmp := make([]Key, capacity)
 	for i := 1; i <= m.n; i++ {
@@ -70,8 +66,8 @@ func (m *PQ) resize(capacity int) {
 	m.pq = tmp
 }
 
-func (m *PQ) insert(x Key) {
-	// double size of array if necessary
+func (m *PQ) Insert(x Key) {
+	// double Size of array if necessary
 	if m.n == len(m.pq)-1 {
 		m.resize(2 * len(m.pq))
 	}
@@ -80,12 +76,12 @@ func (m *PQ) insert(x Key) {
 	m.pq[m.n] = x
 	m.swim(m.n)
 	if !m.isMaxHeap() {
-		panic("insert: insert failed")
+		panic("Insert: Insert failed")
 	}
 }
 
-func (m *PQ) delMax() Key {
-	if m.isEmpty() {
+func (m *PQ) DelMax() Key {
+	if m.IsEmpty() {
 		panic("maxPQ underflows")
 	}
 	max := m.pq[1]
@@ -97,18 +93,18 @@ func (m *PQ) delMax() Key {
 		m.resize(len(m.pq) / 2)
 	}
 	if !m.isMaxHeap() {
-		panic("delMax: delMax failed")
+		panic("DelMax: DelMax failed")
 	}
 	return max
 }
 
-func (m *PQ) heapify() {
+func (m *PQ) Heapify() {
 	for k := m.n / 2; k >= 1; k-- {
 		m.sink(k)
 	}
 }
 
-func (m *PQ) heapAdjust(key Key) {
+func (m *PQ) HeapAdjust(key Key) {
 	m.pq[1] = key
 	m.sink(1)
 }
@@ -129,7 +125,7 @@ func (m *PQ) sink(k int) {
 	// left child index = 2k, right child index =2k+1
 	// 保证子节点存在，找到最大的子节点，如果小于之，则交换
 	for 2*k <= m.n {
-		// get max child between left and right child
+		// get Max child between left and right child
 		j := 2 * k
 		if j < m.n && m.less(j, j+1) {
 			j = j + 1
@@ -156,7 +152,7 @@ func (m *PQ) exch(i, j int) {
 	m.pq[i], m.pq[j] = m.pq[j], m.pq[i]
 }
 
-// is PQ[1..n] a max heap?
+// is PQ[1..n] a Max heap?
 func (m *PQ) isMaxHeap() bool {
 	for i := 1; i <= m.n; i++ {
 		if m.pq[i] == nil {
@@ -174,7 +170,7 @@ func (m *PQ) isMaxHeap() bool {
 	return m.isMaxHeapOrdered(1)
 }
 
-// is subtree of PQ[1..n] rooted at k a max heap?
+// is subtree of PQ[1..n] rooted at k a Max heap?
 func (m *PQ) isMaxHeapOrdered(k int) bool {
 	if k > m.n {
 		return true
@@ -190,17 +186,17 @@ func (m *PQ) isMaxHeapOrdered(k int) bool {
 	return m.isMaxHeapOrdered(left) && m.isMaxHeapOrdered(right)
 }
 
-func main() {
-	pq := NewMaxPQ()
-	in := NewIn(os.Stdin)
-	for in.HasNext() {
-		item := in.ReadString()
-		if item != "-" {
-			k, _ := strconv.Atoi(item)
-			pq.insert(k)
-		} else if !pq.isEmpty() {
-			fmt.Println(pq.delMax(), " ")
-		}
-	}
-	fmt.Println("(", pq.size(), " left on PQ")
-}
+//func main() {
+//	pq := NewMaxPQ()
+//	in := NewIn(os.Stdin)
+//	for in.HasNext() {
+//		item := in.ReadString()
+//		if item != "-" {
+//			k, _ := strconv.Atoi(item)
+//			pq.Insert(k)
+//		} else if !pq.IsEmpty() {
+//			fmt.Println(pq.DelMax(), " ")
+//		}
+//	}
+//	fmt.Println("(", pq.Size(), " left on PQ")
+//}

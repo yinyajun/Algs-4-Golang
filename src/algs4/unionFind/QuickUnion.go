@@ -1,11 +1,4 @@
-package main
-
-import (
-	"fmt"
-	"os"
-
-	. "algs4/util"
-)
+package unionFind
 
 /**
 *	QuickUnion
@@ -30,11 +23,11 @@ func NewQuickUnionUF(N int) *QuickUnionUF {
 	}
 }
 
-func (m *QuickUnionUF) count() int {
+func (m *QuickUnionUF) Count() int {
 	return m.cnt
 }
 
-func (m *QuickUnionUF) connected(p int, q int) bool {
+func (m *QuickUnionUF) Connected(p int, q int) bool {
 	return m.find(p) == m.find(q)
 }
 
@@ -46,7 +39,7 @@ func (m *QuickUnionUF) find(p int) int {
 	return p
 }
 
-func (m *QuickUnionUF) union(p int, q int) {
+func (m *QuickUnionUF) Union(p int, q int) {
 	pRoot := m.find(p)
 	qRoot := m.find(q)
 
@@ -57,18 +50,3 @@ func (m *QuickUnionUF) union(p int, q int) {
 	m.cnt--
 }
 
-func main() {
-	in := NewIn(os.Stdin)
-	N := in.ReadInt()
-	uf := NewQuickUnionUF(N)
-	for in.HasNext() {
-		p := in.ReadInt()
-		q := in.ReadInt()
-		if uf.connected(p, q) {
-			continue
-		}
-		uf.union(p, q)
-		//fmt.Println(p, q)
-	}
-	fmt.Println(uf.count(), "components")
-}

@@ -1,8 +1,7 @@
-package main
+package priorityQueue
 
 import (
-	. "algs4/util"
-	"fmt"
+	. "util"
 )
 
 /**
@@ -35,16 +34,16 @@ func NewIndexPQ(maxN int) *indexPQ {
 	return m
 }
 
-func (m *indexPQ) isEmpty() bool { return m.n == 0 }
+func (m *indexPQ) IsEmpty() bool { return m.n == 0 }
 
-func (m *indexPQ) size() int { return m.n }
+func (m *indexPQ) Size() int { return m.n }
 
 func (m *indexPQ) contains(i int) bool { return m.qp[i] != -1 }
 
 // Associate key with index i
-func (m *indexPQ) insert(i int, key Key) {
+func (m *indexPQ) Insert(i int, key Key) {
 	if m.contains(i) {
-		panic("insert: index already in pq")
+		panic("Insert: index already in pq")
 	}
 	m.n++
 	m.keys[i] = key
@@ -54,25 +53,25 @@ func (m *indexPQ) insert(i int, key Key) {
 }
 
 // Returns an index associated with a maximum key.
-func (m *indexPQ) maxIndex() int {
+func (m *indexPQ) MaxIndex() int {
 	if m.n == 0 {
-		panic("maxIndex: priority queue underflows")
+		panic("MaxIndex: priority queue underflows")
 	}
 	return m.pq[1]
 }
 
 // Returns a maximum key.
-func (m *indexPQ) maxKey() Key {
+func (m *indexPQ) MaxKey() Key {
 	if m.n == 0 {
-		panic("maxKey: priority queue underflows")
+		panic("MaxKey: priority queue underflows")
 	}
 	return m.keys[m.pq[1]]
 }
 
 // Removes a maximum key and returns its associated index.
-func (m *indexPQ) delMax() int {
+func (m *indexPQ) DelMax() int {
 	if m.n == 0 {
-		panic("delMax: priority queue underflows")
+		panic("DelMax: priority queue underflows")
 	}
 	max := m.pq[1]
 	m.exch(m.n, 1)
@@ -86,17 +85,17 @@ func (m *indexPQ) delMax() int {
 }
 
 // Returns the key associated with index i
-func (m *indexPQ) keyOf(i int) Key {
+func (m *indexPQ) KeyOf(i int) Key {
 	if !m.contains(i) {
-		panic("keyOf: index not exist")
+		panic("KeyOf: index not exist")
 	}
 	return m.keys[i]
 }
 
 // Change the key associated with index i to the specified value.
-func (m *indexPQ) changeKey(i int, key Key) {
+func (m *indexPQ) ChangeKey(i int, key Key) {
 	if !m.contains(i) {
-		panic("changeKey: index not exist")
+		panic("ChangeKey: index not exist")
 	}
 	m.keys[i] = key
 	m.swim(m.qp[i])
@@ -104,38 +103,38 @@ func (m *indexPQ) changeKey(i int, key Key) {
 }
 
 // Change the key associated with index i to the specified value.
-func (m *indexPQ) change(i int, key Key) {
-	m.changeKey(i, key)
+func (m *indexPQ) Change(i int, key Key) {
+	m.ChangeKey(i, key)
 }
 
 // Increase the key associated with index i to the specified value.
-func (m *indexPQ) increaseKey(i int, key Key) {
+func (m *indexPQ) IncreaseKey(i int, key Key) {
 	if !m.contains(i) {
-		panic("increaseKey: index not exist")
+		panic("IncreaseKey: index not exist")
 	}
 	if !Less(m.keys[i], key) {
-		panic("increaseKey: new key less than original key")
+		panic("IncreaseKey: new key less than original key")
 	}
 	m.keys[i] = key
 	m.swim(m.qp[i])
 }
 
 // Decrease the key associated with index i to the specified value.
-func (m *indexPQ) decreaseKey(i int, key Key) {
+func (m *indexPQ) DecreaseKey(i int, key Key) {
 	if !m.contains(i) {
-		panic("decreaseKey: index not exist")
+		panic("DecreaseKey: index not exist")
 	}
 	if Leq(m.keys[i], key) {
-		panic("decreaseKey: new key larger than original key")
+		panic("DecreaseKey: new key larger than original key")
 	}
 	m.keys[i] = key
 	m.sink(m.qp[i])
 }
 
 // Remove the key on the priority queue associated with index {@code i}.
-func (m *indexPQ) delete(i int) {
+func (m *indexPQ) Delete(i int) {
 	if !m.contains(i) {
-		panic("delete: index not exist")
+		panic("Delete: index not exist")
 	}
 	idx := m.qp[i]
 	m.exch(m.n, idx)
@@ -189,28 +188,14 @@ func (m *indexPQ) sink(k int) {
 	}
 }
 
-func (m *indexPQ) iterator() []int {
+func (m *indexPQ) Iterator() []int {
 	ret := []int{}
 	cop := NewIndexPQ(len(m.pq) - 1)
 	for i := 1; i <= m.n; i++ {
-		cop.insert(m.pq[i], m.keys[m.pq[i]])
+		cop.Insert(m.pq[i], m.keys[m.pq[i]])
 	}
-	for !cop.isEmpty() {
-		ret = append(ret, cop.delMax())
+	for !cop.IsEmpty() {
+		ret = append(ret, cop.DelMax())
 	}
 	return ret
-}
-
-func main() {
-	// insert a bunch of strings
-	strings := []string{"it", "was", "the", "best", "of", "times", "it", "was", "the", "worst"}
-	pq := NewIndexPQ(len(strings))
-	for idx, s := range strings {
-		pq.insert(idx, s)
-	}
-
-	// print each key using the iterator
-	for _, i := range pq.iterator() {
-		fmt.Println(i, strings[i])
-	}
 }

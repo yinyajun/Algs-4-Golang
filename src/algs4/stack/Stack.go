@@ -1,11 +1,4 @@
-package main
-
-import (
-	"fmt"
-	"os"
-
-	. "algs4/util"
-)
+package stack
 
 /**
 * stack
@@ -28,15 +21,15 @@ func NewStack() *Stack {
 	return &Stack{}
 }
 
-func (m *Stack) isEmpty() bool {
+func (m *Stack) IsEmpty() bool {
 	return m.first == nil
 }
 
-func (m *Stack) size() int {
+func (m *Stack) Size() int {
 	return m.N
 }
 
-func (m *Stack) push(item interface{}) {
+func (m *Stack) Push(item interface{}) {
 	// 向栈顶添加元素
 	oldFirst := m.first
 	m.first = &Node{item: item}
@@ -44,8 +37,8 @@ func (m *Stack) push(item interface{}) {
 	m.N++
 }
 
-func (m *Stack) pop() interface{} {
-	if m.isEmpty() {
+func (m *Stack) Pop() interface{} {
+	if m.IsEmpty() {
 		panic("stack underflows")
 	}
 	// 从栈顶删除元素
@@ -55,16 +48,3 @@ func (m *Stack) pop() interface{} {
 	return item
 }
 
-func main() {
-	s := NewStack()
-	in := NewIn(os.Stdin)
-	for in.HasNext() {
-		item := in.ReadString()
-		if item != "-" {
-			s.push(item)
-		} else if !s.isEmpty() {
-			fmt.Print(s.pop(), " ")
-		}
-	}
-	fmt.Println("(", s.size(), "left on stack)")
-}

@@ -1,11 +1,4 @@
-package main
-
-import (
-	"fmt"
-	"os"
-
-	. "algs4/util"
-)
+package unionFind
 
 /**
 *  Path Compressed Weighted Quick Union Union Find
@@ -36,11 +29,11 @@ func NewPathComWeightedQU(N int) *PathComWeightedQU {
 	}
 }
 
-func (m *PathComWeightedQU) count() int {
+func (m *PathComWeightedQU) Count() int {
 	return m.cnt
 }
 
-func (m *PathComWeightedQU) connected(p int, q int) bool {
+func (m *PathComWeightedQU) Connected(p int, q int) bool {
 	return m.find(p) == m.find(q)
 }
 
@@ -52,7 +45,7 @@ func (m *PathComWeightedQU) find(p int) int {
 	return p
 }
 
-func (m *PathComWeightedQU) union(p int, q int) {
+func (m *PathComWeightedQU) Union(p int, q int) {
 	pRoot := m.find(p)
 	qRoot := m.find(q)
 
@@ -68,20 +61,4 @@ func (m *PathComWeightedQU) union(p int, q int) {
 		m.sz[pRoot] += m.sz[qRoot]
 	}
 	m.cnt--
-}
-
-func main() {
-	in := NewIn(os.Stdin)
-	N := in.ReadInt()
-	uf := NewPathComWeightedQU(N)
-	for in.HasNext() {
-		p := in.ReadInt()
-		q := in.ReadInt()
-		if uf.connected(p, q) {
-			continue
-		}
-		uf.union(p, q)
-		fmt.Println(p, q)
-	}
-	fmt.Println(uf.count(), "components")
 }
