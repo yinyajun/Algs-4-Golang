@@ -8,8 +8,8 @@ package unionFind
  */
 
 type UnionFind interface {
-	count() int
-	connected(int, int) bool
+	Count() int
+	Connected(int, int) bool
 	find(int) int
-	union(p int, q int)
+	Union(p int, q int)
 }

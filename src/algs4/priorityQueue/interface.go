@@ -3,9 +3,9 @@ package priorityQueue
 import . "util"
 
 type MaxPQ interface {
-	insert(Key)
-	max() Key
-	delMax() Key
-	isEmpty() bool
-	size() int
+	Insert(Key)
+	Max() Key
+	DelMax() Key
+	IsEmpty() bool
+	Size() int
 }
