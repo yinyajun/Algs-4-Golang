@@ -81,19 +81,6 @@ func (g *graph) Degree(v int) int {
 	return g.adj[v].Size()
 }
 
-//func (g *graph) String() string {
-//	s := strings.Builder{}
-//	s.WriteString(fmt.Sprintf("%d vertices, %d edges \n", g.v, g.e))
-//	for v := 0; v < g.v; v++ {
-//		s.WriteString(fmt.Sprintf("%d:", v))
-//		for _, w := range g.adj[v].Iterator() {
-//			s.WriteString(fmt.Sprintf("%d ", w.(int)))
-//		}
-//		s.WriteString("\n")
-//	}
-//	return s.String()
-//}
-
 func (g *graph) String() string {
 	s := strings.Builder{}
 	s.WriteString(fmt.Sprintf("%d vertices, %d edges \n", g.v, g.e))
