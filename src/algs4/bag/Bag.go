@@ -38,7 +38,7 @@ func (b *Bag) Add(item interface{}) {
 
 func (b *Bag) Yield() Generator {
 	cur := b.first
-	return func() (bool, interface{}) {
+	f:= func() (bool, interface{}) {
 		if cur != nil {
 			ret := cur.item
 			cur = cur.next
@@ -46,4 +46,6 @@ func (b *Bag) Yield() Generator {
 		}
 		return false, nil
 	}
+	return f
 }
+

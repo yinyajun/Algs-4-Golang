@@ -2,6 +2,7 @@ package graph
 
 import (
 	"algs4/stack"
+	"util"
 )
 
 type DepthFirstPaths struct {
@@ -10,13 +11,14 @@ type DepthFirstPaths struct {
 	s      int    // source vertex
 }
 
-func NewDepthFirstPaths(g *graph, s int) {
+func NewDepthFirstPaths(g *graph, s int) *DepthFirstPaths {
 	m := &DepthFirstPaths{}
 	m.s = s
 	m.edgeTo = make([]int, g.V())
 	m.marked = make([]bool, g.V())
 	m.validateVertex(s)
 	m.dfs(g, s)
+	return m
 }
 
 func (m *DepthFirstPaths) validateVertex(v int) {
@@ -44,16 +46,15 @@ func (m *DepthFirstPaths) HasPathTo(v int) bool {
 	return m.marked[v]
 }
 
-func (m *DepthFirstPaths) PathTo(v int) []int {
-	ret := []int{}
+func (m *DepthFirstPaths) PathTo(v int) util.Generator {
 	m.validateVertex(v)
 	if !m.HasPathTo(v) {
-		return ret
+		return nil
 	}
 	path := stack.NewStack()
 	for x := v; x != m.s; x = m.edgeTo[x] {
 		path.Push(x)
 	}
 	path.Push(m.s)
-	return []int{}
+	return path.Yield()
 }

@@ -1,8 +1,23 @@
 package util
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Generator func() (bool, interface{})
+
+func (g Generator) String() string {
+	if g == nil {
+		return "<nil>"
+	}
+	ret := strings.Builder{}
+	for hasNext, val := g(); hasNext; hasNext, val = g() {
+		ret.WriteString(val.(string))
+		ret.WriteString("\n")
+	}
+	return ret.String()
+}
 
 type Iterator interface {
 	Yield() Generator
@@ -10,8 +25,8 @@ type Iterator interface {
 
 // mimic map function in Python
 func Map(it Iterator, f func(interface{})) {
-	iterator := it.Yield()
-	for hasNext, val := iterator(); hasNext; hasNext, val = iterator() {
+	generator := it.Yield()
+	for hasNext, val := generator(); hasNext; hasNext, val = generator() {
 		f(val)
 	}
 }

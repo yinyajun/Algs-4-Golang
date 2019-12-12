@@ -1,6 +1,9 @@
 package graph
 
-import . "algs4/bag"
+import (
+	. "algs4/bag"
+	. "util"
+)
 
 // undirected graph
 type Graph interface {
@@ -18,5 +21,5 @@ type Search interface {
 
 type Paths interface {
 	HasPathTo(v int) bool
-	PathTo(v int) []int // path from s to v, empty if not exists
+	PathTo(v int) Generator // path from s to v, empty if not exists
 }
