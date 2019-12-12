@@ -1,16 +1,15 @@
 package graph
 
 import (
-	. "algs4/bag"
 	. "util"
 )
 
 // undirected graph
 type Graph interface {
-	V() int           // vertex num
-	E() int           // edge num
-	AddEdge(v, w int) // add edge v-w
-	Adj(v int) *Bag   // all adjacent vertex of v
+	V() int              // vertex num
+	E() int              // edge num
+	AddEdge(v, w int)    // add edge v-w
+	Adj(v int) Generator // all adjacent vertex of v
 }
 
 type Search interface {
@@ -29,4 +28,12 @@ type SymbolGraph interface {
 	Index(key string) int
 	Name(v int) string
 	Graph() *graph
+}
+
+type Digraph interface {
+	V() int              // vertex num
+	E() int              // edge num
+	AddEdge(v, w int)    // add edge v-w
+	Adj(v int) Generator // all adjacent vertex of v
+	Reverse() *Digraph
 }

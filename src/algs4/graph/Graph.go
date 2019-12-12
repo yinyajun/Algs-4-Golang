@@ -1,8 +1,8 @@
 package graph
 
 import (
-	"strings"
 	"fmt"
+	"strings"
 
 	. "algs4/bag"
 	. "util"
@@ -70,9 +70,9 @@ func (g *graph) AddEdge(v, w int) {
 }
 
 // Returns the vertices adjacent to vertex v
-func (g *graph) Adj(v int) *Bag {
+func (g *graph) Adj(v int) Generator {
 	g.validateVertex(v)
-	return g.adj[v]
+	return g.adj[v].Yield()
 }
 
 // Returns the degree of vertex v
@@ -99,7 +99,7 @@ func (g *graph) String() string {
 	s.WriteString(fmt.Sprintf("%d vertices, %d edges \n", g.v, g.e))
 	for v := 0; v < g.v; v++ {
 		s.WriteString(fmt.Sprintf("%d:", v))
-		generator := g.adj[v].Yield()
+		generator := g.Adj(v)
 		for hasNext, w := generator(); hasNext; hasNext, w = generator() {
 			s.WriteString(fmt.Sprintf("%d ", w.(int)))
 		}

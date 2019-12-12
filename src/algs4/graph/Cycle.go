@@ -45,7 +45,7 @@ func NewCycle(g *graph) *Cycle {
 // side effect: initialize cycle to be self loop
 func (c *Cycle) hasSelfLoop(g *graph) bool {
 	for v := 0; v < g.V(); v++ {
-		gen := g.Adj(v).Yield()
+		gen := g.Adj(v)
 		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
 			if v == w.(int) {
 				c.cycle = NewStack()
@@ -63,7 +63,7 @@ func (c *Cycle) hasSelfLoop(g *graph) bool {
 func (c *Cycle) hasParallelEdges(g *graph) bool {
 	for v := 0; v < g.V(); v++ {
 		marked := make([]bool, g.V())
-		gen := g.Adj(v).Yield()
+		gen := g.Adj(v)
 		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
 			if marked[w.(int)] {
 				c.cycle = NewStack()
@@ -75,7 +75,7 @@ func (c *Cycle) hasParallelEdges(g *graph) bool {
 			marked[w.(int)] = true
 		}
 		// reset so marked[v] = false for all v
-		gen = g.Adj(v).Yield()
+		gen = g.Adj(v)
 		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
 			marked[w.(int)] = false
 		}
@@ -86,7 +86,7 @@ func (c *Cycle) hasParallelEdges(g *graph) bool {
 func (c *Cycle) dfs(g *graph, v int, u int) {
 	c.marked[v] = true
 
-	gen := g.Adj(v).Yield()
+	gen := g.Adj(v)
 	for hasNext, w := gen(); hasNext; hasNext, w = gen() {
 		// short circuit if cycle already found
 		if c.HasCycle() {

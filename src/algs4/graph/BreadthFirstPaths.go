@@ -3,8 +3,8 @@ package graph
 import (
 	"algs4/queue"
 	"algs4/stack"
-	. "util"
 	"fmt"
+	. "util"
 )
 
 /**
@@ -57,7 +57,7 @@ func (m *BreadthFirstPaths) bfs(g *graph, s int) {
 
 	for !q.IsEmpty() {
 		v := q.Dequeue()
-		gen := g.Adj(v.(int)).Yield()
+		gen := g.Adj(v.(int))
 		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
 			if !m.marked[w.(int)] {
 				m.edgeTo[w.(int)] = v.(int)
@@ -103,7 +103,7 @@ func (m *BreadthFirstPaths) check(g *graph, s int) bool {
 	// check that for each edge v-w dist[w] <= dist[v] + 1
 	// provided v is reachable from s
 	for v := 0; v < g.V(); v++ {
-		gen := g.Adj(v).Yield()
+		gen := g.Adj(v)
 		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
 			if m.HasPathTo(v) != m.HasPathTo(w.(int)) {
 				fmt.Println("edge", v, "-", w.(int))

@@ -18,14 +18,14 @@ func main() {
 	filename := os.Args[1]
 	delimiter := os.Args[2]
 	sg := graph.NewSymbolGraph(filename, delimiter)
-	graph := sg.Graph()
+	g := sg.Graph()
 	in := NewIn(os.Stdin)
 
 	for in.HasNext() {
 		source := in.ReadString()
 		if sg.Contains(source) {
 			s := sg.Index(source)
-			gen := graph.Adj(s).Yield()
+			gen := g.Adj(s)
 			for hasNext, v := gen(); hasNext; hasNext, v = gen() {
 				fmt.Println(" ", sg.Name(v.(int)))
 			}
