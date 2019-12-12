@@ -23,3 +23,10 @@ type Paths interface {
 	HasPathTo(v int) bool
 	PathTo(v int) Generator // path from s to v, empty if not exists
 }
+
+type SymbolGraph interface {
+	Contains(key string) bool
+	Index(key string) int
+	Name(v int) string
+	Graph() *graph
+}

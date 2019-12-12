@@ -17,6 +17,7 @@ func main() {
 		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
 			fmt.Print(w, " ")
 		}
+		fmt.Println()
 		//fmt.Println(gen)
 	} else {
 		fmt.Println("Graph is acyclic")

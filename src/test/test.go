@@ -1,9 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"os"
+	"util"
+	"bufio"
+)
 
 func main() {
-	var c interface{}
-	c = 2
-	fmt.Print(2 == c)
+	f, _ := os.Open("graph.go")
+	defer func() {
+		if f != nil {
+			f.Close()
+		}
+	}()
+	in := util.NewInWithSplitFunc(f, bufio.ScanLines)
+
+
+
+
 }

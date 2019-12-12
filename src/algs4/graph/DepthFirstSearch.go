@@ -1,5 +1,12 @@
 package graph
 
+/**
+* depth first search
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
+
 type DepthFirstSearch struct {
 	marked []bool // marked[v] = is there an s-v path?
 	count  int    // number of vertices connected to s

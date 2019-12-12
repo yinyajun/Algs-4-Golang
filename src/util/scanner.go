@@ -10,6 +10,7 @@ type In struct {
 	*bufio.Scanner
 	buf  []string
 	rpos int
+	split bufio.SplitFunc
 }
 
 func NewIn(r io.Reader) *In {
@@ -17,9 +18,8 @@ func NewIn(r io.Reader) *In {
 }
 
 func NewInWithSplitFunc(r io.Reader, split bufio.SplitFunc) *In {
-	s := bufio.NewScanner(r)
-	s.Split(split)
-	m := &In{s, []string{}, 0}
+	m := &In{bufio.NewScanner(r), []string{}, 0, split}
+	m.Scanner.Split(m.split)
 	return m
 }
 
@@ -47,3 +47,5 @@ func (m *In) ReadInt() int {
 	i, _ := strconv.Atoi(s)
 	return i
 }
+
+

@@ -7,6 +7,13 @@ import (
 	"fmt"
 )
 
+/**
+* breadth first paths
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
+
 const INT_MAX = int(^uint(0) >> 1)
 
 type BreadthFirstPaths struct {

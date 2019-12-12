@@ -5,6 +5,13 @@ import (
 	"util"
 )
 
+/**
+* check cycle in a undirected graph
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
+
 type Cycle struct {
 	marked   []bool
 	edgeTo   []int
@@ -67,7 +74,6 @@ func (c *Cycle) hasParallelEdges(g *graph) bool {
 			}
 			marked[w.(int)] = true
 		}
-
 		// reset so marked[v] = false for all v
 		gen = g.Adj(v).Yield()
 		for hasNext, w := gen(); hasNext; hasNext, w = gen() {

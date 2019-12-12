@@ -5,6 +5,13 @@ import (
 	. "util"
 )
 
+/**
+* depth first paths
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
+
 type DepthFirstPaths struct {
 	marked []bool // marked[v] = is there an s-v path?
 	edgeTo []int  // edgeTo[v] = last edge on s-v path
