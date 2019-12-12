@@ -15,11 +15,12 @@ func main() {
 	for in.HasNext() {
 		item := in.ReadString()
 		if item != "-" {
-			k, _ := strconv.Atoi(item)
+			k, _ := strconv.Atoi(item) // input should be int
 			pq.Insert(k)
 		} else if !pq.IsEmpty() {
 			fmt.Println(pq.DelMax(), " ")
 		}
 	}
-	fmt.Println("(", pq.Size(), " left on PQ")
+	fmt.Println("(", pq.Size(), " left on PQ)")
+	PrintIterator(pq)
 }

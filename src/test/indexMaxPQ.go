@@ -1,9 +1,8 @@
 package main
 
 import (
-	"fmt"
-
 	. "algs4/priorityQueue"
+	"fmt"
 )
 
 func main() {
@@ -14,8 +13,9 @@ func main() {
 		pq.Insert(idx, s)
 	}
 
-	// print each key using the Iterator
-	for _, i := range pq.Iterator() {
-		fmt.Println(i, strings[i])
+	iterator := pq.Yield()
+	for hasNext, val := iterator(); hasNext; hasNext, val = iterator() {
+		fmt.Println(val, strings[val.(int)])
 	}
+
 }

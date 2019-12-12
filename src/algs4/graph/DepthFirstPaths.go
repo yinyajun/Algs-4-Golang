@@ -48,9 +48,9 @@ func (m *DepthFirstPaths) PathTo(v int) []int {
 		return ret
 	}
 	path := stack.NewStack()
-	for x:= v; x!=m.s; x= m.edgeTo[x]{
+	for x := v; x != m.s; x = m.edgeTo[x] {
 		path.Push(x)
 	}
 	path.Push(m.s)
-
+	return []int{}
 }

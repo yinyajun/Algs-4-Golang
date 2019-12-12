@@ -186,17 +186,11 @@ func (m *PQ) isMaxHeapOrdered(k int) bool {
 	return m.isMaxHeapOrdered(left) && m.isMaxHeapOrdered(right)
 }
 
-//func main() {
-//	pq := NewMaxPQ()
-//	in := NewIn(os.Stdin)
-//	for in.HasNext() {
-//		item := in.ReadString()
-//		if item != "-" {
-//			k, _ := strconv.Atoi(item)
-//			pq.Insert(k)
-//		} else if !pq.IsEmpty() {
-//			fmt.Println(pq.DelMax(), " ")
-//		}
-//	}
-//	fmt.Println("(", pq.Size(), " left on PQ")
-//}
+func (m *PQ) Yield() Generator {
+	return func() (bool, interface{}) {
+		if !m.IsEmpty() {
+			return true, m.DelMax()
+		}
+		return false, nil
+	}
+}

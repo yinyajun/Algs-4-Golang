@@ -1,5 +1,7 @@
 package stack
 
+import "util"
+
 /**
 * stack
 *
@@ -48,3 +50,11 @@ func (m *Stack) Pop() interface{} {
 	return item
 }
 
+func (m *Stack) Yield() util.Generator {
+	return func() (bool, interface{}) {
+		if !m.IsEmpty() {
+			return true, m.Pop()
+		}
+		return false, nil
+	}
+}

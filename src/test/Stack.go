@@ -20,4 +20,5 @@ func main() {
 		}
 	}
 	fmt.Println("(", s.Size(), "left on stack)")
+	PrintIterator(s)
 }

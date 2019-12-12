@@ -1,11 +1,6 @@
-package main
+package queue
 
-import (
-	"fmt"
-	"os"
-
-	. "util"
-)
+import "util"
 
 /**
 * Queue
@@ -29,19 +24,19 @@ func NewQueue() *Queue {
 	return &Queue{}
 }
 
-func (m *Queue) isEmpty() bool {
+func (m *Queue) IsEmpty() bool {
 	return m.first == nil
 }
 
-func (m *Queue) size() int {
+func (m *Queue) Size() int {
 	return m.N
 }
 
-func (m *Queue) enqueue(item interface{}) {
+func (m *Queue) Enqueue(item interface{}) {
 	// 向表尾添加元素
 	oldLast := m.last
 	m.last = &Node{item: item}
-	if m.isEmpty() {
+	if m.IsEmpty() {
 		m.first = m.last
 	} else {
 		oldLast.next = m.last
@@ -49,29 +44,24 @@ func (m *Queue) enqueue(item interface{}) {
 	m.N++
 }
 
-func (m *Queue) dequeue() interface{} {
-	if m.isEmpty() {
+func (m *Queue) Dequeue() interface{} {
+	if m.IsEmpty() {
 		panic("queue underflows")
 	}
 	item := m.first.item
 	m.first = m.first.next
-	if m.isEmpty() {
+	if m.IsEmpty() {
 		m.last = nil
 	}
 	m.N--
 	return item
 }
 
-func main() {
-	q := NewQueue()
-	in := NewIn(os.Stdin)
-	for in.HasNext() {
-		item := in.ReadString()
-		if item != "-" {
-			q.enqueue(item)
-		} else if !q.isEmpty() {
-			fmt.Print(q.dequeue(), " ")
+func (m *Queue) Yield() util.Generator {
+	return func() (bool, interface{}) {
+		if !m.IsEmpty() {
+			return true, m.Dequeue()
 		}
+		return false, nil
 	}
-	fmt.Println("(", q.size(), "left on queue)")
 }

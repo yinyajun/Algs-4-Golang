@@ -1,5 +1,7 @@
 package stack
 
+import "util"
+
 /**
 *
 *
@@ -30,10 +32,18 @@ func (m *FixedCapacityStack) Push(item interface{}) {
 	m.a[m.N] = item
 	m.N++
 }
+
 func (m *FixedCapacityStack) Pop() interface{} {
 	m.N--
 	ret := m.a[m.N]
 	return ret
 }
 
-
+func (m *FixedCapacityStack) Yield() util.Generator {
+	return func() (bool, interface{}) {
+		if !m.IsEmpty() {
+			return true, m.Pop()
+		}
+		return false, nil
+	}
+}

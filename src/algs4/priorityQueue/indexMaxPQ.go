@@ -188,21 +188,11 @@ func (m *IndexPQ) sink(k int) {
 	}
 }
 
-func (m *IndexPQ) Iterator() []int {
-	ret := []int{}
-	cop := NewIndexPQ(len(m.pq) - 1)
-	for i := 1; i <= m.n; i++ {
-		cop.Insert(m.pq[i], m.keys[m.pq[i]])
+func (m *IndexPQ) Yield() Generator {
+	return func() (bool, interface{}) {
+		if !m.IsEmpty() {
+			return true, m.DelMax()
+		}
+		return false, nil
 	}
-	for !cop.IsEmpty() {
-		ret = append(ret, cop.DelMax())
-	}
-	return ret
-}
-
-func (m *IndexPQ) Next() (interface{}, bool) {
-	if !m.IsEmpty() {
-		return m.DelMax(), !m.IsEmpty()
-	}
-	return nil, false
 }

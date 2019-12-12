@@ -15,7 +15,5 @@ func main() {
 		bag.Add(in.ReadString())
 	}
 	fmt.Println("size of bag = ", bag.Size())
-	for _, i := range bag.Iterator() {
-		fmt.Println(i)
-	}
+	PrintIterator(bag)
 }

@@ -1,5 +1,7 @@
 package bag
 
+import . "util"
+
 /**
 * Bag
 *
@@ -42,4 +44,16 @@ func (b *Bag) Iterator() []interface{} {
 		cur = cur.next
 	}
 	return ret
+}
+
+func (b *Bag) Yield() Generator {
+	cur := b.first
+	return func() (bool, interface{}) {
+		if cur != nil {
+			ret := cur.item
+			cur = cur.next
+			return true, ret
+		}
+		return false, nil
+	}
 }
