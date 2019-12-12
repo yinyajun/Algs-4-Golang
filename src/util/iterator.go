@@ -3,6 +3,7 @@ package util
 import (
 	"fmt"
 	"strings"
+	"strconv"
 )
 
 type Generator func() (bool, interface{})
@@ -13,7 +14,14 @@ func (g Generator) String() string {
 	}
 	ret := strings.Builder{}
 	for hasNext, val := g(); hasNext; hasNext, val = g() {
-		ret.WriteString(val.(string))
+		switch val.(type) {
+		case string:
+			ret.WriteString(val.(string))
+		case int:
+			ret.WriteString(strconv.Itoa(val.(int)))
+		case float32:
+			ret.WriteString(strconv.FormatFloat(float64(val.(float32)), 'E', -1, 32))
+		}
 		ret.WriteString("\n")
 	}
 	return ret.String()

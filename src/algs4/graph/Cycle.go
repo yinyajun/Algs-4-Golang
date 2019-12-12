@@ -40,10 +40,10 @@ func (c *Cycle) hasSelfLoop(g *graph) bool {
 	for v := 0; v < g.V(); v++ {
 		gen := g.Adj(v).Yield()
 		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
-			if v == w {
+			if v == w.(int) {
 				c.cycle = NewStack()
 				c.cycle.Push(v)
-				c.cycle.Push(w)
+				c.cycle.Push(w.(int))
 				return true
 			}
 		}

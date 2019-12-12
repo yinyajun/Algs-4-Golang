@@ -14,9 +14,12 @@ func main() {
 
 	if finder.HasCycle() {
 		gen := finder.Cycle()
-		fmt.Println(gen)
+		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
+			fmt.Print(w, " ")
+		}
+		//fmt.Println(gen)
 	} else {
-		fmt.Println("Graph is scyclic")
+		fmt.Println("Graph is acyclic")
 	}
 
 }
