@@ -2,7 +2,7 @@ package graph
 
 import (
 	"algs4/stack"
-	"util"
+	. "util"
 )
 
 type DepthFirstPaths struct {
@@ -46,7 +46,7 @@ func (m *DepthFirstPaths) HasPathTo(v int) bool {
 	return m.marked[v]
 }
 
-func (m *DepthFirstPaths) PathTo(v int) util.Generator {
+func (m *DepthFirstPaths) PathTo(v int) Generator {
 	m.validateVertex(v)
 	if !m.HasPathTo(v) {
 		return nil
