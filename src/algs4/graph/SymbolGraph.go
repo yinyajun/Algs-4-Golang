@@ -1,9 +1,10 @@
 package graph
 
 import (
-	"os"
-	"util"
 	"bufio"
+	"os"
+	"strings"
+	"util"
 )
 
 /**
@@ -29,8 +30,36 @@ func NewSymbolGraph(filename string, delimiter string) *symbolGraph {
 		}
 	}()
 	in := util.NewInWithSplitFunc(f, bufio.ScanLines)
-
-
+	for in.HasNext() {
+		a := strings.Split(in.ReadLine(), delimiter)
+		v := sg.st[a[0]]
+		for i := 1; i < len(a); i++ {
+			w := sg.st[a[i]]
+			sg.graph.AddEdge(v, w)
+		}
+	}
 	return sg
+}
 
+func (sg *symbolGraph) Contains(key string) bool {
+	_, ok := sg.st[key]
+	return ok
+}
+
+func (sg *symbolGraph) Index(key string) int {
+	return sg.st[key]
+}
+
+func (sg *symbolGraph) Name(v int) string {
+	sg.validateVertex(v)
+	return sg.keys[v]
+}
+
+func (sg *symbolGraph) Graph() *graph { return sg.graph }
+
+func (sg *symbolGraph) validateVertex(v int) {
+	V := sg.graph.V()
+	if v < 0 || v >= V {
+		panic("validateVertex: invalid vertex")
+	}
 }

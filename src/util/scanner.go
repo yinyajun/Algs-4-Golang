@@ -3,13 +3,14 @@ package util
 import (
 	"bufio"
 	"io"
+	"reflect"
 	"strconv"
 )
 
 type In struct {
 	*bufio.Scanner
-	buf  []string
-	rpos int
+	buf   []string
+	rpos  int
 	split bufio.SplitFunc
 }
 
@@ -21,6 +22,10 @@ func NewInWithSplitFunc(r io.Reader, split bufio.SplitFunc) *In {
 	m := &In{bufio.NewScanner(r), []string{}, 0, split}
 	m.Scanner.Split(m.split)
 	return m
+}
+
+func (m *In) GetSplitFunc() bufio.SplitFunc {
+	return m.split
 }
 
 func (m *In) HasNext() bool {
@@ -48,4 +53,10 @@ func (m *In) ReadInt() int {
 	return i
 }
 
-
+func (m *In) ReadLine() string {
+	// note that their type is different: bufio.SplitFunc | func([]uint8, bool) (int, []uint8, error)
+	if reflect.ValueOf(m.split).Pointer() != reflect.ValueOf(bufio.ScanLines).Pointer() {
+		panic("ReadLine: In.split != bufio.ScanLines")
+	}
+	return m.ReadString()
+}
