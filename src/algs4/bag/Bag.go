@@ -36,16 +36,6 @@ func (b *Bag) Add(item interface{}) {
 	b.n++
 }
 
-func (b *Bag) Iterator() []interface{} {
-	ret := []interface{}{}
-	cur := b.first
-	for cur != nil {
-		ret = append(ret, cur.item)
-		cur = cur.next
-	}
-	return ret
-}
-
 func (b *Bag) Yield() Generator {
 	cur := b.first
 	return func() (bool, interface{}) {

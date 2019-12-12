@@ -23,7 +23,8 @@ func (m *DepthFirstSearch) validateVertex(v int) {
 func (m *DepthFirstSearch) dfs(g *graph, v int) {
 	m.count++
 	m.marked[v] = true
-	for _, w := range g.Adj(v).Iterator() {
+	generator := g.Adj(v).Yield()
+	for hasNext, w := generator(); hasNext; hasNext, w = generator() {
 		if !m.marked[w.(int)] {
 			m.dfs(g, w.(int))
 		}

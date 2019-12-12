@@ -1,6 +1,8 @@
 package graph
 
-import "algs4/stack"
+import (
+	"algs4/stack"
+)
 
 type DepthFirstPaths struct {
 	marked []bool // marked[v] = is there an s-v path?
@@ -27,7 +29,8 @@ func (m *DepthFirstPaths) validateVertex(v int) {
 // depth first search from v
 func (m *DepthFirstPaths) dfs(g *graph, v int) {
 	m.marked[v] = true
-	for _, w := range g.Adj(v).Iterator() {
+	generator := g.Adj(v).Yield()
+	for hasNext, w := generator(); hasNext; hasNext, w = generator() {
 		if !m.marked[w.(int)] {
 			m.edgeTo[w.(int)] = v
 			m.dfs(g, w.(int))
