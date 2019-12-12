@@ -15,8 +15,8 @@ func main() {
 	s, _ := strconv.Atoi(os.Args[1])
 	bfs := NewBreadthFirstPaths(g, s)
 	for v := 0; v < g.V(); v++ {
-		fmt.Print(s, " to ", v, ": ", bfs.DistTo(v))
 		if bfs.HasPathTo(v) {
+			fmt.Print(s, " to ", v, " (",bfs.DistTo(v),"): ")
 			gen := bfs.PathTo(v)
 			for hasNext, x := gen(); hasNext; hasNext, x = gen() {
 				if x == s {
@@ -27,7 +27,7 @@ func main() {
 			}
 			fmt.Println()
 		} else {
-			fmt.Println(s, " to ", v, ": ", "not connected")
+			fmt.Print(s, " to ", v, " (-): ", "not connected\n")
 		}
 	}
 }
