@@ -13,8 +13,8 @@ type Graph interface {
 }
 
 type Search interface {
-	Marked(v int) bool      // is v and s connected?
-	Count() int             // number of vertices connected to s
+	Marked(v int) bool // is v and s connected?
+	Count() int        // number of vertices connected to s
 }
 
 type Paths interface {
@@ -35,4 +35,14 @@ type Digraph interface {
 	AddEdge(v, w int)    // add edge v-w
 	Adj(v int) Generator // all adjacent vertex of v
 	Reverse() *digraph
+}
+
+type HasCycle interface {
+	HasCycle() bool
+	Cycle() Generator
+}
+
+type Topological interface {
+	IsDAG() bool
+	Order() Generator
 }

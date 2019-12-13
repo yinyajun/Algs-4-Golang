@@ -5,6 +5,13 @@ import (
 	"fmt"
 	"util"
 )
+/**
+* directed cycle
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
+
 
 type DirectedCycle struct {
 	marked  []bool       // marked[v] = has vertex v been marked?
