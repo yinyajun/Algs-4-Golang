@@ -23,6 +23,8 @@ type BreadthFirstPaths struct {
 	s      int    // source vertex
 }
 
+// Computes the shortest path between the source vertex s
+// and every other vertex in the graph g.
 func NewBreadthFirstPaths(g *graph, s int) *BreadthFirstPaths {
 	m := &BreadthFirstPaths{}
 	m.s = s
@@ -38,10 +40,38 @@ func NewBreadthFirstPaths(g *graph, s int) *BreadthFirstPaths {
 	return m
 }
 
+// Computes the shortest path between any one of the source vertices in sources
+// and every other vertex in graph g.
+func NewBreadthFirstPathsMultiSources(g *graph, sources []int) *BreadthFirstPaths {
+	m := &BreadthFirstPaths{}
+	m.edgeTo = make([]int, g.V())
+	m.distTo = make([]int, g.V())
+	m.marked = make([]bool, g.V())
+
+	for v := 0; v < g.V(); v++ {
+		m.distTo[v] = INT_MAX
+	}
+	m.validateVertices(sources)
+	m.bfsMultiSources(g, sources)
+	return m
+}
+
 func (m *BreadthFirstPaths) validateVertex(v int) {
 	V := len(m.marked)
 	if v < 0 || v >= V {
 		panic("validateVertex: invalid vertex")
+	}
+}
+
+func (m *BreadthFirstPaths) validateVertices(vertices []int) {
+	if len(vertices) == 0 {
+		panic("validateVertices: empty vertices")
+	}
+	V := len(m.marked)
+	for _, v := range vertices {
+		if v < 0 || v >= V {
+			panic("validateVertex: invalid vertex")
+		}
 	}
 }
 
@@ -63,6 +93,28 @@ func (m *BreadthFirstPaths) bfs(g *graph, s int) {
 				m.edgeTo[w.(int)] = v.(int)
 				m.distTo[w.(int)] = m.distTo[v.(int)] + 1
 				m.marked[w.(int)] = true
+				q.Enqueue(w)
+			}
+		}
+	}
+}
+
+// breadth-first search from multiple sources
+func (m *BreadthFirstPaths) bfsMultiSources(g *graph, sources []int) {
+	q := queue.NewQueue()
+	for _, s := range sources {
+		m.marked[s] = true
+		m.distTo[s] = 0
+		q.Enqueue(s)
+	}
+	for !q.IsEmpty() {
+		v := q.Dequeue().(int)
+		vAdj := g.Adj(v)
+		for hasNext, w := vAdj(); hasNext; hasNext, w = vAdj() {
+			if !m.marked[w.(int)] {
+				m.edgeTo[w.(int)] = v
+				m.marked[w.(int)] = true
+				m.distTo[w.(int)] = m.distTo[v] + 1
 				q.Enqueue(w)
 			}
 		}

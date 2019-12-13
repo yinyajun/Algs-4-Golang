@@ -13,7 +13,6 @@ type Graph interface {
 }
 
 type Search interface {
-	Search(g *graph, s int) // find all vertices connected to s
 	Marked(v int) bool      // is v and s connected?
 	Count() int             // number of vertices connected to s
 }

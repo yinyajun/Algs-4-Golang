@@ -48,7 +48,3 @@ func (m *DepthFirstSearch) Marked(v int) bool {
 func (m *DepthFirstSearch) Count() int {
 	return m.count
 }
-
-func (m *DepthFirstSearch) Search(g *graph, s int) {
-	m.dfs(g, s)
-}
