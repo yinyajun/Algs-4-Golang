@@ -35,5 +35,5 @@ type Digraph interface {
 	E() int              // edge num
 	AddEdge(v, w int)    // add edge v-w
 	Adj(v int) Generator // all adjacent vertex of v
-	Reverse() *Digraph
+	Reverse() *digraph
 }

@@ -3,6 +3,9 @@ package graph
 import (
 	. "algs4/bag"
 	. "util"
+	"algs4/stack"
+	"strings"
+	"fmt"
 )
 
 /**
@@ -19,11 +22,13 @@ type digraph struct {
 	indegree []int  // indegree[v] = indegree of vertex v
 }
 
+// Initializes an empty digraph with V vertices.
 func NewDigraph(V int) *digraph {
 	if V < 0 {
 		panic("NewDigraph: invalid V")
 	}
 	dg := &digraph{}
+	dg.v = V
 	dg.adj = make([]*Bag, V)
 	for idx := range dg.adj {
 		dg.adj[idx] = &Bag{}
@@ -32,7 +37,8 @@ func NewDigraph(V int) *digraph {
 	return dg
 }
 
-func NewDigraphWithIn(in In) *digraph {
+// Initializes a digraph from the specified input stream.
+func NewDigraphWithIn(in *In) *digraph {
 	v := in.ReadInt()
 	dg := NewDigraph(v)
 	e := in.ReadInt()
@@ -45,4 +51,85 @@ func NewDigraphWithIn(in In) *digraph {
 		dg.AddEdge(v, w)
 	}
 	return dg
+}
+
+// Initializes a new digraph that is a deep copy of the specified digraph.
+func NewDigraphWithGraph(g *digraph) *digraph {
+	dg := NewDigraph(g.V())
+	dg.e = g.E()
+	for v := 0; v < g.V(); v++ {
+		dg.indegree[v] = g.Indegree(v)
+	}
+	for v := 0; v < g.V(); v++ {
+		// reverse so that adjacency list is in same order as original
+		reverse := stack.NewStack()
+		gen := g.Adj(v)
+		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
+			reverse.Push(w)
+		}
+		gen = reverse.Yield()
+		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
+			dg.adj[v].Add(w)
+		}
+	}
+	return dg
+}
+
+func (dg *digraph) V() int { return dg.v }
+
+func (dg *digraph) E() int { return dg.e }
+
+func (dg *digraph) validateVertex(v int) {
+	if v < 0 || v >= dg.v {
+		panic("validateVertex: invalid vertex")
+	}
+}
+
+// Adds the directed edge v→w to this digraph.
+func (dg *digraph) AddEdge(v, w int) {
+	dg.validateVertex(v)
+	dg.validateVertex(w)
+	dg.adj[v].Add(w)
+	dg.indegree[w]++
+	dg.e++
+}
+
+func (dg *digraph) Adj(v int) Generator {
+	dg.validateVertex(v)
+	return dg.adj[v].Yield()
+}
+
+func (dg *digraph) Reverse() *digraph {
+	reverse := NewDigraph(dg.v)
+	for v := 0; v < dg.v; v++ {
+		vAdj := dg.Adj(v)
+		for hasNext, w := vAdj(); hasNext; hasNext, w = vAdj() {
+			reverse.adj[w.(int)].Add(v)
+		}
+	}
+	return reverse
+}
+
+func (dg *digraph) Indegree(v int) int {
+	dg.validateVertex(v)
+	return dg.indegree[v]
+}
+
+func (dg *digraph) Outdegree(v int) int {
+	dg.validateVertex(v)
+	return dg.adj[v].Size()
+}
+
+func (dg *digraph) String() string {
+	s := strings.Builder{}
+	s.WriteString(fmt.Sprintf("%d vertices, %d edges \n", dg.v, dg.e))
+	for v := 0; v < dg.V(); v++ {
+		s.WriteString(fmt.Sprintf("%d: ", v))
+		vAdj := dg.Adj(v)
+		for hasNext, w := vAdj(); hasNext; hasNext, w = vAdj() {
+			s.WriteString(fmt.Sprintf("%d ", w))
+		}
+		s.WriteString("\n")
+	}
+	return s.String()
 }
