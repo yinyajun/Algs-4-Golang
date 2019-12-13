@@ -22,14 +22,38 @@ type symbolGraph struct {
 
 func NewSymbolGraph(filename string, delimiter string) *symbolGraph {
 	sg := &symbolGraph{}
+
+	// First pass builds the index by reading strings to associate
+	// distinct strings with an index
 	sg.st = make(map[string]int)
-	f, _ := os.Open(filename)
-	defer func() {
-		if f != nil {
-			f.Close()
-		}
-	}()
+	f, err := os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
 	in := util.NewInWithSplitFunc(f, bufio.ScanLines)
+	for in.HasNext() {
+		a := strings.Split(in.ReadLine(), delimiter)
+		for i := 0; i < len(a); i++ {
+			if _, ok := sg.st[a[i]]; !ok {
+				sg.st[a[i]] = len(sg.st)
+			}
+		}
+	}
+
+	// inverted index to get string keys in an array
+	sg.keys = make([]string, len(sg.st))
+	for name, idx := range sg.st {
+		sg.keys[idx] = name
+	}
+	f.Close()
+
+	// second pass builds the graph by connecting first vertex on each
+	// line to all others
+	f, err = os.Open(filename)
+	if err != nil {
+		panic(err)
+	}
+	in = util.NewInWithSplitFunc(f, bufio.ScanLines)
 	for in.HasNext() {
 		a := strings.Split(in.ReadLine(), delimiter)
 		v := sg.st[a[0]]
@@ -38,6 +62,7 @@ func NewSymbolGraph(filename string, delimiter string) *symbolGraph {
 			sg.graph.AddEdge(v, w)
 		}
 	}
+	f.Close()
 	return sg
 }
 
