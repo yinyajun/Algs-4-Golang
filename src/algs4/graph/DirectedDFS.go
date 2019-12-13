@@ -1,5 +1,12 @@
 package graph
 
+/**
+* DirectedDFS
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
+
 type DirectedDFS struct {
 	marked []bool // marked[v] = true iff v is reachable from source(s)
 	count  int    // number of vertices reachable from source(s)

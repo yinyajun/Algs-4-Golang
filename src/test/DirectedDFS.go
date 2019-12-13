@@ -10,9 +10,8 @@ import (
 )
 
 /**
-* $ go run src/test/depthFirstSearch.go < data/tinyCG.txt 0
-* 0 1 2 3 4 5
-* connected
+* $ go run src/test/DirectedDFS.go < data/tinyDG.txt 1 2 6
+* 0 1 2 3 4 5 6 8 9 10 11 12
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
 */
