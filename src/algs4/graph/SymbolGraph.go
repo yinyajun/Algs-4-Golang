@@ -49,6 +49,7 @@ func NewSymbolGraph(filename string, delimiter string) *symbolGraph {
 
 	// second pass builds the graph by connecting first vertex on each
 	// line to all others
+	sg.graph = NewGraph(len(sg.st))
 	f, err = os.Open(filename)
 	if err != nil {
 		panic(err)

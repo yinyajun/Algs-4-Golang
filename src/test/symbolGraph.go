@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	. "util"
+	"bufio"
 )
 
 /**
@@ -19,10 +20,10 @@ func main() {
 	delimiter := os.Args[2]
 	sg := graph.NewSymbolGraph(filename, delimiter)
 	g := sg.Graph()
-	in := NewIn(os.Stdin)
+	in := NewInWithSplitFunc(os.Stdin, bufio.ScanLines)
 
 	for in.HasNext() {
-		source := in.ReadString()
+		source := in.ReadLine()
 		if sg.Contains(source) {
 			s := sg.Index(source)
 			gen := g.Adj(s)
