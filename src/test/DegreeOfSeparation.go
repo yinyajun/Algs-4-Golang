@@ -5,12 +5,24 @@ import (
 	"fmt"
 	"os"
 	"util"
+	"bufio"
 )
 
 /**
+* $ go run src/test/DegreeOfSeparation.go "data/movies.txt" "/" "Bacon, Kevin"
+* Kidman, Nicole
+*   Bacon, Kevin
+*   Woodsman, The (2004)
+*   Grier, David Alan
+*   Bewitched (2005)
+*   Kidman, Nicole
+* Grant, Cary
+*   Bacon, Kevin
+*   Planes, Trains & Automobiles (1987)
+*   Martin, Steve (I)
+*   Dead Men Don't Wear Plaid (1982)
+*   Grant, Cary
 *
-*
-* @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
@@ -29,19 +41,22 @@ func main() {
 	s := sg.Index(source)
 	bfs := graph.NewBreadthFirstPaths(g, s)
 
-	in := util.NewIn(os.Stdin)
-	sink := in.ReadString()
-	if sg.Contains(sink) {
-		t := sg.Index(sink)
-		if bfs.HasPathTo(t) {
-			gen := bfs.PathTo(t)
-			for hasNext, v := gen(); hasNext; hasNext, v = gen() {
-				fmt.Println(" ", sg.Name(v.(int)))
+	in := util.NewInWithSplitFunc(os.Stdin, bufio.ScanLines)
+	for in.HasNext() {
+		sink := in.ReadLine()
+		if sg.Contains(sink) {
+			t := sg.Index(sink)
+			if bfs.HasPathTo(t) {
+				gen := bfs.PathTo(t)
+				for hasNext, v := gen(); hasNext; hasNext, v = gen() {
+					fmt.Println(" ", sg.Name(v.(int)))
+				}
+			} else {
+				fmt.Println("Not connected")
 			}
 		} else {
-			fmt.Println("Not connected")
+			fmt.Println("\tNot in databases.")
 		}
-	} else {
-		fmt.Println(" Not in databases.")
 	}
+
 }

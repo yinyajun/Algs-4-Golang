@@ -9,11 +9,17 @@ import (
 )
 
 /**
+*	go run src/test/symbolGraph.go "data/routes.txt" " "
+*	JFK
+*		ORD
+*		ATL
+*		MCO
+*	LAX
+*		LAS
+*		PHX
 *
-*
-* @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
- */
+*/
 
 func main() {
 	filename := os.Args[1]

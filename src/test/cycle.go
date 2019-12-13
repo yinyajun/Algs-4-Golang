@@ -7,6 +7,13 @@ import (
 	. "util"
 )
 
+/**
+* $ go run src/test/cycle.go < data/tinyCG.txt
+* 1 0 2 1
+*
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+*/
+
 func main() {
 	in := NewIn(os.Stdin)
 	g := NewGraphWithIn(in)

@@ -9,6 +9,18 @@ import (
 	. "util"
 )
 
+/**
+* $ go run src/test/depthFirstPaths.go < data/tinyCG.txt 0
+* 0 to 0: 0
+* 0 to 1: 0-2-1
+* 0 to 2: 0-2
+* 0 to 3: 0-2-3
+* 0 to 4: 0-2-3-4
+* 0 to 5: 0-2-3-5
+*
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+*/
+
 func main() {
 	in := NewIn(os.Stdin)
 	g := NewGraphWithIn(in)

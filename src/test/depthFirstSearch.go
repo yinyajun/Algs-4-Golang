@@ -9,6 +9,14 @@ import (
 	. "util"
 )
 
+/**
+* $ go run src/test/depthFirstSearch.go < data/tinyCG.txt 0
+* 0 1 2 3 4 5
+* connected
+*
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+*/
+
 func main() {
 	in := NewIn(os.Stdin)
 	g := NewGraphWithIn(in)
