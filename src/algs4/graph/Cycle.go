@@ -109,4 +109,9 @@ func (c *Cycle) dfs(g *graph, v int, u int) {
 
 func (c *Cycle) HasCycle() bool { return c.cycle != nil }
 
-func (c *Cycle) Cycle() util.Generator { return c.cycle.Yield() }
+func (c *Cycle) Cycle() util.Generator {
+	if !c.HasCycle() {
+		return nil
+	}
+	return c.cycle.Yield()
+}
