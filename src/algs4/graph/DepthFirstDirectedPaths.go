@@ -21,10 +21,10 @@ type DepthFirstDirectedPaths struct {
 
 func NewDepthFirstDirectedPaths(g *digraph, s int) *DepthFirstDirectedPaths {
 	m := &DepthFirstDirectedPaths{}
-	m.validateVertex(s)
-	m.s = s
 	m.marked = make([]bool, g.V())
 	m.edgeTo = make([]int, g.V())
+	m.validateVertex(s)
+	m.s = s
 	m.dfs(g, s)
 	return m
 }
