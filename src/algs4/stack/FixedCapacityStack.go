@@ -40,9 +40,12 @@ func (m *FixedCapacityStack) Pop() interface{} {
 }
 
 func (m *FixedCapacityStack) Yield() util.Generator {
+	pos := m.N -1
 	return func() (bool, interface{}) {
-		if !m.IsEmpty() {
-			return true, m.Pop()
+		if pos >= 0 {
+			ret := m.a[pos]
+			pos--
+			return true, ret
 		}
 		return false, nil
 	}

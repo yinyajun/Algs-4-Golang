@@ -8,6 +8,16 @@ import (
 	. "util"
 )
 
+/**
+* $ go run  src/test/FixedCapacityStack.go < data/tobe.txt
+* to be not that or be ( 2 left on stack)
+* is
+* to
+*
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+*/
+
+
 func main() {
 	s := NewFixedCapacityStrings(100)
 	in := NewIn(os.Stdin)

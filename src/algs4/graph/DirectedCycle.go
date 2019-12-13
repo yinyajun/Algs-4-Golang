@@ -2,8 +2,8 @@ package graph
 
 import (
 	"algs4/stack"
-	"util"
 	"fmt"
+	"util"
 )
 
 type DirectedCycle struct {
@@ -18,6 +18,7 @@ type DirectedCycle struct {
 func NewDirectedCycle(g *digraph) *DirectedCycle {
 	m := &DirectedCycle{}
 	m.marked = make([]bool, g.V())
+	m.onStack = make([]bool, g.V())
 	m.edgeTo = make([]int, g.V())
 	for v := 0; v < g.V(); v++ {
 		if !m.marked[v] {

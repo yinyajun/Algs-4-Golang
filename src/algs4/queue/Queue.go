@@ -58,10 +58,15 @@ func (m *Queue) Dequeue() interface{} {
 }
 
 func (m *Queue) Yield() util.Generator {
+
+	cur := m.first
 	return func() (bool, interface{}) {
-		if !m.IsEmpty() {
-			return true, m.Dequeue()
+		if cur != nil {
+			ret := cur.item
+			cur = cur.next
+			return true, ret
 		}
 		return false, nil
 	}
+
 }

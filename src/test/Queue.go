@@ -8,6 +8,15 @@ import (
 	. "util"
 )
 
+/**
+* $ go run  src/test/Queue.go < data/tobe.txt
+* to be or not to be ( 2 left on queue)
+* that
+* is
+*
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+*/
+
 func main() {
 	q := NewQueue()
 	in := NewIn(os.Stdin)

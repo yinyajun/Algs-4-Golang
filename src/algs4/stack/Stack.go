@@ -51,9 +51,12 @@ func (m *Stack) Pop() interface{} {
 }
 
 func (m *Stack) Yield() util.Generator {
+	cur := m.first
 	return func() (bool, interface{}) {
-		if !m.IsEmpty() {
-			return true, m.Pop()
+		if cur != nil {
+			ret := cur.item
+			cur = cur.next
+			return true, ret
 		}
 		return false, nil
 	}

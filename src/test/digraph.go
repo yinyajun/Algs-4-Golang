@@ -24,7 +24,6 @@ import (
 * 10: 12
 * 11: 4 12
 * 12: 9
-
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
 */
