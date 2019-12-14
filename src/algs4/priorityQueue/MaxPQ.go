@@ -186,11 +186,10 @@ func (m *PQ) isMaxHeapOrdered(k int) bool {
 	return m.isMaxHeapOrdered(left) && m.isMaxHeapOrdered(right)
 }
 
-func (m *PQ) Yield() Generator {
-	return func() (bool, interface{}) {
-		if !m.IsEmpty() {
-			return true, m.DelMax()
-		}
-		return false, nil
-	}
+func (m *PQ) ExtractItem() interface{} {
+	return m.DelMax()
+}
+
+func (m *PQ) Iterate() Iterators {
+	return NewOnceIterator(m)
 }

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"os"
 	"fmt"
+	"os"
 
 	. "algs4/queue"
 	. "util"
@@ -15,7 +15,7 @@ import (
 * is
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 func main() {
 	q := NewQueue()
@@ -29,5 +29,5 @@ func main() {
 		}
 	}
 	fmt.Println("(", q.Size(), "left on queue)")
-	PrintIterator(q)
+	PrintIterators(q.Iterate())
 }

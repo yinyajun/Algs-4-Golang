@@ -12,7 +12,7 @@ import "util"
  */
 
 type topological struct {
-	order util.Generator
+	order util.Iterators
 	rank  []int
 }
 
@@ -24,10 +24,9 @@ func NewTopological(g *digraph) *topological {
 		return t
 	}
 	dfs := NewDepthFirstOrder(g)
-	order := dfs.ReversePostOrder()
-	t.order = order.DeepCopy()
+	t.order = dfs.ReversePostOrder()
 	i := 0
-	for ok, v := order(); ok; ok, v = order() {
+	for v := t.order.Next(); v != nil; v = t.order.Next() {
 		t.rank[v.(int)] = i
 		i++
 	}
@@ -36,7 +35,10 @@ func NewTopological(g *digraph) *topological {
 
 // todo: topological edge weight digraph
 
-func (t *topological) Order() util.Generator { return t.order.DeepCopy() }
+func (t *topological) Order() util.Iterators {
+	t.order.Reset()
+	return t.order
+}
 
 func (t *topological) HasOrder() bool { return t.order != nil }
 

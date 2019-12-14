@@ -7,7 +7,7 @@ import "util"
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 type FixedCapacityStack struct {
 	a []interface{}
@@ -39,14 +39,4 @@ func (m *FixedCapacityStack) Pop() interface{} {
 	return ret
 }
 
-func (m *FixedCapacityStack) Yield() util.Generator {
-	pos := m.N -1
-	return func() (bool, interface{}) {
-		if pos >= 0 {
-			ret := m.a[pos]
-			pos--
-			return true, ret
-		}
-		return false, nil
-	}
-}
+func (m *FixedCapacityStack) Iterate() util.Iterators { return util.NewSliceIterator(m.a, m.N, true) }

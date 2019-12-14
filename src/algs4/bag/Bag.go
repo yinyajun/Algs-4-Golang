@@ -7,12 +7,7 @@ import . "util"
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
-
-type Node struct {
-	item interface{}
-	next *Node
-}
+ */
 
 // stack without delete function
 type Bag struct {
@@ -31,21 +26,9 @@ func (b *Bag) Size() int { return b.n }
 
 func (b *Bag) Add(item interface{}) {
 	oldFirst := b.first
-	b.first = &Node{item, nil}
-	b.first.next = oldFirst
+	b.first = &Node{Item: item, Next: nil}
+	b.first.Next = oldFirst
 	b.n++
 }
 
-func (b *Bag) Yield() Generator {
-	cur := b.first
-	f:= func() (bool, interface{}) {
-		if cur != nil {
-			ret := cur.item
-			cur = cur.next
-			return true, ret
-		}
-		return false, nil
-	}
-	return f
-}
-
+func (b *Bag) Iterate() Iterators { return NewLinkedListIterator(b.first) }

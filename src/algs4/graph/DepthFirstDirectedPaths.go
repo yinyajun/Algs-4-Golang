@@ -1,8 +1,8 @@
 package graph
 
 import (
-	"util"
 	"algs4/stack"
+	"util"
 )
 
 /**
@@ -40,7 +40,7 @@ func (m *DepthFirstDirectedPaths) dfs(g *digraph, v int) {
 	m.marked[v] = true
 
 	vAdj := g.Adj(v)
-	for hasNext, w := vAdj(); hasNext; hasNext, w = vAdj() {
+	for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 		if !m.marked[w.(int)] {
 			m.edgeTo[w.(int)] = v
 			m.dfs(g, w.(int))
@@ -53,7 +53,7 @@ func (m *DepthFirstDirectedPaths) HasPathTo(v int) bool {
 	return m.marked[v]
 }
 
-func (m *DepthFirstDirectedPaths) PathTo(v int) util.Generator {
+func (m *DepthFirstDirectedPaths) PathTo(v int) util.Iterators {
 	m.validateVertex(v)
 	path := stack.NewStack()
 
@@ -61,5 +61,5 @@ func (m *DepthFirstDirectedPaths) PathTo(v int) util.Generator {
 		path.Push(x)
 	}
 	path.Push(m.s)
-	return path.Yield()
+	return path.Iterate()
 }

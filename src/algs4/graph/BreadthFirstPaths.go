@@ -87,8 +87,8 @@ func (m *BreadthFirstPaths) bfs(g *graph, s int) {
 
 	for !q.IsEmpty() {
 		v := q.Dequeue()
-		gen := g.Adj(v.(int))
-		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
+		vAdj := g.Adj(v.(int))
+		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			if !m.marked[w.(int)] {
 				m.edgeTo[w.(int)] = v.(int)
 				m.distTo[w.(int)] = m.distTo[v.(int)] + 1
@@ -110,7 +110,7 @@ func (m *BreadthFirstPaths) bfsMultiSources(g *graph, sources []int) {
 	for !q.IsEmpty() {
 		v := q.Dequeue().(int)
 		vAdj := g.Adj(v)
-		for hasNext, w := vAdj(); hasNext; hasNext, w = vAdj() {
+		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			if !m.marked[w.(int)] {
 				m.edgeTo[w.(int)] = v
 				m.marked[w.(int)] = true
@@ -126,7 +126,7 @@ func (m *BreadthFirstPaths) HasPathTo(v int) bool {
 	return m.marked[v]
 }
 
-func (m *BreadthFirstPaths) PathTo(v int) Generator {
+func (m *BreadthFirstPaths) PathTo(v int) Iterators {
 	m.validateVertex(v)
 	if !m.marked[v] {
 		return nil
@@ -136,7 +136,7 @@ func (m *BreadthFirstPaths) PathTo(v int) Generator {
 		path.Push(x)
 	}
 	path.Push(m.s)
-	return path.Yield()
+	return path.Iterate()
 }
 
 func (m *BreadthFirstPaths) DistTo(v int) int {
@@ -155,8 +155,8 @@ func (m *BreadthFirstPaths) check(g *graph, s int) bool {
 	// check that for each edge v-w dist[w] <= dist[v] + 1
 	// provided v is reachable from s
 	for v := 0; v < g.V(); v++ {
-		gen := g.Adj(v)
-		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
+		vAdj := g.Adj(v)
+		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			if m.HasPathTo(v) != m.HasPathTo(w.(int)) {
 				fmt.Println("edge", v, "-", w.(int))
 				fmt.Println("hasPathTo(", v, ") =", m.HasPathTo(v))

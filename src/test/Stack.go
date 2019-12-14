@@ -1,8 +1,8 @@
 package main
 
 import (
-	"os"
 	"fmt"
+	"os"
 
 	. "algs4/stack"
 	. "util"
@@ -15,7 +15,7 @@ import (
 * to
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 func main() {
 	s := NewStack()
@@ -29,5 +29,5 @@ func main() {
 		}
 	}
 	fmt.Println("(", s.Size(), "left on stack)")
-	PrintIterator(s)
+	PrintIterators(s.Iterate())
 }

@@ -2,10 +2,10 @@ package graph
 
 import (
 	. "algs4/bag"
-	. "util"
 	"algs4/stack"
-	"strings"
 	"fmt"
+	"strings"
+	. "util"
 )
 
 /**
@@ -63,12 +63,12 @@ func NewDigraphWithGraph(g *digraph) *digraph {
 	for v := 0; v < g.V(); v++ {
 		// reverse so that adjacency list is in same order as original
 		reverse := stack.NewStack()
-		gen := g.Adj(v)
-		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
+		vAdj := g.Adj(v)
+		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			reverse.Push(w)
 		}
-		gen = reverse.Yield()
-		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
+		it := reverse.Iterate()
+		for w := it.Next(); w != nil; w = it.Next() {
 			dg.adj[v].Add(w)
 		}
 	}
@@ -94,16 +94,16 @@ func (dg *digraph) AddEdge(v, w int) {
 	dg.e++
 }
 
-func (dg *digraph) Adj(v int) Generator {
+func (dg *digraph) Adj(v int) Iterators {
 	dg.validateVertex(v)
-	return dg.adj[v].Yield()
+	return dg.adj[v].Iterate()
 }
 
 func (dg *digraph) Reverse() *digraph {
 	reverse := NewDigraph(dg.v)
 	for v := 0; v < dg.v; v++ {
 		vAdj := dg.Adj(v)
-		for hasNext, w := vAdj(); hasNext; hasNext, w = vAdj() {
+		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			reverse.adj[w.(int)].Add(v)
 		}
 	}
@@ -126,7 +126,7 @@ func (dg *digraph) String() string {
 	for v := 0; v < dg.V(); v++ {
 		s.WriteString(fmt.Sprintf("%d: ", v))
 		vAdj := dg.Adj(v)
-		for hasNext, w := vAdj(); hasNext; hasNext, w = vAdj() {
+		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			s.WriteString(fmt.Sprintf("%d ", w))
 		}
 		s.WriteString("\n")

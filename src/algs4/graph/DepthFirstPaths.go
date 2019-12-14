@@ -38,8 +38,8 @@ func (m *DepthFirstPaths) validateVertex(v int) {
 // depth first search from v
 func (m *DepthFirstPaths) dfs(g *graph, v int) {
 	m.marked[v] = true
-	generator := g.Adj(v)
-	for hasNext, w := generator(); hasNext; hasNext, w = generator() {
+	vAdj := g.Adj(v)
+	for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 		if !m.marked[w.(int)] {
 			m.edgeTo[w.(int)] = v
 			m.dfs(g, w.(int))
@@ -53,7 +53,7 @@ func (m *DepthFirstPaths) HasPathTo(v int) bool {
 	return m.marked[v]
 }
 
-func (m *DepthFirstPaths) PathTo(v int) Generator {
+func (m *DepthFirstPaths) PathTo(v int) Iterators {
 	m.validateVertex(v)
 	if !m.HasPathTo(v) {
 		return nil
@@ -63,5 +63,5 @@ func (m *DepthFirstPaths) PathTo(v int) Generator {
 		path.Push(x)
 	}
 	path.Push(m.s)
-	return path.Yield()
+	return path.Iterate()
 }

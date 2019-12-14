@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"util"
 )
+
 /**
 * directed cycle
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
-
 
 type DirectedCycle struct {
 	marked  []bool       // marked[v] = has vertex v been marked?
@@ -41,7 +41,7 @@ func (m *DirectedCycle) dfs(g *digraph, v int) {
 	m.onStack[v] = true
 
 	vAdj := g.Adj(v)
-	for ok, w := vAdj(); ok; ok, w = vAdj() {
+	for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 		// short circuit if directed cycle found
 		if m.HasCycle() {
 			return
@@ -67,11 +67,11 @@ func (m *DirectedCycle) dfs(g *digraph, v int) {
 
 func (m *DirectedCycle) HasCycle() bool { return m.cycle != nil }
 
-func (m *DirectedCycle) Cycle() util.Generator {
+func (m *DirectedCycle) Cycle() util.Iterators {
 	if !m.HasCycle() {
 		return nil
 	}
-	return m.cycle.Yield()
+	return m.cycle.Iterate()
 }
 
 // certify that digraph has a directed cycle if it reports one
@@ -79,7 +79,7 @@ func (m *DirectedCycle) check() bool {
 	if m.HasCycle() {
 		first, last := -1, -1
 		gen := m.Cycle()
-		for ok, v := gen(); ok; ok, v = gen() {
+		for v := gen.Next(); v != nil; v = gen.Next() {
 			if first == -1 {
 				first = v.(int)
 			}

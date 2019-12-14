@@ -69,10 +69,16 @@ func (g *graph) AddEdge(v, w int) {
 	g.adj[w].Add(v)
 }
 
+//// Returns the vertices adjacent to vertex v
+//func (g *graph) Adj(v int) Generator {
+//	g.validateVertex(v)
+//	return g.adj[v].Yield()
+//}
+
 // Returns the vertices adjacent to vertex v
-func (g *graph) Adj(v int) Generator {
+func (g *graph) Adj(v int) Iterators {
 	g.validateVertex(v)
-	return g.adj[v].Yield()
+	return g.adj[v].Iterate()
 }
 
 // Returns the degree of vertex v
@@ -86,8 +92,8 @@ func (g *graph) String() string {
 	s.WriteString(fmt.Sprintf("%d vertices, %d edges \n", g.v, g.e))
 	for v := 0; v < g.v; v++ {
 		s.WriteString(fmt.Sprintf("%d:", v))
-		generator := g.Adj(v)
-		for hasNext, w := generator(); hasNext; hasNext, w = generator() {
+		vAdj := g.Adj(v)
+		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			s.WriteString(fmt.Sprintf("%d ", w.(int)))
 		}
 		s.WriteString("\n")

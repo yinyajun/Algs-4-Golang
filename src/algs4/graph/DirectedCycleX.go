@@ -35,7 +35,7 @@ func NewDirectedCycleX(g *digraph) *DirectedCycle {
 	for !q.IsEmpty() {
 		v := q.Dequeue().(int)
 		vAdj := g.Adj(v)
-		for ok, w := vAdj(); ok; ok, w = vAdj() {
+		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			indegree[w.(int)]--
 			if indegree[w.(int)] == 0 {
 				q.Enqueue(w.(int))
@@ -52,7 +52,7 @@ func NewDirectedCycleX(g *digraph) *DirectedCycle {
 		}
 		root = v
 		vAdj := g.Adj(v)
-		for ok, w := vAdj(); ok; ok, w = vAdj() {
+		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			edgeTo[w.(int)] = v
 		}
 	}
@@ -72,11 +72,11 @@ func NewDirectedCycleX(g *digraph) *DirectedCycle {
 
 func (c *DirectedCycleX) HasCycle() bool { return c.cycle != nil }
 
-func (c *DirectedCycleX) Cycle() util.Generator {
+func (c *DirectedCycleX) Cycle() util.Iterators {
 	if !c.HasCycle() {
 		return nil
 	}
-	return c.cycle.Yield()
+	return c.cycle.Iterate()
 }
 
 // todo: check

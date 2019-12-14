@@ -1,12 +1,34 @@
 package main
 
 import (
-	"os"
 	"fmt"
+	"os"
 
 	. "algs4/bag"
 	. "util"
 )
+
+/**
+* $ go run src/test/bag.go < data/tobe.txt
+* size of bag =  14
+* is
+* -
+* -
+* -
+* that
+* -
+* -
+* be
+* -
+* to
+* not
+* or
+* be
+* to
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
 
 func main() {
 	bag := NewBag()
@@ -15,5 +37,5 @@ func main() {
 		bag.Add(in.ReadString())
 	}
 	fmt.Println("size of bag = ", bag.Size())
-	PrintIterator(bag)
+	PrintIterators(bag.Iterate())
 }

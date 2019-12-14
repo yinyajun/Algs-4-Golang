@@ -19,8 +19,7 @@ import (
 * 3 best
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
-
+ */
 
 func main() {
 	// Insert a bunch of strings
@@ -30,8 +29,8 @@ func main() {
 		pq.Insert(idx, s)
 	}
 
-	iterator := pq.Yield()
-	for hasNext, val := iterator(); hasNext; hasNext, val = iterator() {
+	it := pq.Iterate()
+	for val := it.Next(); val != nil; val = it.Next() {
 		fmt.Println(val, strings[val.(int)])
 	}
 

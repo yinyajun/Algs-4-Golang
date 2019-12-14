@@ -50,7 +50,7 @@ func (m *DepthFirstOrder) dfs(g *digraph, v int) {
 	m.preCounter++
 	m.preorder.Enqueue(v)
 	vAdj := g.Adj(v)
-	for ok, w := vAdj(); ok; ok, w = vAdj() {
+	for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 		if !m.marked[w.(int)] {
 			m.dfs(g, w.(int))
 		}
@@ -69,17 +69,17 @@ func (m *DepthFirstOrder) Post(v int) int {
 	return m.post[v]
 }
 
-func (m *DepthFirstOrder) PostOrder() util.Generator { return m.postorder.Yield() }
+func (m *DepthFirstOrder) PostOrder() util.Iterators { return m.postorder.Iterate() }
 
-func (m *DepthFirstOrder) PreOrder() util.Generator { return m.preorder.Yield() }
+func (m *DepthFirstOrder) PreOrder() util.Iterators { return m.preorder.Iterate() }
 
-func (m *DepthFirstOrder) ReversePostOrder() util.Generator {
+func (m *DepthFirstOrder) ReversePostOrder() util.Iterators {
 	reverse := stack.NewStack()
 	gen := m.PostOrder()
-	for ok, v := gen(); ok; ok, v = gen() {
+	for v := gen.Next(); v != nil; v = gen.Next() {
 		reverse.Push(v)
 	}
-	return reverse.Yield()
+	return reverse.Iterate()
 }
 
 func (m *DepthFirstOrder) validateVertex(v int) {
@@ -92,7 +92,7 @@ func (m *DepthFirstOrder) validateVertex(v int) {
 func (m *DepthFirstOrder) check() bool {
 	r := 0
 	order := m.PreOrder()
-	for ok, v := order(); ok; ok, v = order() {
+	for v := order.Next(); v != nil; v = order.Next() {
 		if m.Pre(v.(int)) != r {
 			fmt.Println("pre not consistent")
 			return false
@@ -102,7 +102,7 @@ func (m *DepthFirstOrder) check() bool {
 
 	r = 0
 	order = m.PostOrder()
-	for ok, v := order(); ok; ok, v = order() {
+	for v := order.Next(); v != nil; v = order.Next() {
 		if m.Post(v.(int)) != r {
 			fmt.Println("post not consistent")
 			return false

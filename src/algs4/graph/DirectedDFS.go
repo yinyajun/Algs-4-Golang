@@ -54,7 +54,7 @@ func (d *DirectedDFS) dfs(g *digraph, v int) {
 	d.marked[v] = true
 	d.count++
 	vAdj := g.Adj(v)
-	for hasNext, w := vAdj(); hasNext; hasNext, w = vAdj() {
+	for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 		if !d.marked[w.(int)] {
 			d.dfs(g, w.(int))
 		}

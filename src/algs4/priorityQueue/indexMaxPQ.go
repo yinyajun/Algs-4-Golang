@@ -188,11 +188,6 @@ func (m *IndexPQ) sink(k int) {
 	}
 }
 
-func (m *IndexPQ) Yield() Generator {
-	return func() (bool, interface{}) {
-		if !m.IsEmpty() {
-			return true, m.DelMax()
-		}
-		return false, nil
-	}
-}
+func (m *IndexPQ) ExtractItem() interface{} { return m.DelMax() }
+
+func (m *IndexPQ) Iterate() Iterators { return NewOnceIterator(m) }

@@ -1,18 +1,13 @@
 package queue
 
-import "util"
+import . "util"
 
 /**
 * Queue
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
-
-type Node struct {
-	item interface{}
-	next *Node
-}
+ */
 
 type Queue struct {
 	first *Node
@@ -35,11 +30,11 @@ func (m *Queue) Size() int {
 func (m *Queue) Enqueue(item interface{}) {
 	// 向表尾添加元素
 	oldLast := m.last
-	m.last = &Node{item: item}
+	m.last = &Node{Item: item}
 	if m.IsEmpty() {
 		m.first = m.last
 	} else {
-		oldLast.next = m.last
+		oldLast.Next = m.last
 	}
 	m.N++
 }
@@ -48,8 +43,8 @@ func (m *Queue) Dequeue() interface{} {
 	if m.IsEmpty() {
 		panic("queue underflows")
 	}
-	item := m.first.item
-	m.first = m.first.next
+	item := m.first.Item
+	m.first = m.first.Next
 	if m.IsEmpty() {
 		m.last = nil
 	}
@@ -57,16 +52,19 @@ func (m *Queue) Dequeue() interface{} {
 	return item
 }
 
-func (m *Queue) Yield() util.Generator {
-
+func (m *Queue) Yield() Generator {
 	cur := m.first
 	return func() (bool, interface{}) {
 		if cur != nil {
-			ret := cur.item
-			cur = cur.next
+			ret := cur.Item
+			cur = cur.Next
 			return true, ret
 		}
 		return false, nil
 	}
 
+}
+
+func (m *Queue) Iterate() Iterators {
+	return NewLinkedListIterator(m.first)
 }

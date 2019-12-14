@@ -1,8 +1,8 @@
 package main
 
 import (
-	"os"
 	"fmt"
+	"os"
 
 	. "algs4/priorityQueue"
 	. "util"
@@ -22,7 +22,7 @@ import (
 * A
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 func main() {
 	pq := NewMaxPQ()
@@ -30,12 +30,11 @@ func main() {
 	for in.HasNext() {
 		item := in.ReadString()
 		if item != "-" {
-			//k, _ := strconv.Atoi(item) // input should be int
 			pq.Insert(item)
 		} else if !pq.IsEmpty() {
 			fmt.Println(pq.DelMax(), " ")
 		}
 	}
 	fmt.Println("(", pq.Size(), " left on PQ)")
-	PrintIterator(pq)
+	PrintIterators(pq.Iterate())
 }

@@ -1,8 +1,8 @@
 package util
 
 import (
-	"strings"
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -16,9 +16,9 @@ func TestNewIn(t *testing.T) {
 		if ans[idx] != k {
 			fmt.Println("read: [%v], acutually: [%v]", k, ans[idx])
 		}
-		idx ++
+		idx++
 	}
 	if idx != len(ans) {
-		fmt.Println("read length larger than actual string array")
+		fmt.Println("read length larger than actual string slice")
 	}
 }
