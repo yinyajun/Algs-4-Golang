@@ -9,7 +9,7 @@ import "fmt"
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type Iterate interface {
+type Iterable interface {
 	Iterate() Iterator
 }
 

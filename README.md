@@ -11,7 +11,7 @@ Golang translations of Robert Sedgewick's Java Algorthms. Details see [http://al
 ## Usage
 1. Set `GOPATH` properly to ensure this package can be find. 
 2. Run test cases. Each test case correspond to an implementation in `src/algs4`. 
-In each case, you will find the specific usage in comment.
+In the file of each case, you will find the specific usage in comment.
     E.g. `$ go run src/test/graph.go < data/tinyG.txt`
 
     ```
