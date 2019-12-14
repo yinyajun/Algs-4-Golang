@@ -45,4 +45,4 @@ func (m *Stack) Pop() interface{} {
 	return item
 }
 
-func (m *Stack) Iterate() Iterators { return NewLinkedListIterator(m.first) }
+func (m *Stack) Iterate() Iterator { return NewLinkedListIterator(m.first) }

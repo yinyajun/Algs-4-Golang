@@ -67,7 +67,7 @@ func (m *DirectedCycle) dfs(g *digraph, v int) {
 
 func (m *DirectedCycle) HasCycle() bool { return m.cycle != nil }
 
-func (m *DirectedCycle) Cycle() util.Iterators {
+func (m *DirectedCycle) Cycle() util.Iterator {
 	if !m.HasCycle() {
 		return nil
 	}

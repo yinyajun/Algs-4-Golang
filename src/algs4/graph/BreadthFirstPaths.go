@@ -126,7 +126,7 @@ func (m *BreadthFirstPaths) HasPathTo(v int) bool {
 	return m.marked[v]
 }
 
-func (m *BreadthFirstPaths) PathTo(v int) Iterators {
+func (m *BreadthFirstPaths) PathTo(v int) Iterator {
 	m.validateVertex(v)
 	if !m.marked[v] {
 		return nil

@@ -190,4 +190,4 @@ func (m *IndexPQ) sink(k int) {
 
 func (m *IndexPQ) ExtractItem() interface{} { return m.DelMax() }
 
-func (m *IndexPQ) Iterate() Iterators { return NewOnceIterator(m) }
+func (m *IndexPQ) Iterate() Iterator { return NewOnceIterator(m) }

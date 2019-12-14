@@ -52,19 +52,6 @@ func (m *Queue) Dequeue() interface{} {
 	return item
 }
 
-func (m *Queue) Yield() Generator {
-	cur := m.first
-	return func() (bool, interface{}) {
-		if cur != nil {
-			ret := cur.Item
-			cur = cur.Next
-			return true, ret
-		}
-		return false, nil
-	}
-
-}
-
-func (m *Queue) Iterate() Iterators {
+func (m *Queue) Iterate() Iterator {
 	return NewLinkedListIterator(m.first)
 }

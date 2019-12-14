@@ -109,7 +109,7 @@ func (c *Cycle) dfs(g *graph, v int, u int) {
 
 func (c *Cycle) HasCycle() bool { return c.cycle != nil }
 
-func (c *Cycle) Cycle() util.Iterators {
+func (c *Cycle) Cycle() util.Iterator {
 	if !c.HasCycle() {
 		return nil
 	}

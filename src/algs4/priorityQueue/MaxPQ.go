@@ -190,6 +190,6 @@ func (m *PQ) ExtractItem() interface{} {
 	return m.DelMax()
 }
 
-func (m *PQ) Iterate() Iterators {
+func (m *PQ) Iterate() Iterator {
 	return NewOnceIterator(m)
 }

@@ -31,4 +31,4 @@ func (b *Bag) Add(item interface{}) {
 	b.n++
 }
 
-func (b *Bag) Iterate() Iterators { return NewLinkedListIterator(b.first) }
+func (b *Bag) Iterate() Iterator { return NewLinkedListIterator(b.first) }

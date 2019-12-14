@@ -39,4 +39,4 @@ func (m *FixedCapacityStack) Pop() interface{} {
 	return ret
 }
 
-func (m *FixedCapacityStack) Iterate() util.Iterators { return util.NewSliceIterator(m.a, m.N, true) }
+func (m *FixedCapacityStack) Iterate() util.Iterator { return util.NewSliceIterator(m.a, m.N, true) }

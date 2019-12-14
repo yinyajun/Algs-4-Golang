@@ -72,7 +72,7 @@ func NewDirectedCycleX(g *digraph) *DirectedCycle {
 
 func (c *DirectedCycleX) HasCycle() bool { return c.cycle != nil }
 
-func (c *DirectedCycleX) Cycle() util.Iterators {
+func (c *DirectedCycleX) Cycle() util.Iterator {
 	if !c.HasCycle() {
 		return nil
 	}

@@ -69,11 +69,11 @@ func (m *DepthFirstOrder) Post(v int) int {
 	return m.post[v]
 }
 
-func (m *DepthFirstOrder) PostOrder() util.Iterators { return m.postorder.Iterate() }
+func (m *DepthFirstOrder) PostOrder() util.Iterator { return m.postorder.Iterate() }
 
-func (m *DepthFirstOrder) PreOrder() util.Iterators { return m.preorder.Iterate() }
+func (m *DepthFirstOrder) PreOrder() util.Iterator { return m.preorder.Iterate() }
 
-func (m *DepthFirstOrder) ReversePostOrder() util.Iterators {
+func (m *DepthFirstOrder) ReversePostOrder() util.Iterator {
 	reverse := stack.NewStack()
 	gen := m.PostOrder()
 	for v := gen.Next(); v != nil; v = gen.Next() {

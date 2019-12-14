@@ -12,7 +12,7 @@ import "util"
  */
 
 type topological struct {
-	order util.Iterators
+	order util.Iterator
 	rank  []int
 }
 
@@ -35,7 +35,7 @@ func NewTopological(g *digraph) *topological {
 
 // todo: topological edge weight digraph
 
-func (t *topological) Order() util.Iterators {
+func (t *topological) Order() util.Iterator {
 	t.order.Reset()
 	return t.order
 }

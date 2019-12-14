@@ -53,7 +53,7 @@ func (m *DepthFirstPaths) HasPathTo(v int) bool {
 	return m.marked[v]
 }
 
-func (m *DepthFirstPaths) PathTo(v int) Iterators {
+func (m *DepthFirstPaths) PathTo(v int) Iterator {
 	m.validateVertex(v)
 	if !m.HasPathTo(v) {
 		return nil

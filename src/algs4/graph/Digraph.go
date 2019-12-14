@@ -94,7 +94,7 @@ func (dg *digraph) AddEdge(v, w int) {
 	dg.e++
 }
 
-func (dg *digraph) Adj(v int) Iterators {
+func (dg *digraph) Adj(v int) Iterator {
 	dg.validateVertex(v)
 	return dg.adj[v].Iterate()
 }

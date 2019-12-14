@@ -53,7 +53,7 @@ func (m *DepthFirstDirectedPaths) HasPathTo(v int) bool {
 	return m.marked[v]
 }
 
-func (m *DepthFirstDirectedPaths) PathTo(v int) util.Iterators {
+func (m *DepthFirstDirectedPaths) PathTo(v int) util.Iterator {
 	m.validateVertex(v)
 	path := stack.NewStack()
 

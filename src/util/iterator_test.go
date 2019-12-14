@@ -22,7 +22,7 @@ func (b *sliceBag) add(item interface{}) {
 	b.n++
 }
 
-func (b *sliceBag) Iterate() Iterators {
+func (b *sliceBag) Iterate() Iterator {
 	ai := NewSliceIterator(b.a, b.n, false)
 	return ai
 }
@@ -39,7 +39,7 @@ func (b *LinkedListBag) add(item interface{}) {
 	b.n++
 }
 
-func (b *LinkedListBag) Iterate() Iterators {
+func (b *LinkedListBag) Iterate() Iterator {
 	ai := NewLinkedListIterator(b.first)
 	return ai
 }

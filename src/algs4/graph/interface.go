@@ -6,10 +6,10 @@ import (
 
 // undirected graph
 type Graph interface {
-	V() int              // vertex num
-	E() int              // edge num
-	AddEdge(v, w int)    // add edge v-w
-	Adj(v int) Iterators // all adjacent vertex of v
+	V() int             // vertex num
+	E() int             // edge num
+	AddEdge(v, w int)   // add edge v-w
+	Adj(v int) Iterator // all adjacent vertex of v
 }
 
 type Search interface {
@@ -19,7 +19,7 @@ type Search interface {
 
 type Paths interface {
 	HasPathTo(v int) bool
-	PathTo(v int) Iterators // path from s to v, empty if not exists
+	PathTo(v int) Iterator // path from s to v, empty if not exists
 }
 
 type SymbolGraph interface {
@@ -30,19 +30,19 @@ type SymbolGraph interface {
 }
 
 type Digraph interface {
-	V() int              // vertex num
-	E() int              // edge num
-	AddEdge(v, w int)    // add edge v-w
-	Adj(v int) Iterators // all adjacent vertex of v
+	V() int             // vertex num
+	E() int             // edge num
+	AddEdge(v, w int)   // add edge v-w
+	Adj(v int) Iterator // all adjacent vertex of v
 	Reverse() *digraph
 }
 
 type HasCycle interface {
 	HasCycle() bool
-	Cycle() Iterators
+	Cycle() Iterator
 }
 
 type Topological interface {
 	IsDAG() bool
-	Order() Iterators
+	Order() Iterator
 }
