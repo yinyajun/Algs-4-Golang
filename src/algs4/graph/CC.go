@@ -51,12 +51,7 @@ func (c *cc) Id(v int) int {
 func (c *cc) Count() int     { return c.count }
 func (c *cc) Size(v int) int { return c.size[c.Id(v)] }
 
-func (c *cc) Connected(v, w int) bool {
-	c.validateVertex(v)
-	c.validateVertex(w)
-	return c.Id(v) == c.Id(w)
-
-}
+func (c *cc) Connected(v, w int) bool { return c.Id(v) == c.Id(w) }
 
 func (c *cc) validateVertex(v int) {
 	V := len(c.marked)

@@ -52,3 +52,7 @@ type Topological interface {
 	IsDAG() bool
 	Order() Iterator
 }
+
+type TransitiveClosure interface {
+	Reachable(v, w int) bool
+}
