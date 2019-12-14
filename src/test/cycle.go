@@ -1,9 +1,9 @@
 package main
 
 import (
+	. "algs4/graph"
 	"fmt"
 	"os"
-	. "algs4/graph"
 	. "util"
 )
 
@@ -12,7 +12,7 @@ import (
 * 1 0 2 1
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 func main() {
 	in := NewIn(os.Stdin)
@@ -20,12 +20,12 @@ func main() {
 	finder := NewCycle(g)
 
 	if finder.HasCycle() {
-		gen := finder.Cycle()
-		for hasNext, w := gen(); hasNext; hasNext, w = gen() {
+		c := finder.Cycle()
+		for w := c.Next(); w != nil; w = c.Next() {
 			fmt.Print(w, " ")
 		}
 		fmt.Println()
-		//fmt.Println(gen)
+		//fmt.Println(c)
 	} else {
 		fmt.Println("Graph is acyclic")
 	}

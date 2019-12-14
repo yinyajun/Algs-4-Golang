@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	. "algs4/graph"
-	. "util"
 	"fmt"
+	. "util"
 )
 
 /**
@@ -26,7 +26,7 @@ import (
 * 0 to 12: not connected
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 func main() {
 	in := NewIn(os.Stdin)
@@ -39,7 +39,7 @@ func main() {
 		if dfs.HasPathTo(v) {
 			fmt.Printf("%d to %d:  ", s, v)
 			path := dfs.PathTo(v)
-			for ok, x := path(); ok; ok, x = path() {
+			for x := path.Next(); x != nil; x = path.Next() {
 				if x == s {
 					fmt.Print(x)
 				} else {

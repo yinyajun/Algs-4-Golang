@@ -33,9 +33,8 @@ func main() {
 
 	topological := graph.NewTopological(sg.Digraph())
 	order := topological.Order()
-	fmt.Println(order)
 
-	for ok, v := order(); ok; ok, v = order() {
+	for v := order.Next(); v != nil; v = order.Next() {
 		fmt.Println(sg.Name(v.(int)))
 	}
 }

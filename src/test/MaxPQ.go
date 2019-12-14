@@ -35,6 +35,6 @@ func main() {
 			fmt.Println(pq.DelMax(), " ")
 		}
 	}
-	fmt.Println("(", pq.Size(), " left on PQ)")
+	fmt.Println("(", pq.Size(), "left on PQ)")
 	PrintIterators(pq.Iterate())
 }

@@ -36,7 +36,7 @@ func main() {
 		if sd.Contains(source) {
 			s := sd.Index(source)
 			gen := g.Adj(s)
-			for hasNext, v := gen(); hasNext; hasNext, v = gen() {
+			for v := gen.Next(); v != nil; v = gen.Next() {
 				fmt.Println(" ", sd.Name(v.(int)))
 			}
 		} else {

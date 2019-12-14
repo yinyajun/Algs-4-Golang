@@ -2,10 +2,10 @@ package main
 
 import (
 	"algs4/graph"
+	"bufio"
 	"fmt"
 	"os"
 	"util"
-	"bufio"
 )
 
 /**
@@ -47,8 +47,8 @@ func main() {
 		if sg.Contains(sink) {
 			t := sg.Index(sink)
 			if bfs.HasPathTo(t) {
-				gen := bfs.PathTo(t)
-				for hasNext, v := gen(); hasNext; hasNext, v = gen() {
+				path := bfs.PathTo(t)
+				for v := path.Next(); v != nil; v = path.Next() {
 					fmt.Println(" ", sg.Name(v.(int)))
 				}
 			} else {

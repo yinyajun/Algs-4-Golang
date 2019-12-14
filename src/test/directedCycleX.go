@@ -5,8 +5,8 @@ import (
 )
 
 import (
-	"fmt"
 	. "algs4/graph"
+	"fmt"
 	. "util"
 )
 
@@ -16,7 +16,7 @@ import (
 * 11 12 9 11
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 func main() {
 	in := NewIn(os.Stdin)
@@ -26,7 +26,7 @@ func main() {
 	if finder.HasCycle() {
 		fmt.Println("Directed cycle:")
 		cyc := finder.Cycle()
-		for ok, v := cyc(); ok; ok, v = cyc() {
+		for v := cyc.Next(); v != nil; v = cyc.Next() {
 			fmt.Print(v.(int), " ")
 		}
 		fmt.Println()

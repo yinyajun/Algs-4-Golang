@@ -19,7 +19,7 @@ import (
 * 0 to 5: 0-2-3-5
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 func main() {
 	in := NewIn(os.Stdin)
@@ -29,8 +29,8 @@ func main() {
 	for v := 0; v < g.V(); v++ {
 		fmt.Print(s, " to ", v, ": ")
 		if search.HasPathTo(v) {
-			gen := search.PathTo(v)
-			for hasNext, x := gen(); hasNext; hasNext, x = gen() {
+			path := search.PathTo(v)
+			for x := path.Next(); x != nil; x = path.Next() {
 				if x == s {
 					fmt.Print(x)
 				} else {

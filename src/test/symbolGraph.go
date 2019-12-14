@@ -33,7 +33,7 @@ func main() {
 		if sg.Contains(source) {
 			s := sg.Index(source)
 			gen := g.Adj(s)
-			for hasNext, v := gen(); hasNext; hasNext, v = gen() {
+			for v := gen.Next(); v != nil; v = gen.Next() {
 				fmt.Println(" ", sg.Name(v.(int)))
 			}
 		} else {

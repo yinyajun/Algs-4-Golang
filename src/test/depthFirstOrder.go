@@ -45,21 +45,21 @@ func main() {
 
 	fmt.Print("Preorder: ")
 	pre := dfs.PreOrder()
-	for ok, v := pre(); ok; ok, v = pre() {
+	for v := pre.Next(); v != nil; v = pre.Next() {
 		fmt.Print(v, " ")
 	}
 	fmt.Println()
 
 	fmt.Print("Postorder: ")
 	post := dfs.PostOrder()
-	for ok, v := post(); ok; ok, v = post() {
+	for v := post.Next(); v != nil; v = post.Next() {
 		fmt.Print(v, " ")
 	}
 	fmt.Println()
 
 	fmt.Print("Reverse postorder: ")
 	reversePost := dfs.ReversePostOrder()
-	for ok, v := reversePost(); ok; ok, v = reversePost() {
+	for v := reversePost.Next(); v != nil; v = reversePost.Next() {
 		fmt.Print(v, " ")
 	}
 	fmt.Println()
