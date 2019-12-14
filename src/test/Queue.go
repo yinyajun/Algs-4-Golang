@@ -29,5 +29,5 @@ func main() {
 		}
 	}
 	fmt.Println("(", q.Size(), "left on queue)")
-	PrintIterators(q.Iterate())
+	PrintIterator(q.Iterate())
 }

@@ -19,7 +19,7 @@ type Iterator interface {
 	Next() interface{}
 }
 
-func PrintIterators(it Iterator) {
+func PrintIterator(it Iterator) {
 	for i := it.Next(); i != nil; i = it.Next() {
 		fmt.Println(i)
 	}

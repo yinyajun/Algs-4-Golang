@@ -36,5 +36,5 @@ func main() {
 		}
 	}
 	fmt.Println("(", pq.Size(), "left on PQ)")
-	PrintIterators(pq.Iterate())
+	PrintIterator(pq.Iterate())
 }

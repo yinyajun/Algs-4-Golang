@@ -22,6 +22,12 @@ type Paths interface {
 	PathTo(v int) Iterator // path from s to v, empty if not exists
 }
 
+type CC interface {
+	Connected(v, w int) bool
+	Count() int
+	Id(v int) int
+}
+
 type SymbolGraph interface {
 	Contains(key string) bool
 	Index(key string) int
