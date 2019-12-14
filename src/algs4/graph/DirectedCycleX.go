@@ -1,11 +1,17 @@
 package graph
 
 import (
-	"algs4/stack"
 	"algs4/queue"
+	"algs4/stack"
 	"util"
 )
 
+/**
+*
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
 type DirectedCycleX struct {
 	cycle *stack.Stack
 }
@@ -72,6 +78,5 @@ func (c *DirectedCycleX) Cycle() util.Generator {
 	}
 	return c.cycle.Yield()
 }
-
 
 // todo: check

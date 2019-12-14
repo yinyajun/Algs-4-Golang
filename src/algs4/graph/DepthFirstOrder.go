@@ -7,6 +7,13 @@ import (
 	"util"
 )
 
+/**
+*
+*
+* @see
+* @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
+ */
+
 type DepthFirstOrder struct {
 	marked      []bool
 	pre         []int

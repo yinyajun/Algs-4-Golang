@@ -2,8 +2,8 @@ package util
 
 import (
 	"fmt"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 type Generator func() (bool, interface{})
@@ -25,6 +25,22 @@ func (g Generator) String() string {
 		ret.WriteString("\n")
 	}
 	return ret.String()
+}
+
+func (g Generator) DeepCopy() Generator {
+	it := []interface{}{}
+	for hasNext, val := g(); hasNext; hasNext, val = g() {
+		it = append(it, val)
+	}
+	i := 0
+	return func() (bool, interface{}) {
+		if i < len(it) {
+			ret := it[i]
+			i++
+			return true, ret
+		}
+		return false, nil
+	}
 }
 
 type Iterator interface {
