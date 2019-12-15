@@ -24,7 +24,7 @@ type DepthFirstOrder struct {
 	postCounter int
 }
 
-func NewDepthFirstOrder(g *digraph) *DepthFirstOrder {
+func NewDepthFirstOrder(g *Digraph) *DepthFirstOrder {
 	m := &DepthFirstOrder{}
 	m.marked = make([]bool, g.V())
 	m.pre = make([]int, g.V())
@@ -42,9 +42,9 @@ func NewDepthFirstOrder(g *digraph) *DepthFirstOrder {
 	return m
 }
 
-// todo: edge weight digraph
+// todo: Edge weight Digraph
 
-func (m *DepthFirstOrder) dfs(g *digraph, v int) {
+func (m *DepthFirstOrder) dfs(g *Digraph, v int) {
 	m.marked[v] = true
 	m.pre[v] = m.preCounter
 	m.preCounter++

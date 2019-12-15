@@ -7,12 +7,12 @@ package graph
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type transitiveClosure struct {
+type TransitiveClosure struct {
 	tc []*DirectedDFS
 }
 
-func NewTransitiveClosure(g *digraph) *transitiveClosure {
-	m := &transitiveClosure{}
+func NewTransitiveClosure(g *Digraph) *TransitiveClosure {
+	m := &TransitiveClosure{}
 	m.tc = make([]*DirectedDFS, g.V())
 	for v := 0; v < g.V(); v++ {
 		m.tc[v] = NewDirectedDFS(g, v)
@@ -20,13 +20,13 @@ func NewTransitiveClosure(g *digraph) *transitiveClosure {
 	return m
 }
 
-func (m *transitiveClosure) Reachable(v, w int) bool {
+func (m *TransitiveClosure) Reachable(v, w int) bool {
 	m.validateVertex(v)
 	m.validateVertex(w)
 	return m.tc[v].Marked(w)
 }
 
-func (m *transitiveClosure) validateVertex(v int) {
+func (m *TransitiveClosure) validateVertex(v int) {
 	V := len(m.tc)
 	if v < 0 || v >= V {
 		panic("validateVertex: invalid vertex")

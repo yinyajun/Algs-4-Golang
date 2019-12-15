@@ -12,8 +12,8 @@ type DirectedDFS struct {
 	count  int    // number of vertices reachable from source(s)
 }
 
-//Computes the vertices in digraph G that are reachable from the source vertex s.
-func NewDirectedDFS(g *digraph, s int) *DirectedDFS {
+//Computes the vertices in Digraph G that are reachable from the source vertex s.
+func NewDirectedDFS(g *Digraph, s int) *DirectedDFS {
 	d := &DirectedDFS{}
 	d.marked = make([]bool, g.V())
 	d.validateVertex(s)
@@ -21,7 +21,7 @@ func NewDirectedDFS(g *digraph, s int) *DirectedDFS {
 	return d
 }
 
-func NewDirectedDFSMultiSources(g *digraph, sources []int) *DirectedDFS {
+func NewDirectedDFSMultiSources(g *Digraph, sources []int) *DirectedDFS {
 	d := &DirectedDFS{}
 	d.marked = make([]bool, g.V())
 	d.validateVertices(sources)
@@ -50,7 +50,7 @@ func (d *DirectedDFS) validateVertices(sources []int) {
 	}
 }
 
-func (d *DirectedDFS) dfs(g *digraph, v int) {
+func (d *DirectedDFS) dfs(g *Digraph, v int) {
 	d.marked[v] = true
 	d.count++
 	vAdj := g.Adj(v)

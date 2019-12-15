@@ -7,7 +7,7 @@ import (
 
 /**
 * DepthFirstDirectedPaths: finding directed paths from
-* a source vertex s to every other vertex in the digraph.
+* a source vertex s to every other vertex in the Digraph.
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
@@ -19,7 +19,7 @@ type DepthFirstDirectedPaths struct {
 	s      int
 }
 
-func NewDepthFirstDirectedPaths(g *digraph, s int) *DepthFirstDirectedPaths {
+func NewDepthFirstDirectedPaths(g *Digraph, s int) *DepthFirstDirectedPaths {
 	m := &DepthFirstDirectedPaths{}
 	m.marked = make([]bool, g.V())
 	m.edgeTo = make([]int, g.V())
@@ -36,7 +36,7 @@ func (m *DepthFirstDirectedPaths) validateVertex(v int) {
 	}
 }
 
-func (m *DepthFirstDirectedPaths) dfs(g *digraph, v int) {
+func (m *DepthFirstDirectedPaths) dfs(g *Digraph, v int) {
 	m.marked[v] = true
 
 	vAdj := g.Adj(v)

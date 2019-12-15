@@ -1,22 +1,22 @@
 package graph
 
 /**
-* determining the connected components in an undirected graph.
+* determining the connected components in an undirected Graph.
 * his implementation uses depth-first search.
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type cc struct {
+type CC struct {
 	marked []bool
 	count  int   // number of connected components
 	id     []int //id[v] = id of connected component containing v
 	size   []int //size[id] = number of vertices in given component
 }
 
-func NewCC(g *graph) *cc {
-	c := &cc{}
+func NewCC(g *Graph) *CC {
+	c := &CC{}
 	c.marked = make([]bool, g.V())
 	c.id = make([]int, g.V())
 	c.size = make([]int, g.V())
@@ -29,9 +29,9 @@ func NewCC(g *graph) *cc {
 	return c
 }
 
-//todo: edge weight
+//todo: Edge weight
 
-func (c *cc) dfs(g *graph, v int) {
+func (c *CC) dfs(g *Graph, v int) {
 	c.marked[v] = true
 	c.id[v] = c.count
 	c.size[c.count]++
@@ -43,17 +43,17 @@ func (c *cc) dfs(g *graph, v int) {
 	}
 }
 
-func (c *cc) Id(v int) int {
+func (c *CC) Id(v int) int {
 	c.validateVertex(v)
 	return c.id[v]
 }
 
-func (c *cc) Count() int     { return c.count }
-func (c *cc) Size(v int) int { return c.size[c.Id(v)] }
+func (c *CC) Count() int     { return c.count }
+func (c *CC) Size(v int) int { return c.size[c.Id(v)] }
 
-func (c *cc) Connected(v, w int) bool { return c.Id(v) == c.Id(w) }
+func (c *CC) Connected(v, w int) bool { return c.Id(v) == c.Id(w) }
 
-func (c *cc) validateVertex(v int) {
+func (c *CC) validateVertex(v int) {
 	V := len(c.marked)
 	if v < 0 || v >= V {
 		panic("validateVertex: invalid vertex")

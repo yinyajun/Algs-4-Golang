@@ -11,8 +11,8 @@ import (
 
 /**
 *
-* represents an edge-weighted graph of vertices named 0 through V – 1, where each
-* undirected edge is of type edge and has a real-valued weight.
+* represents an Edge-weighted Graph of vertices named 0 through V – 1, where each
+* undirected Edge is of type Edge and has a real-valued weight.
 *
 * This implementation uses an adjacency-lists representation
 *
@@ -20,15 +20,15 @@ import (
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type edgeWeightedGraph struct {
+type EdgeWeightedGraph struct {
 	v   int
 	e   int
 	adj []*bag.Bag
 }
 
-// Initializes an empty edge-weighted graph with v vertices and 0 edges.
-func NewEdgeWeightedGraph(v int) *edgeWeightedGraph {
-	m := &edgeWeightedGraph{}
+// Initializes an empty Edge-weighted Graph with v vertices and 0 edges.
+func NewEdgeWeightedGraph(v int) *EdgeWeightedGraph {
+	m := &EdgeWeightedGraph{}
 	if v < 0 {
 		panic("NewEdgeWeightedGraph: invalid v")
 	}
@@ -40,8 +40,8 @@ func NewEdgeWeightedGraph(v int) *edgeWeightedGraph {
 	return m
 }
 
-// Initializes a random edge-weighted graph with V vertices and E edges.
-func NewEdgeWeightedGraphRandomly(V, E int) *edgeWeightedGraph {
+// Initializes a random Edge-weighted Graph with V vertices and E edges.
+func NewEdgeWeightedGraphRandomly(V, E int) *EdgeWeightedGraph {
 	m := NewEdgeWeightedGraph(V)
 	if E < 0 {
 		panic("NewEdgeWeightedGraphRandomly: invalid e")
@@ -56,8 +56,8 @@ func NewEdgeWeightedGraphRandomly(V, E int) *edgeWeightedGraph {
 	return m
 }
 
-// Initializes an edge-weighted graph from an input stream.
-func NewEdgeWeightedGraphWithIn(in *util.In) *edgeWeightedGraph {
+// Initializes an Edge-weighted Graph from an input stream.
+func NewEdgeWeightedGraphWithIn(in *util.In) *EdgeWeightedGraph {
 	v := in.ReadInt()
 	m := NewEdgeWeightedGraph(v)
 	e := in.ReadInt()
@@ -74,8 +74,8 @@ func NewEdgeWeightedGraphWithIn(in *util.In) *edgeWeightedGraph {
 	return m
 }
 
-// Initializes a new edge-weighted graph that is a deep copy of g
-func NewEdgeWeightedGraphwithG(g *edgeWeightedGraph) *edgeWeightedGraph {
+// Initializes a new Edge-weighted Graph that is a deep copy of g
+func NewEdgeWeightedGraphwithG(g *EdgeWeightedGraph) *EdgeWeightedGraph {
 	m := NewEdgeWeightedGraph(g.V())
 	m.e = g.E()
 	for v := 0; v < g.V(); v++ {
@@ -92,7 +92,7 @@ func NewEdgeWeightedGraphwithG(g *edgeWeightedGraph) *edgeWeightedGraph {
 	return m
 }
 
-func (m *edgeWeightedGraph) AddEdge(e *edge) {
+func (m *EdgeWeightedGraph) AddEdge(e *Edge) {
 	v := e.Either()
 	w := e.Other(v)
 	m.validateVertex(v)
@@ -102,36 +102,36 @@ func (m *edgeWeightedGraph) AddEdge(e *edge) {
 	m.e++
 }
 
-func (m *edgeWeightedGraph) validateVertex(v int) {
+func (m *EdgeWeightedGraph) validateVertex(v int) {
 	V := len(m.adj)
 	if v < 0 || v >= V {
 		panic("validateVertex: invalid vertex")
 	}
 }
 
-func (m *edgeWeightedGraph) V() int { return m.v }
+func (m *EdgeWeightedGraph) V() int { return m.v }
 
-func (m *edgeWeightedGraph) E() int { return m.e }
+func (m *EdgeWeightedGraph) E() int { return m.e }
 
-func (m *edgeWeightedGraph) Adj(v int) util.Iterator {
+func (m *EdgeWeightedGraph) Adj(v int) util.Iterator {
 	m.validateVertex(v)
 	return m.adj[v].Iterate()
 }
 
-func (m *edgeWeightedGraph) Degree(v int) int {
+func (m *EdgeWeightedGraph) Degree(v int) int {
 	m.validateVertex(v)
 	return m.adj[v].Size()
 }
 
-func (m *edgeWeightedGraph) Edges() util.Iterator {
+func (m *EdgeWeightedGraph) Edges() util.Iterator {
 	list := bag.NewBag()
 	for v := 0; v < m.v; v++ {
 		selfLoops := 0
 		vAdj := m.Adj(v)
 		for e := vAdj.Next(); e != nil; e = vAdj.Next() {
-			if e.(*edge).Other(v) > v {
+			if e.(*Edge).Other(v) > v {
 				list.Add(e)
-			} else if e.(*edge).Other(v) == v {
+			} else if e.(*Edge).Other(v) == v {
 				if selfLoops%2 == 0 {
 					list.Add(e)
 				}
@@ -142,14 +142,14 @@ func (m *edgeWeightedGraph) Edges() util.Iterator {
 	return list.Iterate()
 }
 
-func (m *edgeWeightedGraph) String() string {
+func (m *EdgeWeightedGraph) String() string {
 	s := strings.Builder{}
 	s.WriteString(fmt.Sprintf("%d %d\n", m.v, m.e))
 	for v := 0; v < m.v; v++ {
 		s.WriteString(fmt.Sprintf("%d : ", v))
 		vAdj := m.Adj(v)
 		for e := vAdj.Next(); e != nil; e = vAdj.Next() {
-			s.WriteString(e.(*edge).String() + " ")
+			s.WriteString(e.(*Edge).String() + " ")
 		}
 		s.WriteString("\n")
 	}

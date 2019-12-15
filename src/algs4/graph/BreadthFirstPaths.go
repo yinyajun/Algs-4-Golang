@@ -18,14 +18,14 @@ const INT_MAX = int(^uint(0) >> 1)
 
 type BreadthFirstPaths struct {
 	marked []bool // marked[v] = is there an s-v path?
-	edgeTo []int  // edgeTo[v] = last edge on s-v path
+	edgeTo []int  // edgeTo[v] = last Edge on s-v path
 	distTo []int  // distTo[v] = number of edges shortest s-v path
 	s      int    // source vertex
 }
 
 // Computes the shortest path between the source vertex s
-// and every other vertex in the graph g.
-func NewBreadthFirstPaths(g *graph, s int) *BreadthFirstPaths {
+// and every other vertex in the Graph g.
+func NewBreadthFirstPaths(g *Graph, s int) *BreadthFirstPaths {
 	m := &BreadthFirstPaths{}
 	m.s = s
 	m.edgeTo = make([]int, g.V())
@@ -41,8 +41,8 @@ func NewBreadthFirstPaths(g *graph, s int) *BreadthFirstPaths {
 }
 
 // Computes the shortest path between any one of the source vertices in sources
-// and every other vertex in graph g.
-func NewBreadthFirstPathsMultiSources(g *graph, sources []int) *BreadthFirstPaths {
+// and every other vertex in Graph g.
+func NewBreadthFirstPathsMultiSources(g *Graph, sources []int) *BreadthFirstPaths {
 	m := &BreadthFirstPaths{}
 	m.edgeTo = make([]int, g.V())
 	m.distTo = make([]int, g.V())
@@ -76,7 +76,7 @@ func (m *BreadthFirstPaths) validateVertices(vertices []int) {
 }
 
 // breadth-first search from a single source
-func (m *BreadthFirstPaths) bfs(g *graph, s int) {
+func (m *BreadthFirstPaths) bfs(g *Graph, s int) {
 	q := queue.NewQueue()
 	for idx := range m.distTo {
 		m.distTo[idx] = INT_MAX
@@ -100,7 +100,7 @@ func (m *BreadthFirstPaths) bfs(g *graph, s int) {
 }
 
 // breadth-first search from multiple sources
-func (m *BreadthFirstPaths) bfsMultiSources(g *graph, sources []int) {
+func (m *BreadthFirstPaths) bfsMultiSources(g *Graph, sources []int) {
 	q := queue.NewQueue()
 	for _, s := range sources {
 		m.marked[s] = true
@@ -145,26 +145,26 @@ func (m *BreadthFirstPaths) DistTo(v int) int {
 }
 
 // check optimality conditions for single source
-func (m *BreadthFirstPaths) check(g *graph, s int) bool {
+func (m *BreadthFirstPaths) check(g *Graph, s int) bool {
 	// check that the distance of s = 0
 	if m.distTo[s] != 0 {
 		fmt.Println("distance of source", s, "to itself=", m.distTo[s])
 		return false
 	}
 
-	// check that for each edge v-w dist[w] <= dist[v] + 1
+	// check that for each Edge v-w dist[w] <= dist[v] + 1
 	// provided v is reachable from s
 	for v := 0; v < g.V(); v++ {
 		vAdj := g.Adj(v)
 		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 			if m.HasPathTo(v) != m.HasPathTo(w.(int)) {
-				fmt.Println("edge", v, "-", w.(int))
+				fmt.Println("Edge", v, "-", w.(int))
 				fmt.Println("hasPathTo(", v, ") =", m.HasPathTo(v))
 				fmt.Println("hasPathTo(", w.(int), ") =", m.HasPathTo(w.(int)))
 				return false
 			}
 			if m.HasPathTo(v) && m.distTo[w.(int)] > m.distTo[v]+1 {
-				fmt.Println("edge", v, "-", w.(int))
+				fmt.Println("Edge", v, "-", w.(int))
 				fmt.Println("distTo[", v, "] =", m.DistTo(v))
 				fmt.Println("distTo[", w.(int), "] =", m.DistTo(w.(int)))
 				return false
@@ -180,7 +180,7 @@ func (m *BreadthFirstPaths) check(g *graph, s int) bool {
 		}
 		v := m.edgeTo[w]
 		if m.distTo[w] != m.distTo[v]+1 {
-			fmt.Println("shortest path edge", v, "-", w)
+			fmt.Println("shortest path Edge", v, "-", w)
 			fmt.Println("distTo[", v, "] =", m.DistTo(v))
 			fmt.Println("distTo[", w, "] =", m.DistTo(w))
 			return false

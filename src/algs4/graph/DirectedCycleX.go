@@ -16,7 +16,7 @@ type DirectedCycleX struct {
 	cycle *stack.Stack
 }
 
-func NewDirectedCycleX(g *digraph) *DirectedCycle {
+func NewDirectedCycleX(g *Digraph) *DirectedCycle {
 	c := &DirectedCycle{}
 
 	// indegrees of remaining vertices

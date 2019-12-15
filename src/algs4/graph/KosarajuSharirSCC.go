@@ -1,7 +1,7 @@
 package graph
 
 /**
-* determining the strong components in a digraph
+* determining the strong components in a Digraph
 * This implementation uses the Kosaraju-Sharir algorithm
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
@@ -13,10 +13,10 @@ type KosarajuSharirSCC struct {
 	count  int
 }
 
-func NewKosarajuSharirScc(g *digraph) *KosarajuSharirSCC {
+func NewKosarajuSharirScc(g *Digraph) *KosarajuSharirSCC {
 	scc := &KosarajuSharirSCC{}
 
-	// compute reverse postorder of reverse graph
+	// compute reverse postorder of reverse Graph
 	dfs := NewDepthFirstOrder(g.Reverse())
 
 	// run DFS on G, using reverse postorder to guide calculation
@@ -35,7 +35,7 @@ func NewKosarajuSharirScc(g *digraph) *KosarajuSharirSCC {
 	return scc
 }
 
-func (scc *KosarajuSharirSCC) dfs(g *digraph, v int) {
+func (scc *KosarajuSharirSCC) dfs(g *Digraph, v int) {
 	scc.marked[v] = true
 	scc.id[v] = scc.count
 
@@ -63,7 +63,7 @@ func (scc *KosarajuSharirSCC) validateVertex(v int) {
 
 func (scc *KosarajuSharirSCC) Connected(v, w int) bool { return scc.Id(v) == scc.Id(w) }
 
-func (scc *KosarajuSharirSCC) check(g *digraph) bool {
+func (scc *KosarajuSharirSCC) check(g *Digraph) bool {
 	tc := NewTransitiveClosure(g)
 	for v := 0; v < g.V(); v++ {
 		for w := 0; w < g.V(); w++ {

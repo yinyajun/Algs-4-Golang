@@ -39,3 +39,7 @@ func Leq(a, b interface{}) bool {
 		panic("compare Err: unsupported type")
 	}
 }
+
+func Great(a, b interface{}) bool {
+	return !Leq(a, b)
+}

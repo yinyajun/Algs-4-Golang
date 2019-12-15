@@ -9,23 +9,23 @@ import (
 )
 
 /**
-* undirected graph
+* undirected Graph
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type graph struct {
+type Graph struct {
 	v   int    // # vertex
-	e   int    // # edge
+	e   int    // # Edge
 	adj []*Bag // Adjacency list
 }
 
-func NewGraph(V int) *graph {
+func NewGraph(V int) *Graph {
 	if V < 0 {
 		panic("newGraph: invalid v")
 	}
-	g := &graph{}
+	g := &Graph{}
 	g.v = V
 	g.adj = make([]*Bag, V)
 	// initialize pointer
@@ -35,7 +35,7 @@ func NewGraph(V int) *graph {
 	return g
 }
 
-func NewGraphWithIn(in *In) *graph {
+func NewGraphWithIn(in *In) *Graph {
 	v := in.ReadInt()
 	g := NewGraph(v)
 	e := in.ReadInt()
@@ -50,18 +50,18 @@ func NewGraphWithIn(in *In) *graph {
 	return g
 }
 
-func (g *graph) V() int { return g.v }
+func (g *Graph) V() int { return g.v }
 
-func (g *graph) E() int { return g.e }
+func (g *Graph) E() int { return g.e }
 
-func (g *graph) validateVertex(v int) {
+func (g *Graph) validateVertex(v int) {
 	if v < 0 || v >= g.v {
 		panic("validateVertex: invalid vertex")
 	}
 }
 
-// Adds the undirected edge v-w to this graph.
-func (g *graph) AddEdge(v, w int) {
+// Adds the undirected Edge v-w to this Graph.
+func (g *Graph) AddEdge(v, w int) {
 	g.validateVertex(v)
 	g.validateVertex(w)
 	g.e++
@@ -70,18 +70,18 @@ func (g *graph) AddEdge(v, w int) {
 }
 
 // Returns the vertices adjacent to vertex v
-func (g *graph) Adj(v int) Iterator {
+func (g *Graph) Adj(v int) Iterator {
 	g.validateVertex(v)
 	return g.adj[v].Iterate()
 }
 
 // Returns the degree of vertex v
-func (g *graph) Degree(v int) int {
+func (g *Graph) Degree(v int) int {
 	g.validateVertex(v)
 	return g.adj[v].Size()
 }
 
-func (g *graph) String() string {
+func (g *Graph) String() string {
 	s := strings.Builder{}
 	s.WriteString(fmt.Sprintf("%d vertices, %d edges \n", g.v, g.e))
 	for v := 0; v < g.v; v++ {

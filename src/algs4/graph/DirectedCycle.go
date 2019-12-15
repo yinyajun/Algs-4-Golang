@@ -20,9 +20,9 @@ type DirectedCycle struct {
 	cycle   *stack.Stack // directed cycle (or null if no such cycle)
 }
 
-// Determines whether the digraph g has a directed cycle and, if so,
+// Determines whether the Digraph g has a directed cycle and, if so,
 // finds such a cycle.
-func NewDirectedCycle(g *digraph) *DirectedCycle {
+func NewDirectedCycle(g *Digraph) *DirectedCycle {
 	m := &DirectedCycle{}
 	m.marked = make([]bool, g.V())
 	m.onStack = make([]bool, g.V())
@@ -35,8 +35,8 @@ func NewDirectedCycle(g *digraph) *DirectedCycle {
 	return m
 }
 
-// a little different from find cycle in undirected graph,
-func (m *DirectedCycle) dfs(g *digraph, v int) {
+// a little different from find cycle in undirected Graph,
+func (m *DirectedCycle) dfs(g *Digraph, v int) {
 	m.marked[v] = true
 	m.onStack[v] = true
 
@@ -74,7 +74,7 @@ func (m *DirectedCycle) Cycle() util.Iterator {
 	return m.cycle.Iterate()
 }
 
-// certify that digraph has a directed cycle if it reports one
+// certify that Digraph has a directed cycle if it reports one
 func (m *DirectedCycle) check() bool {
 	if m.HasCycle() {
 		first, last := -1, -1

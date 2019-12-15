@@ -15,19 +15,19 @@ import (
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type digraph struct {
-	v        int    // number of vertices in this digraph
-	e        int    // number of edges in this digraph
+type Digraph struct {
+	v        int    // number of vertices in this Digraph
+	e        int    // number of edges in this Digraph
 	adj      []*Bag // adj[v] = adjacency list for vertex v
 	indegree []int  // indegree[v] = indegree of vertex v
 }
 
-// Initializes an empty digraph with V vertices.
-func NewDigraph(V int) *digraph {
+// Initializes an empty Digraph with V vertices.
+func NewDigraph(V int) *Digraph {
 	if V < 0 {
 		panic("NewDigraph: invalid V")
 	}
-	dg := &digraph{}
+	dg := &Digraph{}
 	dg.v = V
 	dg.adj = make([]*Bag, V)
 	for idx := range dg.adj {
@@ -37,8 +37,8 @@ func NewDigraph(V int) *digraph {
 	return dg
 }
 
-// Initializes a digraph from the specified input stream.
-func NewDigraphWithIn(in *In) *digraph {
+// Initializes a Digraph from the specified input stream.
+func NewDigraphWithIn(in *In) *Digraph {
 	v := in.ReadInt()
 	dg := NewDigraph(v)
 	e := in.ReadInt()
@@ -53,8 +53,8 @@ func NewDigraphWithIn(in *In) *digraph {
 	return dg
 }
 
-// Initializes a new digraph that is a deep copy of the specified digraph.
-func NewDigraphWithGraph(g *digraph) *digraph {
+// Initializes a new Digraph that is a deep copy of the specified Digraph.
+func NewDigraphWithGraph(g *Digraph) *Digraph {
 	dg := NewDigraph(g.V())
 	dg.e = g.E()
 	for v := 0; v < g.V(); v++ {
@@ -75,18 +75,18 @@ func NewDigraphWithGraph(g *digraph) *digraph {
 	return dg
 }
 
-func (dg *digraph) V() int { return dg.v }
+func (dg *Digraph) V() int { return dg.v }
 
-func (dg *digraph) E() int { return dg.e }
+func (dg *Digraph) E() int { return dg.e }
 
-func (dg *digraph) validateVertex(v int) {
+func (dg *Digraph) validateVertex(v int) {
 	if v < 0 || v >= dg.v {
 		panic("validateVertex: invalid vertex")
 	}
 }
 
-// Adds the directed edge v→w to this digraph.
-func (dg *digraph) AddEdge(v, w int) {
+// Adds the directed Edge v→w to this Digraph.
+func (dg *Digraph) AddEdge(v, w int) {
 	dg.validateVertex(v)
 	dg.validateVertex(w)
 	dg.adj[v].Add(w)
@@ -94,12 +94,12 @@ func (dg *digraph) AddEdge(v, w int) {
 	dg.e++
 }
 
-func (dg *digraph) Adj(v int) Iterator {
+func (dg *Digraph) Adj(v int) Iterator {
 	dg.validateVertex(v)
 	return dg.adj[v].Iterate()
 }
 
-func (dg *digraph) Reverse() *digraph {
+func (dg *Digraph) Reverse() *Digraph {
 	reverse := NewDigraph(dg.v)
 	for v := 0; v < dg.v; v++ {
 		vAdj := dg.Adj(v)
@@ -110,17 +110,17 @@ func (dg *digraph) Reverse() *digraph {
 	return reverse
 }
 
-func (dg *digraph) Indegree(v int) int {
+func (dg *Digraph) Indegree(v int) int {
 	dg.validateVertex(v)
 	return dg.indegree[v]
 }
 
-func (dg *digraph) Outdegree(v int) int {
+func (dg *Digraph) Outdegree(v int) int {
 	dg.validateVertex(v)
 	return dg.adj[v].Size()
 }
 
-func (dg *digraph) String() string {
+func (dg *Digraph) String() string {
 	s := strings.Builder{}
 	s.WriteString(fmt.Sprintf("%d vertices, %d edges \n", dg.v, dg.e))
 	for v := 0; v < dg.V(); v++ {

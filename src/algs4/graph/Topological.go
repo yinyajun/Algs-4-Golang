@@ -3,21 +3,21 @@ package graph
 import "util"
 
 /**
-* determining a topological order of a directed acyclic graph (DAG)
-* Recall, a digraph has a topological order if and only if it is a DAG.
+* determining a Topological order of a directed acyclic Graph (DAG)
+* Recall, a Digraph has a Topological order if and only if it is a DAG.
 * This implementation uses depth-first search.
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type topological struct {
+type Topological struct {
 	order util.Iterator
 	rank  []int
 }
 
-func NewTopological(g *digraph) *topological {
-	t := &topological{}
+func NewTopological(g *Digraph) *Topological {
+	t := &Topological{}
 	t.rank = make([]int, g.V())
 	finder := NewDirectedCycle(g)
 	if finder.HasCycle() {
@@ -33,18 +33,18 @@ func NewTopological(g *digraph) *topological {
 	return t
 }
 
-// todo: topological edge weight digraph
+// todo: Topological Edge weight Digraph
 
-func (t *topological) Order() util.Iterator {
+func (t *Topological) Order() util.Iterator {
 	t.order.Reset()
 	return t.order
 }
 
-func (t *topological) HasOrder() bool { return t.order != nil }
+func (t *Topological) HasOrder() bool { return t.order != nil }
 
-func (t *topological) IsDAG() bool { return t.HasOrder() }
+func (t *Topological) IsDAG() bool { return t.HasOrder() }
 
-func (t *topological) Rank(v int) int {
+func (t *Topological) Rank(v int) int {
 	t.validateVertex(v)
 	if t.HasOrder() {
 		return t.rank[v]
@@ -52,7 +52,7 @@ func (t *topological) Rank(v int) int {
 	return -1
 }
 
-func (t *topological) validateVertex(v int) {
+func (t *Topological) validateVertex(v int) {
 	V := len(t.rank)
 	if v < 0 || v >= V {
 		panic("validateVertex: invalid vertex")

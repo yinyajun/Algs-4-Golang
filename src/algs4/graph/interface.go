@@ -1,73 +1,76 @@
 package graph
 
-import (
-	. "util"
-)
+import . "util"
 
-// undirected graph
-type Graph interface {
+// undirected Graph
+type graph interface {
 	V() int             // vertex num
-	E() int             // edge num
-	AddEdge(v, w int)   // add edge v-w
+	E() int             // Edge num
+	AddEdge(v, w int)   // add Edge v-w
 	Adj(v int) Iterator // all adjacent vertex of v
 }
 
-type Search interface {
+type search interface {
 	Marked(v int) bool // is v and s connected?
 	Count() int        // number of vertices connected to s
 }
 
-type Paths interface {
+type paths interface {
 	HasPathTo(v int) bool
 	PathTo(v int) Iterator // path from s to v, empty if not exists
 }
 
-type CC interface {
+type cc interface {
 	Connected(v, w int) bool
 	Count() int
 	Id(v int) int
 }
 
-type SymbolGraph interface {
+type symbolGraph interface {
 	Contains(key string) bool
 	Index(key string) int
 	Name(v int) string
-	Graph() *graph
+	Graph() *Graph
 }
 
-type Digraph interface {
+type digraph interface {
 	V() int             // vertex num
-	E() int             // edge num
-	AddEdge(v, w int)   // add edge v-w
+	E() int             // Edge num
+	AddEdge(v, w int)   // add Edge v-w
 	Adj(v int) Iterator // all adjacent vertex of v
-	Reverse() *digraph
+	Reverse() *Digraph
 }
 
-type HasCycle interface {
+type hasCycle interface {
 	HasCycle() bool
 	Cycle() Iterator
 }
 
-type Topological interface {
+type topological interface {
 	IsDAG() bool
 	Order() Iterator
 }
 
-type TransitiveClosure interface {
+type transitiveClosure interface {
 	Reachable(v, w int) bool
 }
 
-type Edge interface {
-	Weight() float32
+type edge interface {
+	Weight() float64
 	Either() int
 	Other(v int) int
-	CompareTo(that *edge) bool
+	CompareTo(that *Edge) bool
 }
 
-type EdgeWeightedGraph interface {
+type edgeWeightedGraph interface {
 	V() int
 	E() int
-	AddEdge(e *edge)
+	AddEdge(e *Edge)
 	Adj(v int) Iterator
 	Edges() Iterator
+}
+
+type mst interface {
+	Edges() Iterator
+	Weight() float64
 }

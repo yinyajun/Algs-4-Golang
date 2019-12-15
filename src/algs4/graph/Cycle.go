@@ -6,7 +6,7 @@ import (
 )
 
 /**
-* check cycle in a undirected graph
+* check cycle in a undirected Graph
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
@@ -20,10 +20,10 @@ type Cycle struct {
 }
 
 /**
- * Determines whether the undirected graph {@code G} has a cycle and,
+ * Determines whether the undirected Graph {@code G} has a cycle and,
  * if so, finds such a cycle.
  */
-func NewCycle(g *graph) *Cycle {
+func NewCycle(g *Graph) *Cycle {
 	c := &Cycle{}
 	if c.hasSelfLoop(g) {
 		return c
@@ -41,9 +41,9 @@ func NewCycle(g *graph) *Cycle {
 	return c
 }
 
-// does this graph have a self loop?
+// does this Graph have a self loop?
 // side effect: initialize cycle to be self loop
-func (c *Cycle) hasSelfLoop(g *graph) bool {
+func (c *Cycle) hasSelfLoop(g *Graph) bool {
 	for v := 0; v < g.V(); v++ {
 		vAdj := g.Adj(v)
 		for w := vAdj.Next(); w != nil; w = vAdj.Next() {
@@ -58,9 +58,9 @@ func (c *Cycle) hasSelfLoop(g *graph) bool {
 	return false
 }
 
-// does this graph have two parallel edges?
+// does this Graph have two parallel edges?
 // side effect: initialize cycle to be two parallel edges
-func (c *Cycle) hasParallelEdges(g *graph) bool {
+func (c *Cycle) hasParallelEdges(g *Graph) bool {
 	for v := 0; v < g.V(); v++ {
 		marked := make([]bool, g.V())
 		vAdj := g.Adj(v)
@@ -83,7 +83,7 @@ func (c *Cycle) hasParallelEdges(g *graph) bool {
 	return false
 }
 
-func (c *Cycle) dfs(g *graph, v int, u int) {
+func (c *Cycle) dfs(g *Graph, v int, u int) {
 	c.marked[v] = true
 
 	vAdj := g.Adj(v)
@@ -96,7 +96,7 @@ func (c *Cycle) dfs(g *graph, v int, u int) {
 			c.edgeTo[w.(int)] = v
 			c.dfs(g, w.(int), v)
 		} else if w.(int) != u {
-			// check for cycle (but disregard reverse of edge leading to v)
+			// check for cycle (but disregard reverse of Edge leading to v)
 			c.cycle = NewStack()
 			for x := v; x != w; x = c.edgeTo[x] {
 				c.cycle.Push(x)

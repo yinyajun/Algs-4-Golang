@@ -8,20 +8,20 @@ import (
 )
 
 /**
-* symbol graph
+* symbol Graph
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type symbolGraph struct {
+type SymbolGraph struct {
 	st    map[string]int // string -> index
 	keys  []string       // index  -> string
-	graph *graph         // the underlying graph
+	graph *Graph         // the underlying Graph
 }
 
-func NewSymbolGraph(filename string, delimiter string) *symbolGraph {
-	sg := &symbolGraph{}
+func NewSymbolGraph(filename string, delimiter string) *SymbolGraph {
+	sg := &SymbolGraph{}
 
 	// First pass builds the index by reading strings to associate
 	// distinct strings with an index
@@ -47,7 +47,7 @@ func NewSymbolGraph(filename string, delimiter string) *symbolGraph {
 	}
 	f.Close()
 
-	// second pass builds the graph by connecting first vertex on each
+	// second pass builds the Graph by connecting first vertex on each
 	// line to all others
 	sg.graph = NewGraph(len(sg.st))
 	f, err = os.Open(filename)
@@ -67,23 +67,23 @@ func NewSymbolGraph(filename string, delimiter string) *symbolGraph {
 	return sg
 }
 
-func (sg *symbolGraph) Contains(key string) bool {
+func (sg *SymbolGraph) Contains(key string) bool {
 	_, ok := sg.st[key]
 	return ok
 }
 
-func (sg *symbolGraph) Index(key string) int {
+func (sg *SymbolGraph) Index(key string) int {
 	return sg.st[key]
 }
 
-func (sg *symbolGraph) Name(v int) string {
+func (sg *SymbolGraph) Name(v int) string {
 	sg.validateVertex(v)
 	return sg.keys[v]
 }
 
-func (sg *symbolGraph) Graph() *graph { return sg.graph }
+func (sg *SymbolGraph) Graph() *Graph { return sg.graph }
 
-func (sg *symbolGraph) validateVertex(v int) {
+func (sg *SymbolGraph) validateVertex(v int) {
 	V := sg.graph.V()
 	if v < 0 || v >= V {
 		panic("validateVertex: invalid vertex")

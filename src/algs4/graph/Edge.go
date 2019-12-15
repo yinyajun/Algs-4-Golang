@@ -7,20 +7,20 @@ import (
 
 /**
 *
-* Immutable weighted edge
+* Immutable weighted Edge
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-type edge struct {
+type Edge struct {
 	v      int
 	w      int
 	weight float64
 }
 
-func NewEdge(v, w int, weight float64) *edge {
-	e := &edge{}
+func NewEdge(v, w int, weight float64) *Edge {
+	e := &Edge{}
 	if v < 0 {
 		panic("NewEdge:invalid vertex")
 	}
@@ -33,11 +33,11 @@ func NewEdge(v, w int, weight float64) *edge {
 	return e
 }
 
-func (e *edge) Weight() float64 { return e.weight }
+func (e *Edge) Weight() float64 { return e.weight }
 
-func (e *edge) Either() int { return e.v }
+func (e *Edge) Either() int { return e.v }
 
-func (e *edge) Other(vertex int) int {
+func (e *Edge) Other(vertex int) int {
 	if vertex == e.v {
 		return e.w
 	} else if vertex == e.w {
@@ -47,10 +47,10 @@ func (e *edge) Other(vertex int) int {
 	}
 }
 
-func (e *edge) CompareTo(that *edge) bool {
+func (e *Edge) CompareTo(that *Edge) bool {
 	return util.Less(e.weight, that.weight)
 }
 
-func (e *edge) String() string {
+func (e *Edge) String() string {
 	return fmt.Sprintf("%d-%d %.5f", e.v, e.w, e.weight)
 }

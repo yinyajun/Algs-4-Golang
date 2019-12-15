@@ -5,36 +5,35 @@ import (
 )
 
 /**
-* Max Priority Queue
+* Min Priority Queue
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
-
-type MaxPQ struct {
-	pq         []Key // pq[0] is not used
+type MinPQ struct {
+	pq         []Key // pa[0] is not used
 	n          int
 	comparator Comparator
 }
 
-func NewMaxPQwithCapAndCom(capacity int, compartor Comparator) *MaxPQ {
-	pq := &MaxPQ{}
+func NewMinPQwithCapAndCom(capacity int, compartor Comparator) *MinPQ {
+	pq := &MinPQ{}
 	pq.pq = make([]Key, capacity+1)
 	pq.comparator = compartor
 	return pq
 }
 
-func NewMaxPQwithCap(capacity int) *MaxPQ {
-	return NewMaxPQwithCapAndCom(capacity, nil)
+func NewMinPQwithCap(capacity int) *MinPQ {
+	return NewMinPQwithCapAndCom(capacity, nil)
 }
 
-func NewMaxPQ() *MaxPQ {
-	return NewMaxPQwithCap(1)
+func NewMinPQ() *MinPQ {
+	return NewMinPQwithCap(1)
 }
 
-func NewMaxPQwithArray(keys []Key) *MaxPQ {
+func NewMinPQwithArray(keys []Key) *MinPQ {
 	n := len(keys)
-	pq := NewMaxPQwithCap(n + 1)
+	pq := NewMinPQwithCap(n + 1)
 	for idx, key := range keys {
 		pq.pq[idx+1] = key
 	}
@@ -42,23 +41,19 @@ func NewMaxPQwithArray(keys []Key) *MaxPQ {
 	return pq
 }
 
-func (m *MaxPQ) IsEmpty() bool {
-	return m.n == 0
-}
+func (m *MinPQ) IsEmpty() bool { return m.n == 0 }
 
-func (m *MaxPQ) Size() int {
-	return m.n
-}
+func (m *MinPQ) Size() int { return m.n }
 
-func (m *MaxPQ) Max() Key {
+func (m *MinPQ) Min() Key {
 	if m.IsEmpty() {
-		panic("Max: MaxPQ underflows")
+		panic("Min: MinPQ underflows")
 	}
 	return m.pq[1]
 }
 
 // helper function to double the Size of the heap array
-func (m *MaxPQ) resize(capacity int) {
+func (m *MinPQ) resize(capacity int) {
 	tmp := make([]Key, capacity)
 	for i := 1; i <= m.n; i++ {
 		tmp[i] = m.pq[i]
@@ -66,7 +61,7 @@ func (m *MaxPQ) resize(capacity int) {
 	m.pq = tmp
 }
 
-func (m *MaxPQ) Insert(x Key) {
+func (m *MinPQ) Insert(x Key) {
 	// double Size of array if necessary
 	if m.n == len(m.pq)-1 {
 		m.resize(2 * len(m.pq))
@@ -75,16 +70,16 @@ func (m *MaxPQ) Insert(x Key) {
 	m.n++
 	m.pq[m.n] = x
 	m.swim(m.n)
-	if !m.isMaxHeap() {
+	if !m.isMinHeap() {
 		panic("Insert: Insert failed")
 	}
 }
 
-func (m *MaxPQ) DelMax() Key {
+func (m *MinPQ) DelMin() Key {
 	if m.IsEmpty() {
-		panic("MaxPQ underflows")
+		panic("MinPQ underflows")
 	}
-	max := m.pq[1]
+	min := m.pq[1]
 	m.exch(m.n, 1)
 	m.n--
 	m.sink(1)
@@ -92,19 +87,19 @@ func (m *MaxPQ) DelMax() Key {
 	if m.n > 0 && m.n == (len(m.pq)-1)/4 {
 		m.resize(len(m.pq) / 2)
 	}
-	if !m.isMaxHeap() {
-		panic("DelMax: DelMax failed")
+	if !m.isMinHeap() {
+		panic("DelMin: DelMin failed")
 	}
-	return max
+	return min
 }
 
-func (m *MaxPQ) Heapify() {
+func (m *MinPQ) Heapify() {
 	for k := m.n / 2; k >= 1; k-- {
 		m.sink(k)
 	}
 }
 
-func (m *MaxPQ) HeapAdjust(key Key) {
+func (m *MinPQ) HeapAdjust(key Key) {
 	m.pq[1] = key
 	m.sink(1)
 }
@@ -112,25 +107,25 @@ func (m *MaxPQ) HeapAdjust(key Key) {
 /***************************************************************************
  * Helper functions to restore the heap invariant.
  ***************************************************************************/
-func (m *MaxPQ) swim(k int) {
+func (m *MinPQ) swim(k int) {
 	// parent index = k/2
-	// 保证父节点存在,如果大于父节点，就和父节点交换
-	for k > 1 && m.less(k/2, k) {
+	// 保证父节点存在,如果小于父节点，就和父节点交换
+	for k > 1 && m.great(k/2, k) {
 		m.exch(k, k/2)
 		k = k / 2
 	}
 }
 
-func (m *MaxPQ) sink(k int) {
+func (m *MinPQ) sink(k int) {
 	// left child index = 2k, right child index =2k+1
-	// 保证子节点存在，找到最大的子节点，如果小于之，则交换
+	// 保证子节点存在，找到最小的子节点，如果大于之，则交换
 	for 2*k <= m.n {
-		// get Max child between left and right child
+		// get Min child between left and right child
 		j := 2 * k
-		if j < m.n && m.less(j, j+1) {
+		if j < m.n && m.great(j, j+1) {
 			j = j + 1
 		}
-		if !m.less(k, j) {
+		if !m.great(k, j) {
 			break
 		}
 		m.exch(k, j)
@@ -141,19 +136,19 @@ func (m *MaxPQ) sink(k int) {
 /***************************************************************************
  * Helper functions for compares and swaps.
  ***************************************************************************/
-func (m *MaxPQ) less(i, j int) bool {
+func (m *MinPQ) great(i, j int) bool {
 	if m.comparator == nil {
-		return Less(m.pq[i], m.pq[j])
+		return Great(m.pq[i], m.pq[j])
 	}
-	return m.comparator.Compare(m.pq[i], m.pq[j]) < 0
+	return m.comparator.Compare(m.pq[i], m.pq[j]) > 0
 }
 
-func (m *MaxPQ) exch(i, j int) {
+func (m *MinPQ) exch(i, j int) {
 	m.pq[i], m.pq[j] = m.pq[j], m.pq[i]
 }
 
-// is MaxPQ[1..n] a Max heap?
-func (m *MaxPQ) isMaxHeap() bool {
+// is PQ[1..n] a Min heap?
+func (m *MinPQ) isMinHeap() bool {
 	for i := 1; i <= m.n; i++ {
 		if m.pq[i] == nil {
 			return false
@@ -167,29 +162,29 @@ func (m *MaxPQ) isMaxHeap() bool {
 	if m.pq[0] != nil {
 		return false
 	}
-	return m.isMaxHeapOrdered(1)
+	return m.isMinHeapOrdered(1)
 }
 
-// is subtree of MaxPQ[1..n] rooted at k a Max heap?
-func (m *MaxPQ) isMaxHeapOrdered(k int) bool {
+// is subtree of PQ[1..n] rooted at k a Min heap?
+func (m *MinPQ) isMinHeapOrdered(k int) bool {
 	if k > m.n {
 		return true
 	}
 	left := 2 * k
 	right := left + 1
-	if left <= m.n && m.less(k, left) {
+	if left <= m.n && m.great(k, left) {
 		return false
 	}
-	if right <= m.n && m.less(k, right) {
+	if right <= m.n && m.great(k, right) {
 		return false
 	}
-	return m.isMaxHeapOrdered(left) && m.isMaxHeapOrdered(right)
+	return m.isMinHeapOrdered(left) && m.isMinHeapOrdered(right)
 }
 
-func (m *MaxPQ) ExtractItem() interface{} {
-	return m.DelMax()
+func (m *MinPQ) ExtractItem() interface{} {
+	return m.DelMin()
 }
 
-func (m *MaxPQ) Iterate() Iterator {
+func (m *MinPQ) Iterate() Iterator {
 	return NewOnceIterator(m)
 }

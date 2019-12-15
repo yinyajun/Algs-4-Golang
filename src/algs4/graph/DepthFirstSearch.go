@@ -12,7 +12,7 @@ type DepthFirstSearch struct {
 	count  int    // number of vertices connected to s
 }
 
-func NewDepthFirstSearch(g *graph, s int) *DepthFirstSearch {
+func NewDepthFirstSearch(g *Graph, s int) *DepthFirstSearch {
 	m := &DepthFirstSearch{make([]bool, g.V()), 0}
 	m.validateVertex(s)
 	m.dfs(g, s)
@@ -27,7 +27,7 @@ func (m *DepthFirstSearch) validateVertex(v int) {
 }
 
 // depth first search from v
-func (m *DepthFirstSearch) dfs(g *graph, v int) {
+func (m *DepthFirstSearch) dfs(g *Graph, v int) {
 	m.count++
 	m.marked[v] = true
 	vAdj := g.Adj(v)

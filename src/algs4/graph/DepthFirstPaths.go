@@ -14,11 +14,11 @@ import (
 
 type DepthFirstPaths struct {
 	marked []bool // marked[v] = is there an s-v path?
-	edgeTo []int  // edgeTo[v] = last edge on s-v path
+	edgeTo []int  // edgeTo[v] = last Edge on s-v path
 	s      int    // source vertex
 }
 
-func NewDepthFirstPaths(g *graph, s int) *DepthFirstPaths {
+func NewDepthFirstPaths(g *Graph, s int) *DepthFirstPaths {
 	m := &DepthFirstPaths{}
 	m.s = s
 	m.edgeTo = make([]int, g.V())
@@ -36,7 +36,7 @@ func (m *DepthFirstPaths) validateVertex(v int) {
 }
 
 // depth first search from v
-func (m *DepthFirstPaths) dfs(g *graph, v int) {
+func (m *DepthFirstPaths) dfs(g *Graph, v int) {
 	m.marked[v] = true
 	vAdj := g.Adj(v)
 	for w := vAdj.Next(); w != nil; w = vAdj.Next() {

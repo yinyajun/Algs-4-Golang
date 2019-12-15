@@ -8,7 +8,7 @@ import (
 )
 
 /**
-* symbol digraph
+* symbol Digraph
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
@@ -17,7 +17,7 @@ import (
 type SymbolDigraph struct {
 	st    map[string]int
 	keys  []string
-	graph *digraph
+	graph *Digraph
 }
 
 func NewSymbolDigraph(filename string, delimiter string) *SymbolDigraph {
@@ -47,7 +47,7 @@ func NewSymbolDigraph(filename string, delimiter string) *SymbolDigraph {
 	}
 	f.Close()
 
-	// second pass builds the digraph by connecting first vertex on each
+	// second pass builds the Digraph by connecting first vertex on each
 	// line to all others
 	sd.graph = NewDigraph(len(sd.st))
 	f, err = os.Open(filename)
@@ -81,7 +81,7 @@ func (sd *SymbolDigraph) Name(v int) string {
 	return sd.keys[v]
 }
 
-func (sd *SymbolDigraph) Digraph() *digraph { return sd.graph }
+func (sd *SymbolDigraph) Digraph() *Digraph { return sd.graph }
 
 func (sd *SymbolDigraph) validateVertex(v int) {
 	V := sd.graph.V()
