@@ -46,7 +46,7 @@ func NewLazyPrimMST(g *EdgeWeightedGraph) *LazyPrimMST {
 func (m *LazyPrimMST) prim(g *EdgeWeightedGraph, s int) {
 	m.scan(g, s)
 	for !m.pq.IsEmpty() || m.mst.Size()+1 < g.V() {
-		e := m.pq.DelMin().(Edge) // smallest edge on pq
+		e := m.pq.DelMin().(*Edge) // smallest edge on pq
 		v := e.Either()           // two endpoints
 		w := e.Other(v)
 		if !m.marked[v] || !m.marked[w] {
@@ -74,8 +74,8 @@ func (m *LazyPrimMST) scan(g *EdgeWeightedGraph, v int) {
 	m.marked[v] = true
 	vAdj := g.Adj(v)
 	for e := vAdj.Next(); e != nil; e = vAdj.Next() {
-		if !m.marked[e.(Edge).Other(v)] {
-			m.pq.Insert(e.(Edge))
+		if !m.marked[e.(*Edge).Other(v)] {
+			m.pq.Insert(e.(*Edge))
 		}
 	}
 }
@@ -90,7 +90,7 @@ func (m *LazyPrimMST) check(g *EdgeWeightedGraph) bool {
 	var totalWeight float64
 	edges := m.Edges()
 	for e := edges.Next(); e != nil; e = edges.Next() {
-		totalWeight += e.(Edge).Weight()
+		totalWeight += e.(*Edge).Weight()
 	}
 	if math.Abs(totalWeight-m.Weight()) > 1E-10 {
 		fmt.Println("Weight of edges does not equal Weight()", totalWeight, m.Weight())
@@ -101,8 +101,8 @@ func (m *LazyPrimMST) check(g *EdgeWeightedGraph) bool {
 	uf := unionFind.NewPathComWeightedQU(g.V())
 	edges = m.Edges()
 	for e := edges.Next(); e != nil; e = edges.Next() {
-		v := e.(Edge).Either()
-		w := e.(Edge).Other(v)
+		v := e.(*Edge).Either()
+		w := e.(*Edge).Other(v)
 		if uf.Connected(v, w) {
 			fmt.Println("Not a forest")
 			return false
@@ -113,8 +113,8 @@ func (m *LazyPrimMST) check(g *EdgeWeightedGraph) bool {
 	// check that it is a spanning forest
 	allEdges := g.Edges()
 	for e := allEdges.Next(); e != nil; e = allEdges.Next() {
-		v := e.(Edge).Either()
-		w := e.(Edge).Other(v)
+		v := e.(*Edge).Either()
+		w := e.(*Edge).Other(v)
 		if !uf.Connected(v, w) {
 			fmt.Println("Not a spanning forest")
 			return false
@@ -129,8 +129,8 @@ func (m *LazyPrimMST) check(g *EdgeWeightedGraph) bool {
 		uf := unionFind.NewPathComWeightedQU(g.V())
 		mstEdges := m.mst.Iterate()
 		for f := mstEdges.Next(); f != nil; f = mstEdges.Next() {
-			x := f.(Edge).Either()
-			y := f.(Edge).Other(x)
+			x := f.(*Edge).Either()
+			y := f.(*Edge).Other(x)
 			if f != e {
 				uf.Union(x, y)
 			}
@@ -139,10 +139,10 @@ func (m *LazyPrimMST) check(g *EdgeWeightedGraph) bool {
 		// check that e is min weight edge in crossing cut
 		gEdges := g.Edges()
 		for f := gEdges.Next(); f != nil; f = gEdges.Next() {
-			x := f.(Edge).Either()
-			y := f.(Edge).Other(x)
+			x := f.(*Edge).Either()
+			y := f.(*Edge).Other(x)
 			if !uf.Connected(x, y) { // this edge must be crossing cut
-				if f.(Edge).Weight() < e.(Edge).Weight() {
+				if f.(*Edge).Weight() < e.(*Edge).Weight() {
 					fmt.Println("Edge", f, "violates cut optimality conditions")
 					return false
 				}
