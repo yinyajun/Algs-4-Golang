@@ -69,11 +69,20 @@ func TestNewSliceIterator(t *testing.T) {
 	}
 }
 
+type tt struct {
+	a int
+	b int
+}
+
+func (t *tt) print() {
+	fmt.Println(t.a, t.b)
+}
+
 func TestNewLinkedListIterator(t *testing.T) {
 	b := &LinkedListBag{}
 	input := []int{5, 6, 7, 8}
 	for idx := range input {
-		b.add(input[idx])
+		b.add(&tt{input[idx], input[idx] + 5})
 	}
 	iter := b.Iterate()
 	for w := iter.Next(); w != nil; w = iter.Next() {
@@ -83,5 +92,16 @@ func TestNewLinkedListIterator(t *testing.T) {
 	iter.Reset()
 	for w := iter.Next(); w != nil; w = iter.Next() {
 		fmt.Println(w)
+	}
+
+	// test
+	iter = b.Iterate()
+	for w := iter.Next(); w != nil; w = iter.Next() {
+		iter2 := b.Iterate()
+		for v := iter2.Next(); v != nil; v = iter2.Next() {
+			if v == w {
+				fmt.Println(w, v, w == v, &w, &v)
+			}
+		}
 	}
 }
