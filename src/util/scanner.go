@@ -53,6 +53,12 @@ func (m *In) ReadInt() int {
 	return i
 }
 
+func (m *In) ReadFloat() float64 {
+	s := m.ReadString()
+	f, _ := strconv.ParseFloat(s, 64)
+	return f
+}
+
 func (m *In) ReadLine() string {
 	// note that their type is different: bufio.SplitFunc | func([]uint8, bool) (int, []uint8, error)
 	if reflect.ValueOf(m.split).Pointer() != reflect.ValueOf(bufio.ScanLines).Pointer() {

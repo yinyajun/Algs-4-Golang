@@ -56,3 +56,18 @@ type Topological interface {
 type TransitiveClosure interface {
 	Reachable(v, w int) bool
 }
+
+type Edge interface {
+	Weight() float32
+	Either() int
+	Other(v int) int
+	CompareTo(that *edge) bool
+}
+
+type EdgeWeightedGraph interface {
+	V() int
+	E() int
+	AddEdge(e *edge)
+	Adj(v int) Iterator
+	Edges() Iterator
+}

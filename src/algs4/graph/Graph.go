@@ -69,12 +69,6 @@ func (g *graph) AddEdge(v, w int) {
 	g.adj[w].Add(v)
 }
 
-//// Returns the vertices adjacent to vertex v
-//func (g *graph) Adj(v int) Generator {
-//	g.validateVertex(v)
-//	return g.adj[v].Yield()
-//}
-
 // Returns the vertices adjacent to vertex v
 func (g *graph) Adj(v int) Iterator {
 	g.validateVertex(v)

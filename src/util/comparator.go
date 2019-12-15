@@ -18,7 +18,7 @@ func Less(a, b interface{}) bool {
 	case string:
 		return a.(string) < b.(string)
 	case float32:
-		return a.(float32) < b.(float32)
+		return a.(float64) < b.(float64)
 	default:
 		panic("compare Err: unsupported type")
 	}
@@ -34,7 +34,7 @@ func Leq(a, b interface{}) bool {
 	case string:
 		return a.(string) <= b.(string)
 	case float32:
-		return a.(float32) <= b.(float32)
+		return a.(float64) <= b.(float64)
 	default:
 		panic("compare Err: unsupported type")
 	}
