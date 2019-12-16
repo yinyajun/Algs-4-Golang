@@ -30,7 +30,8 @@ func NewLazyPrimMST(g *EdgeWeightedGraph) *LazyPrimMST {
 	m := &LazyPrimMST{}
 	m.marked = make([]bool, g.V())
 	m.mst = NewQueue()
-	m.pq = NewMinPQ()
+	m.pq = NewMinPQwithCapAndCom(1, EdgeComparator{})
+
 	for v := 0; v < g.V(); v++ { // run Prim from all vertices to
 		if !m.marked[v] { // get a minimum spanning forest
 			m.prim(g, v)
@@ -45,11 +46,11 @@ func NewLazyPrimMST(g *EdgeWeightedGraph) *LazyPrimMST {
 
 func (m *LazyPrimMST) prim(g *EdgeWeightedGraph, s int) {
 	m.scan(g, s)
-	for !m.pq.IsEmpty() || m.mst.Size()+1 < g.V() {
+	for !m.pq.IsEmpty() {
 		e := m.pq.DelMin().(*Edge) // smallest edge on pq
-		v := e.Either()           // two endpoints
+		v := e.Either()            // two endpoints
 		w := e.Other(v)
-		if !m.marked[v] || !m.marked[w] {
+		if !m.marked[v] && !m.marked[w] {
 			panic("prim: neither endpoint is part of tree")
 		}
 		if m.marked[v] && m.marked[w] { // lazy, both v and w already scanned
@@ -57,12 +58,18 @@ func (m *LazyPrimMST) prim(g *EdgeWeightedGraph, s int) {
 		}
 		m.mst.Enqueue(e) // add e to MST
 		m.weight += e.Weight()
+
+		if m.mst.Size()+1 == g.V() { // early stop
+			break
+		}
+
 		if !m.marked[v] { // v becomes part of tree
 			m.scan(g, v)
 		}
-		if !m.marked[v] { // w becomes part of tree
+		if !m.marked[w] { // w becomes part of tree
 			m.scan(g, w)
 		}
+
 	}
 }
 
@@ -72,10 +79,11 @@ func (m *LazyPrimMST) scan(g *EdgeWeightedGraph, v int) {
 		panic("scan: v has been visited")
 	}
 	m.marked[v] = true
+
 	vAdj := g.Adj(v)
 	for e := vAdj.Next(); e != nil; e = vAdj.Next() {
 		if !m.marked[e.(*Edge).Other(v)] {
-			m.pq.Insert(e.(*Edge))
+			m.pq.Insert(e)
 		}
 	}
 }
@@ -104,7 +112,7 @@ func (m *LazyPrimMST) check(g *EdgeWeightedGraph) bool {
 		v := e.(*Edge).Either()
 		w := e.(*Edge).Other(v)
 		if uf.Connected(v, w) {
-			fmt.Println("Not a forest")
+			fmt.Println("Not a forest", v, w)
 			return false
 		}
 		uf.Union(v, w)

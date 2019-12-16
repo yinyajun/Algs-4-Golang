@@ -1,8 +1,8 @@
 package graph
 
 import (
-	"util"
 	"fmt"
+	"util"
 )
 
 /**
@@ -53,4 +53,15 @@ func (e *Edge) CompareTo(that *Edge) bool {
 
 func (e *Edge) String() string {
 	return fmt.Sprintf("%d-%d %.5f", e.v, e.w, e.weight)
+}
+
+type EdgeComparator struct{}
+
+func (c EdgeComparator) Compare(i, j interface{}) int {
+	if i.(*Edge).Weight() > j.(*Edge).Weight() {
+		return 1
+	} else if i.(*Edge).Weight() == j.(*Edge).Weight() {
+		return 0
+	}
+	return -1
 }
