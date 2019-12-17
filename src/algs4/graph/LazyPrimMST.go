@@ -31,6 +31,7 @@ func NewLazyPrimMST(g *EdgeWeightedGraph) *LazyPrimMST {
 	m.marked = make([]bool, g.V())
 	m.mst = NewQueue()
 	m.pq = NewMinPQwithCapAndCom(1, EdgeComparator{})
+
 	for v := 0; v < g.V(); v++ { // run Prim from all vertices to
 		if !m.marked[v] { // get a minimum spanning forest
 			m.prim(g, v)
@@ -49,7 +50,6 @@ func (m *LazyPrimMST) prim(g *EdgeWeightedGraph, s int) {
 		e := m.pq.DelMin().(*Edge) // smallest edge on pq
 		v := e.Either()            // two endpoints
 		w := e.Other(v)
-		//fmt.Println("prim edge:", e.Either(), e.Other(e.Either()), e.Weight())
 		if !m.marked[v] && !m.marked[w] {
 			panic("prim: neither endpoint is part of tree")
 		}
@@ -57,17 +57,18 @@ func (m *LazyPrimMST) prim(g *EdgeWeightedGraph, s int) {
 			continue
 		}
 		m.mst.Enqueue(e) // add e to MST
-		fmt.Println("add e:", e.Either(), e.Other(e.Either()), m.mst)
 		m.weight += e.Weight()
+
+		if m.mst.Size()+1 == g.V() { // early stop
+			break
+		}
+
 		if !m.marked[v] { // v becomes part of tree
 			m.scan(g, v)
 		}
-		if !m.marked[v] { // w becomes part of tree
+		if !m.marked[w] { // w becomes part of tree
 			m.scan(g, w)
 		}
-		//if m.mst.Size()+1 == g.V(){
-		//	break
-		//}
 	}
 }
 
@@ -77,10 +78,10 @@ func (m *LazyPrimMST) scan(g *EdgeWeightedGraph, v int) {
 		panic("scan: v has been visited")
 	}
 	m.marked[v] = true
+
 	vAdj := g.Adj(v)
 	for e := vAdj.Next(); e != nil; e = vAdj.Next() {
 		if !m.marked[e.(*Edge).Other(v)] {
-			fmt.Println("Scan:", e.(*Edge).Either(), e.(*Edge).Other(e.(*Edge).Either()))
 			m.pq.Insert(e)
 		}
 	}
@@ -92,8 +93,6 @@ func (m *LazyPrimMST) Weight() float64 { return m.weight }
 
 // check optimality conditions (takes time proportional to E V lg* V)
 func (m *LazyPrimMST) check(g *EdgeWeightedGraph) bool {
-	util.PrintIterator(m.mst.Iterate())
-
 	// check weight
 	var totalWeight float64
 	edges := m.Edges()
@@ -111,7 +110,6 @@ func (m *LazyPrimMST) check(g *EdgeWeightedGraph) bool {
 	for e := edges.Next(); e != nil; e = edges.Next() {
 		v := e.(*Edge).Either()
 		w := e.(*Edge).Other(v)
-		fmt.Println(v, w)
 		if uf.Connected(v, w) {
 			fmt.Println("Not a forest", v, w)
 			return false
