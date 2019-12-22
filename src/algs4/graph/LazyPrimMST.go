@@ -15,6 +15,9 @@ import (
 * This implementation uses a lazy version of Prim's algorithm
 * with a binary heap of edges.
 *
+* 优先队列保存所有横切边， 顶点索引数组标记mst顶点，队列来保存mst
+* 延时实现会在优先队列中保留失效边
+*
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
@@ -69,7 +72,6 @@ func (m *LazyPrimMST) prim(g *EdgeWeightedGraph, s int) {
 		if !m.marked[w] { // w becomes part of tree
 			m.scan(g, w)
 		}
-
 	}
 }
 
