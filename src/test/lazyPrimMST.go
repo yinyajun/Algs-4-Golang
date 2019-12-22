@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	. "util"
 	"algs4/graph"
+	. "util"
 )
 
 /**
@@ -21,7 +21,7 @@ import (
 * 1.81000
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
-*/
+ */
 
 func main() {
 	in := NewIn(os.Stdin)

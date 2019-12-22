@@ -1,12 +1,12 @@
 package graph
 
 import (
-	. "algs4/queue"
 	. "algs4/priorityQueue"
-	"util"
-	"math"
-	"fmt"
+	. "algs4/queue"
 	"algs4/unionFind"
+	"fmt"
+	"math"
+	"util"
 )
 
 /**
