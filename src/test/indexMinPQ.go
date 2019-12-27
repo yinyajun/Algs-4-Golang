@@ -1,22 +1,23 @@
 package main
 
+
 import (
 	. "algs4/priorityQueue"
 	"fmt"
 )
 
 /**
-* $ go run src/test/indexMaxPQ.go
-* 9 worst
-* 1 was
-* 7 was
-* 5 times
+* go run src/test/indexMinPQ.go
+* 3 best
+* 0 it
+* 6 it
+* 4 of
 * 8 the
 * 2 the
-* 4 of
-* 6 it
-* 0 it
-* 3 best
+* 5 times
+* 7 was
+* 1 was
+* 9 worst
 *
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
@@ -24,7 +25,7 @@ import (
 func main() {
 	// Insert a bunch of strings
 	strings := []string{"it", "was", "the", "best", "of", "times", "it", "was", "the", "worst"}
-	pq := NewIndexMaxPQ(len(strings))
+	pq := NewIndexMinPQ(len(strings))
 	for idx, s := range strings {
 		pq.Insert(idx, s)
 	}
@@ -33,5 +34,4 @@ func main() {
 	for val := it.Next(); val != nil; val = it.Next() {
 		fmt.Println(val, strings[val.(int)])
 	}
-
 }
