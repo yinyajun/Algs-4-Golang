@@ -1,6 +1,5 @@
 package main
 
-
 import (
 	. "algs4/priorityQueue"
 	"fmt"
@@ -33,6 +32,6 @@ func main() {
 
 	it := pq.Iterate()
 	for val := it.Next(); val != nil; val = it.Next() {
-		fmt.Println(val, strings[val.(int)])
+		fmt.Println(val, pq.KeyOf(val.(int)))
 	}
 }

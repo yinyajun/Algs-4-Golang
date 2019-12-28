@@ -195,5 +195,5 @@ func (m *IndexMaxPQ) Iterate() Iterator {
 	for i := 1; i <= m.n; i++ {
 		cop.Insert(m.pq[i], m.keys[m.pq[i]])
 	}
-	return NewOnceIterator(cop)
+	return NewCopyIterator(cop)
 }

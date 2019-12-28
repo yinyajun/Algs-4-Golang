@@ -10,40 +10,29 @@ import (
 )
 
 /**
-* computing a minimum spanning tree in an Edge-weighted Graph.
-*
-* This implementation uses Prim's algorithm with a indexed binary heap.
 *
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.
  */
 
-const POSTIVE_INFINITY = float64(^uint(0) >> 1)
-
-type PrimMST struct {
-	edgeTo []*Edge   // edgeTo[v] = shortest edge from tree vertex to non-tree vertex
-	distTo []float64 // distTo[v] = weight of shortest such edge
-	marked []bool    // marked[v] = true if v on tree, false otherwise
+type PrimMST2 struct {
+	edgeTo []*Edge
+	marked []bool
 	pq     *IndexMinPQ
 }
 
-func NewPrimMST(g *EdgeWeightedGraph) *PrimMST {
-	m := &PrimMST{}
+func NewPrimMST2(g *EdgeWeightedGraph) *PrimMST2 {
+	m := &PrimMST2{}
 	m.edgeTo = make([]*Edge, g.V())
-	m.distTo = make([]float64, g.V())
-	for idx := range m.distTo {
-		m.distTo[idx] = POSTIVE_INFINITY
-	}
 	m.marked = make([]bool, g.V())
 	m.pq = NewIndexMinPQ(g.V())
 
-	for v := 0; v < g.V(); v++ { // run Prim from all vertices to
-		if !m.marked[v] { // get a minimum spanning forest
+	for v := 0; v < g.V(); v++ {
+		if !m.marked[v] {
 			m.prim(g, v)
 		}
 	}
-
 	//check optimality conditions
 	if !m.check(g) {
 		panic("NewPrimMST: check failed")
@@ -51,17 +40,15 @@ func NewPrimMST(g *EdgeWeightedGraph) *PrimMST {
 	return m
 }
 
-// run Prim's algorithm in graph G, starting from vertex s
-func (m *PrimMST) prim(g *EdgeWeightedGraph, s int) {
-	m.distTo[s] = 0
-	m.pq.Insert(s, m.distTo[s])
+func (m *PrimMST2) prim(g *EdgeWeightedGraph, s int) {
+	m.pq.Insert(s, 0)
 	for !m.pq.IsEmpty() {
 		v := m.pq.DelMin()
 		m.scan(g, v)
 	}
 }
 
-func (m *PrimMST) scan(g *EdgeWeightedGraph, v int) {
+func (m *PrimMST2) scan(g *EdgeWeightedGraph, v int) {
 	m.marked[v] = true
 	vAdj := g.Adj(v)
 	for e := vAdj.Next(); e != nil; e = vAdj.Next() {
@@ -69,19 +56,19 @@ func (m *PrimMST) scan(g *EdgeWeightedGraph, v int) {
 		if m.marked[w] {
 			continue // v-w is obsolete edge
 		}
-		if e.(*Edge).weight < m.distTo[w] {
-			m.distTo[w] = e.(*Edge).Weight()
+		if m.edgeTo[w] == nil || (m.edgeTo[w] != nil && e.(*Edge).weight < m.edgeTo[w].Weight()) {
 			m.edgeTo[w] = e.(*Edge)
 			if m.pq.Contains(w) {
-				m.pq.DecreaseKey(w, m.distTo[w])
+				m.pq.DecreaseKey(w, m.edgeTo[w].Weight())
 			} else {
-				m.pq.Insert(w, m.distTo[w])
+				m.pq.Insert(w, m.edgeTo[w].Weight())
 			}
 		}
 	}
+
 }
 
-func (m *PrimMST) Edges() util.Iterator {
+func (m *PrimMST2) Edges() util.Iterator {
 	mst := queue.NewQueue()
 	for _, e := range m.edgeTo {
 		if e != nil {
@@ -91,7 +78,7 @@ func (m *PrimMST) Edges() util.Iterator {
 	return mst.Iterate()
 }
 
-func (m *PrimMST) Weight() float64 {
+func (m *PrimMST2) Weight() float64 {
 	var weight float64
 	for _, e := range m.edgeTo {
 		if e == nil {
@@ -102,7 +89,7 @@ func (m *PrimMST) Weight() float64 {
 	return weight
 }
 
-func (m *PrimMST) check(g *EdgeWeightedGraph) bool {
+func (m *PrimMST2) check(g *EdgeWeightedGraph) bool {
 
 	// check weight
 	var totalWeight float64

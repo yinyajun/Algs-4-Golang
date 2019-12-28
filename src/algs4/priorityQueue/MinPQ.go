@@ -186,5 +186,9 @@ func (m *MinPQ) ExtractItem() interface{} {
 }
 
 func (m *MinPQ) Iterate() Iterator {
-	return NewOnceIterator(m)
+	cop := NewMinPQwithCap(len(m.pq) - 1)
+	for i := 1; i <= m.n; i++ {
+		cop.Insert(m.pq[i])
+	}
+	return NewCopyIterator(cop)
 }

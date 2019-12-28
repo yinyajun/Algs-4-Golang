@@ -115,34 +115,33 @@ func (l *LinkedListIterator) SetNextFunc() {
 }
 
 /**
-* Iterator for collections which could be consumed once, e.g. Max Priority Queue
-* Since get data operation has side effects (will change data structure)
+* Copy the original collection and build iterators.
  */
-type OnceCollect interface {
+type CopyCollect interface {
 	IsEmpty() bool
 	ExtractItem() interface{}
 }
 
-type OnceIterator struct {
-	collect  OnceCollect
+type CopyIterator struct {
+	collect  CopyCollect
 	_hasNext func() bool
 	_next    func() interface{}
 }
 
-func NewOnceIterator(c OnceCollect) *OnceIterator {
-	o := &OnceIterator{collect: c}
+func NewCopyIterator(c CopyCollect) *CopyIterator {
+	o := &CopyIterator{collect: c}
 	o.SetHasNextFunc()
 	o.SetNextFunc()
 	return o
 }
 
-func (o *OnceIterator) Reset()            { panic("Reset is not supported in OnceIterator") }
-func (o *OnceIterator) HasNext() bool     { return o._hasNext() }
-func (o *OnceIterator) Next() interface{} { return o._next() }
-func (o *OnceIterator) SetHasNextFunc() {
+func (o *CopyIterator) Reset()            { panic("Reset is not supported in CopyIterator") }
+func (o *CopyIterator) HasNext() bool     { return o._hasNext() }
+func (o *CopyIterator) Next() interface{} { return o._next() }
+func (o *CopyIterator) SetHasNextFunc() {
 	o._hasNext = func() bool { return !o.collect.IsEmpty() }
 }
-func (o *OnceIterator) SetNextFunc() {
+func (o *CopyIterator) SetNextFunc() {
 	o._next = func() interface{} {
 		if o.HasNext() {
 			return o.collect.ExtractItem()

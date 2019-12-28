@@ -191,5 +191,9 @@ func (m *MaxPQ) ExtractItem() interface{} {
 }
 
 func (m *MaxPQ) Iterate() Iterator {
-	return NewOnceIterator(m)
+	cop := NewMaxPQwithCap(len(m.pq) - 1)
+	for i := 1; i <= m.n; i++ {
+		cop.Insert(m.pq[i])
+	}
+	return NewCopyIterator(cop)
 }

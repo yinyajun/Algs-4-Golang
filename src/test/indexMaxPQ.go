@@ -29,6 +29,8 @@ func main() {
 		pq.Insert(idx, s)
 	}
 
+	pq.IncreaseKey(0, "zz")
+
 	// print each key using the iterator
 	it := pq.Iterate()
 	for val := it.Next(); val != nil; val = it.Next() {

@@ -41,7 +41,7 @@ func (m *IndexMinPQ) Insert(i int, key Key) {
 	if m.Contains(i) {
 		panic("Insert: index already in pq ")
 	}
-	m.n ++
+	m.n++
 	m.keys[i] = key
 	m.pq[m.n] = i
 	m.qp[i] = m.n
@@ -114,7 +114,7 @@ func (m *IndexMinPQ) DecreaseKey(i int, key Key) {
 		panic("DecreaseKey: new key larger than original key")
 	}
 	m.keys[i] = key
-	m.swim(m.pq[i])
+	m.swim(m.qp[i])
 }
 
 func (m *IndexMinPQ) Delete(i int) {
@@ -159,7 +159,7 @@ func (m *IndexMinPQ) sink(k int) {
 	for 2*k <= m.n {
 		j := 2 * k
 		if j < m.n && m.great(j, j+1) {
-			j ++
+			j++
 		}
 		if !m.great(k, j) {
 			break
@@ -176,5 +176,5 @@ func (m *IndexMinPQ) Iterate() Iterator {
 	for i := 1; i <= m.n; i++ {
 		cop.Insert(m.pq[i], m.keys[m.pq[i]])
 	}
-	return NewOnceIterator(cop)
+	return NewCopyIterator(cop)
 }
