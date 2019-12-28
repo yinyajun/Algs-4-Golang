@@ -190,4 +190,10 @@ func (m *IndexMaxPQ) sink(k int) {
 
 func (m *IndexMaxPQ) ExtractItem() interface{} { return m.DelMax() }
 
-func (m *IndexMaxPQ) Iterate() Iterator { return NewOnceIterator(m) }
+func (m *IndexMaxPQ) Iterate() Iterator {
+	cop := NewIndexMaxPQ(len(m.pq) - 1)
+	for i := 1; i <= m.n; i++ {
+		cop.Insert(m.pq[i], m.keys[m.pq[i]])
+	}
+	return NewOnceIterator(cop)
+}

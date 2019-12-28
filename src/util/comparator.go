@@ -1,6 +1,8 @@
 package util
 
-import "reflect"
+import (
+	"reflect"
+)
 
 type Key interface{}
 
@@ -17,7 +19,7 @@ func Less(a, b interface{}) bool {
 		return a.(int) < b.(int)
 	case string:
 		return a.(string) < b.(string)
-	case float32:
+	case float64:
 		return a.(float64) < b.(float64)
 	default:
 		panic("compare Err: unsupported type")
@@ -33,7 +35,7 @@ func Leq(a, b interface{}) bool {
 		return a.(int) <= b.(int)
 	case string:
 		return a.(string) <= b.(string)
-	case float32:
+	case float64:
 		return a.(float64) <= b.(float64)
 	default:
 		panic("compare Err: unsupported type")

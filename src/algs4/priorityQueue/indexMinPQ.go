@@ -171,4 +171,10 @@ func (m *IndexMinPQ) sink(k int) {
 
 func (m *IndexMinPQ) ExtractItem() interface{} { return m.DelMin() }
 
-func (m *IndexMinPQ) Iterate() Iterator { return NewOnceIterator(m) }
+func (m *IndexMinPQ) Iterate() Iterator {
+	cop := NewIndexMinPQ(len(m.pq) - 1)
+	for i := 1; i <= m.n; i++ {
+		cop.Insert(m.pq[i], m.keys[m.pq[i]])
+	}
+	return NewOnceIterator(cop)
+}

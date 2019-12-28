@@ -31,9 +31,6 @@ type PrimMST struct {
 func NewPrimMST(g *EdgeWeightedGraph) *PrimMST {
 	m := &PrimMST{}
 	m.edgeTo = make([]*Edge, g.V())
-	//for idx := range m.edgeTo {
-	//	m.edgeTo[idx] = NewEdge(0, 0, 0)
-	//}
 	m.distTo = make([]float64, g.V())
 	for idx := range m.distTo {
 		m.distTo[idx] = POSTIVE_INFINITY
@@ -70,7 +67,7 @@ func (m *PrimMST) scan(g *EdgeWeightedGraph, v int) {
 	for e := vAdj.Next(); e != nil; e = vAdj.Next() {
 		w := e.(*Edge).Other(v)
 		if m.marked[w] {
-			continue
+			continue // v-w is obsolete edge
 		}
 		if e.(*Edge).weight < m.distTo[w] {
 			m.distTo[w] = e.(*Edge).Weight()

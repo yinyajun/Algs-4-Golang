@@ -29,6 +29,7 @@ func main() {
 	for idx, s := range strings {
 		pq.Insert(idx, s)
 	}
+	pq.IncreaseKey(0, "zzz")
 
 	it := pq.Iterate()
 	for val := it.Next(); val != nil; val = it.Next() {

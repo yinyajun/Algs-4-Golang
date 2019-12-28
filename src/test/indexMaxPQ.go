@@ -29,9 +29,10 @@ func main() {
 		pq.Insert(idx, s)
 	}
 
+	// print each key using the iterator
 	it := pq.Iterate()
 	for val := it.Next(); val != nil; val = it.Next() {
-		fmt.Println(val, strings[val.(int)])
+		fmt.Println(val, pq.KeyOf(val.(int)))
 	}
 
 }
