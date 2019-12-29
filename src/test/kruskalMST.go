@@ -9,7 +9,7 @@ import (
 )
 
 /**
-* go run src/test/kruskalMST.go < data/tinyEWG.txt
+* $ go run src/test/kruskalMST.go < data/tinyEWG.txt
 * 0-7 0.16000
 * 2-3 0.17000
 * 1-7 0.19000

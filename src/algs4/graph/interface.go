@@ -74,3 +74,17 @@ type mst interface {
 	Edges() Iterator
 	Weight() float64
 }
+
+type directedEdge interface {
+	Weight() float64
+	From() int
+	To() int
+}
+
+type edgeWeightedDigraph interface {
+	V() int
+	E() int
+	AddEdge(e *DirectedEdge)
+	Adj(v int) Iterator
+	Edges() Iterator
+}

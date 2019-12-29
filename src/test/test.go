@@ -2,18 +2,15 @@ package main
 
 import (
 	"algs4/graph"
-	"algs4/priorityQueue"
 	"fmt"
-	"os"
-	. "util"
+	"strings"
 )
 
 func main() {
-	in := NewIn(os.Stdin)
-	g := graph.NewEdgeWeightedGraphWithIn(in)
-
-	pq := priorityQueue.NewMaxPQwithArray(g.EdgesArray())
-	fmt.Println("(", pq.Size(), "left on minPQ)")
-	PrintIterator(pq.Iterate())
-
+	e := graph.NewDirectedEdge(12, 34, 5.67)
+	s := strings.Builder{}
+	s.WriteString(fmt.Sprintf("%v\n", e))
+	s.WriteString(fmt.Sprintf("%T\n", e))
+	s.WriteString(fmt.Sprintf("%s\n", e))
+	fmt.Println(s.String())
 }

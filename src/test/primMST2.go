@@ -9,7 +9,7 @@ import (
 )
 
 /**
-* go run src/test/primMST2.go < data/tinyEWG.txt
+* $ go run src/test/primMST2.go < data/tinyEWG.txt
 * 1-7 0.19000
 * 0-2 0.26000
 * 2-3 0.17000

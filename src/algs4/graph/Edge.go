@@ -51,9 +51,7 @@ func (e *Edge) CompareTo(that *Edge) bool {
 	return util.Less(e.weight, that.weight)
 }
 
-func (e *Edge) String() string {
-	return fmt.Sprintf("%d-%d %.5f", e.v, e.w, e.weight)
-}
+func (e *Edge) String() string { return fmt.Sprintf("%d-%d %.5f", e.v, e.w, e.weight) }
 
 type EdgeComparator struct{}
 
