@@ -34,7 +34,8 @@ func NewMaxPQ() *MaxPQ {
 
 func NewMaxPQwithArray(keys []Key) *MaxPQ {
 	n := len(keys)
-	pq := NewMaxPQwithCap(n + 1)
+	pq := NewMaxPQwithCap(n)
+	pq.n = n
 	for idx, key := range keys {
 		pq.pq[idx+1] = key
 	}

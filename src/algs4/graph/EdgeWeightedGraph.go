@@ -2,11 +2,11 @@ package graph
 
 import (
 	"algs4/bag"
-	"math/rand"
-	"util"
 	"algs4/stack"
-	"strings"
 	"fmt"
+	"math/rand"
+	"strings"
+	"util"
 )
 
 /**
@@ -140,6 +140,15 @@ func (m *EdgeWeightedGraph) Edges() util.Iterator {
 		}
 	}
 	return list.Iterate()
+}
+
+func (m *EdgeWeightedGraph) EdgesArray() []util.Key {
+	array := []util.Key{}
+	edges := m.Edges()
+	for e := edges.Next(); e != nil; e = edges.Next() {
+		array = append(array, e.(*Edge))
+	}
+	return array
 }
 
 func (m *EdgeWeightedGraph) String() string {

@@ -49,7 +49,7 @@ func NewLazyPrimMST(g *EdgeWeightedGraph) *LazyPrimMST {
 
 func (m *LazyPrimMST) prim(g *EdgeWeightedGraph, s int) {
 	m.scan(g, s)
-	for !m.pq.IsEmpty() {
+	for !m.pq.IsEmpty() && m.mst.Size() < g.V()-1 {
 		e := m.pq.DelMin().(*Edge) // smallest edge on pq
 		v := e.Either()            // two endpoints
 		w := e.Other(v)
@@ -61,10 +61,6 @@ func (m *LazyPrimMST) prim(g *EdgeWeightedGraph, s int) {
 		}
 		m.mst.Enqueue(e) // add e to MST
 		m.weight += e.Weight()
-
-		if m.mst.Size()+1 == g.V() { // early stop
-			break
-		}
 
 		if !m.marked[v] { // v becomes part of tree
 			m.scan(g, v)

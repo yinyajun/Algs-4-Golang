@@ -33,7 +33,9 @@ func NewMinPQ() *MinPQ {
 
 func NewMinPQwithArray(keys []Key) *MinPQ {
 	n := len(keys)
-	pq := NewMinPQwithCap(n + 1)
+
+	pq := NewMinPQwithCap(n)
+	pq.n = n
 	for idx, key := range keys {
 		pq.pq[idx+1] = key
 	}
