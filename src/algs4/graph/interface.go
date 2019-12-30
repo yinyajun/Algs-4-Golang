@@ -88,3 +88,9 @@ type edgeWeightedDigraph interface {
 	Adj(v int) Iterator
 	Edges() Iterator
 }
+
+type shortestPath interface {
+	DistTo(v int) int
+	HasPathTo(v int) int
+	PathTo(v int) Iterator
+}
