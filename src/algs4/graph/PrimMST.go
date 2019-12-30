@@ -69,7 +69,7 @@ func (m *PrimMST) scan(g *EdgeWeightedGraph, v int) {
 		if m.marked[w] {
 			continue // v-w is obsolete edge
 		}
-		if e.(*Edge).weight < m.distTo[w] {
+		if e.(*Edge).Weight() < m.distTo[w] {
 			m.distTo[w] = e.(*Edge).Weight()
 			m.edgeTo[w] = e.(*Edge)
 			if m.pq.Contains(w) {
