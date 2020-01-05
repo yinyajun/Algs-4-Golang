@@ -1,6 +1,12 @@
 package graph
 
-import . "algs4/priorityQueue"
+import (
+	. "algs4/priorityQueue"
+	"algs4/stack"
+	"fmt"
+	"math"
+	"util"
+)
 
 /**
 * a data type for solving the single-source shortest paths problem in edge-weighted digraphs
@@ -26,13 +32,14 @@ func NewDijkstraSP(g *EdgeWeightedDigraph, s int) *DijkstraSP {
 			panic("NewDijkstraSP: edge has negative weight")
 		}
 	}
-	m.validateVertex(s)
 
 	m.distTo = make([]float64, g.V())
 	m.edgeTo = make([]*DirectedEdge, g.V())
+	m.validateVertex(s)
 	for v := 0; v < g.V(); v++ {
 		m.distTo[v] = POSTIVE_INFINITY
 	}
+
 	m.pq = NewIndexMinPQ(g.V())
 
 	m.distTo[s] = 0.0
@@ -67,17 +74,83 @@ func (m *DijkstraSP) relax(e *DirectedEdge) {
 	}
 }
 
-
-func (m *DijkstraSP) DistTo(v int) float64{
+func (m *DijkstraSP) DistTo(v int) float64 {
 	m.validateVertex(v)
 	return m.distTo[v]
 }
 
-
-func (m*DijkstraSP) HasPathTo(v int) bool{
+func (m *DijkstraSP) HasPathTo(v int) bool {
 	m.validateVertex(v)
 	return m.distTo[v] < POSTIVE_INFINITY
 }
 
+func (m *DijkstraSP) PathTo(v int) util.Iterator {
+	m.validateVertex(v)
+	if !m.HasPathTo(v) {
+		return nil
+	}
+	path := stack.NewStack()
+	for e := m.edgeTo[v]; e != nil; e = m.edgeTo[e.From()] {
+		path.Push(e)
+	}
+	return path.Iterate()
+}
 
+func (m *DijkstraSP) check(g *EdgeWeightedDigraph, s int) bool {
+	// check that edge weights are non-negative
+	edges := g.Edges()
+	for e := edges.Next(); e != nil; e = edges.Next() {
+		if e.(*DirectedEdge).Weight() < 0 {
+			fmt.Println("negative edge weight detected")
+			return false
+		}
+	}
+	// check that distTo[v] and edgeTo[v] are consistent
+	if m.distTo[s] != 0.0 || m.edgeTo[s] != nil {
+		fmt.Println("distTo[s] and edgeTo[s] inconsistent")
+		return false
+	}
+	for v := 0; v < g.V(); v++ {
+		if v == s {
+			continue
+		}
+		if m.edgeTo[v] == nil && math.Abs(m.distTo[v]-POSTIVE_INFINITY) > 1E-10 {
+			fmt.Println("distTo[] and edgeTo[] inconsistent")
+			return false
+		}
+	}
+	// check that all edges e = v->w satisfy distTo[w] <= distTo[v] + e.weight()
+	for v := 0; v < g.V(); v++ {
+		vAdj := g.Adj(v)
+		for e := vAdj.Next(); e != nil; e = vAdj.Next() {
+			w := e.(*DirectedEdge).To()
+			if m.distTo[v]+e.(*DirectedEdge).Weight() < m.distTo[w] {
+				fmt.Printf("edge %s not relaxed", e.(*DirectedEdge))
+				return false
+			}
+		}
+	}
+	// check that all edges e = v->w on SPT satisfy distTo[w] == distTo[v] + e.weight()
+	for w := 0; w < g.V(); w++ {
+		if m.edgeTo[w] == nil {
+			continue
+		}
+		e := m.edgeTo[w]
+		v := e.From()
+		if w != e.To() {
+			return false
+		}
+		if math.Abs(m.distTo[v]+e.Weight()-m.distTo[w]) > 1E-10 {
+			fmt.Printf("edge %s on shortest path not tight.", e)
+			return false
+		}
+	}
+	return true
+}
 
+func (m *DijkstraSP) validateVertex(v int) {
+	V := len(m.distTo)
+	if v < 0 || v >= V {
+		panic("validateVertex: invalid vertex")
+	}
+}
