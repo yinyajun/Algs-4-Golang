@@ -42,7 +42,20 @@ func NewDepthFirstOrder(g *Digraph) *DepthFirstOrder {
 	return m
 }
 
-// todo: Edge weight Digraph
+func NewDepthFirstOrderEWD(g *EdgeWeightedDigraph) *DepthFirstOrder {
+	m := &DepthFirstOrder{}
+	m.marked = make([]bool, g.V())
+	m.pre = make([]int, g.V())
+	m.post = make([]int, g.V())
+	m.preorder = queue.NewQueue()
+	m.postorder = queue.NewQueue()
+	for v := 0; v < g.V(); v++ {
+		if !m.marked[v] {
+			m.dfsEWD(g, v)
+		}
+	}
+	return m
+}
 
 func (m *DepthFirstOrder) dfs(g *Digraph, v int) {
 	m.marked[v] = true
@@ -53,6 +66,23 @@ func (m *DepthFirstOrder) dfs(g *Digraph, v int) {
 	for w := vAdj.Next(); w != nil; w = vAdj.Next() {
 		if !m.marked[w.(int)] {
 			m.dfs(g, w.(int))
+		}
+	}
+	m.post[v] = m.postCounter
+	m.postCounter++
+	m.postorder.Enqueue(v)
+}
+
+func (m *DepthFirstOrder) dfsEWD(g *EdgeWeightedDigraph, v int) {
+	m.marked[v] = true
+	m.pre[v] = m.preCounter
+	m.preCounter++
+	m.preorder.Enqueue(v)
+	vAdjEdges := g.Adj(v)
+	for e := vAdjEdges.Next(); e != nil; e = vAdjEdges.Next() {
+		w := e.(*DirectedEdge).To()
+		if !m.marked[w] {
+			m.dfsEWD(g, w)
 		}
 	}
 	m.post[v] = m.postCounter

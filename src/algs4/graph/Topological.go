@@ -33,11 +33,17 @@ func NewTopological(g *Digraph) *Topological {
 	return t
 }
 
+// Determines whether the edge-weighted digraph g has a topological
+// order and, if so, finds such an order.
 func NewTopologicalEWD(g *EdgeWeightedDigraph) *Topological {
 	t := &Topological{}
 	t.rank = make([]int, g.V())
-	finder := NewDirectedCycle()
-
+	finder := NewEdgeWeightedDirectedCycle(g)
+	if finder.HasCycle() {
+		return t
+	}
+	dfs := NewDepthFirstOrderEWD(g)
+	t.order = dfs.ReversePostOrder()
 	return t
 }
 
