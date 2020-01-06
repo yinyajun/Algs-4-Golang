@@ -12,8 +12,8 @@ import "util"
  */
 
 type Topological struct {
-	order util.Iterator
-	rank  []int
+	order util.Iterator // topological order
+	rank  []int         // rank[v] = rank of vertex v in order
 }
 
 func NewTopological(g *Digraph) *Topological {
@@ -33,7 +33,13 @@ func NewTopological(g *Digraph) *Topological {
 	return t
 }
 
-// todo: Topological Edge weight Digraph
+func NewTopologicalEWD(g *EdgeWeightedDigraph) *Topological {
+	t := &Topological{}
+	t.rank = make([]int, g.V())
+	finder := NewDirectedCycle()
+
+	return t
+}
 
 func (t *Topological) Order() util.Iterator {
 	t.order.Reset()
