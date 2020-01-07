@@ -66,6 +66,7 @@ func (m *DijkstraSP) relax(e *DirectedEdge) {
 	if m.distTo[v]+e.Weight() < m.distTo[w] {
 		m.distTo[w] = m.distTo[v] + e.Weight()
 		m.edgeTo[w] = e
+
 		if m.pq.Contains(w) {
 			m.pq.DecreaseKey(w, m.distTo[w])
 		} else {
