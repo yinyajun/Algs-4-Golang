@@ -149,3 +149,6 @@ func (o *CopyIterator) SetNextFunc() {
 		return nil
 	}
 }
+
+
+

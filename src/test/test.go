@@ -1,16 +1,33 @@
 package main
 
 import (
-	"algs4/graph"
+	"github.com/deckarep/golang-set"
 	"fmt"
-	"strings"
 )
 
+type YourType struct {
+	Name string
+}
+
 func main() {
-	e := graph.NewDirectedEdge(12, 34, 5.67)
-	s := strings.Builder{}
-	s.WriteString(fmt.Sprintf("%v\n", e))
-	s.WriteString(fmt.Sprintf("%T\n", e))
-	s.WriteString(fmt.Sprintf("%s\n", e))
-	fmt.Println(s.String())
+	set := mapset.NewThreadUnsafeSetFromSlice([]interface{}{
+		&YourType{Name: "Alise"},
+		&YourType{Name: "Bob"},
+		&YourType{Name: "John"},
+		&YourType{Name: "Nick"},
+	})
+
+	var found *YourType
+	it := set.Iterator()
+
+	for elem := range it.C {
+		if elem.(*YourType).Name == "John" {
+			found = elem.(*YourType)
+			it.Stop()
+		}
+	}
+
+	fmt.Printf("Found %+v\n", found)
+
+	// Output: Found &{Name:John}
 }
