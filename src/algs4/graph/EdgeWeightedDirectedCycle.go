@@ -68,7 +68,12 @@ func (m *EdgeWeightedDirectedCycle) dfs(g *EdgeWeightedDigraph, v int) {
 
 func (m *EdgeWeightedDirectedCycle) HasCycle() bool { return m.cycle != nil }
 
-func (m *EdgeWeightedDirectedCycle) Cycle() util.Iterator { return m.cycle.Iterate() }
+func (m *EdgeWeightedDirectedCycle) Cycle() util.Iterator {
+	if !m.HasCycle() {
+		return nil
+	}
+	return m.cycle.Iterate()
+}
 
 func (m *EdgeWeightedDirectedCycle) check() bool {
 

@@ -10,15 +10,19 @@ import (
 )
 
 /**
-* $ go run src/test/dijkstra.go 0 < data/tinyEWD.txt
+* $ go run src/test/bellamnFordSP.go 0 < data/tinyEWDn.txt
 * 0 to 0 (0.00)
-* 0 to 1 (1.05)  0 -> 4  0.38   4 -> 5  0.35   5 -> 1  0.32
+* 0 to 1 (0.93)  0 -> 2  0.26   2 -> 7  0.34   7 -> 3  0.39   3 -> 6  0.52   6 -> 4 -1.25   4 -> 5  0.35   5 -> 1  0.32
 * 0 to 2 (0.26)  0 -> 2  0.26
 * 0 to 3 (0.99)  0 -> 2  0.26   2 -> 7  0.34   7 -> 3  0.39
-* 0 to 4 (0.38)  0 -> 4  0.38
-* 0 to 5 (0.73)  0 -> 4  0.38   4 -> 5  0.35
+* 0 to 4 (0.26)  0 -> 2  0.26   2 -> 7  0.34   7 -> 3  0.39   3 -> 6  0.52   6 -> 4 -1.25
+* 0 to 5 (0.61)  0 -> 2  0.26   2 -> 7  0.34   7 -> 3  0.39   3 -> 6  0.52   6 -> 4 -1.25   4 -> 5  0.35
 * 0 to 6 (1.51)  0 -> 2  0.26   2 -> 7  0.34   7 -> 3  0.39   3 -> 6  0.52
 * 0 to 7 (0.60)  0 -> 2  0.26   2 -> 7  0.34
+*
+* go run src/test/bellamnFordSP.go 0 < data/tinyEWDnc.txt
+* 4 -> 5  0.35
+* 5 -> 4 -0.66
 *
 * @see
 * @author Golang translation by Yajun Yin from Java by Robert Sedgewick and Kevin Wayne.

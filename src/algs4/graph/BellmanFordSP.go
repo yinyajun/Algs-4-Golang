@@ -46,8 +46,6 @@ func NewBellmanFordSP(g *EdgeWeightedDigraph, s int) *BellmanFordSP {
 	m.onQueue[s] = true
 	for !m.queue.IsEmpty() && !m.HasNegativeCycle() {
 		v := m.queue.Dequeue().(int)
-		fmt.Println(v)
-		m.debug()
 		m.onQueue[v] = false
 		m.relax(g, v)
 	}
@@ -63,11 +61,9 @@ func (m *BellmanFordSP) relax(g *EdgeWeightedDigraph, v int) {
 	vAdj := g.Adj(v)
 	for e := vAdj.Next(); e != nil; e = vAdj.Next() {
 		w := e.(*DirectedEdge).To()
-		fmt.Println(v, w, e.(*DirectedEdge).Weight())
 		if m.distTo[w] > m.distTo[v]+e.(*DirectedEdge).Weight() {
 			m.distTo[w] = m.distTo[v] + e.(*DirectedEdge).Weight()
 			m.edgeTo[w] = e.(*DirectedEdge)
-			fmt.Println(v, w, m.distTo[v], m.distTo[w])
 			if !m.onQueue[w] {
 				m.queue.Enqueue(w)
 				m.onQueue[w] = true
@@ -198,11 +194,5 @@ func (m *BellmanFordSP) validateVertex(v int) {
 	V := len(m.distTo)
 	if v < 0 || v >= V {
 		panic("validateVertex: invalid vertex")
-	}
-}
-
-func (m *BellmanFordSP) debug() {
-	for i := range m.distTo {
-		fmt.Println("\t", i, m.distTo[i])
 	}
 }
