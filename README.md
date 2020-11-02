@@ -6,7 +6,7 @@ by Robert Sedgewick and Kevin Wayne.
 ## Package Structure
 `Algs-4-Golang` has clear structure.
 * `src/abstract`: API(interface) for abstract data structure.  
-* `src/impl`: Implementation(source code) of abstract data structure. 
+* `src/impl`: Implementation(source code & test cases) of abstract data structure. 
 * `src/utils`: Useful tools to support test and debug.
 * `download.sh`: Script for downloading test data files 
 * `run.sh`：Script for setting `GOPATH` and wrapping `go run` command, you can use this to replace `go run`
@@ -40,10 +40,10 @@ Explanations:
 
 | Abstract Data Structure | Implementation                                               |
 | ----------------------- | ------------------------------------------------------------ |
-| Bag                     | LinkedBag<br />ResizingArrayBag                              |
-| Stack                   | LinkedStack<br />ResizeArrayStack                            |
-| Queue                   | LinkedQueue<br />ResizingArrayQueue                          |
-| Union-find              | QuickFindUF<br />QuickUnionUF<br />QuickUnionSizeUF<br />QuickUnionRankUF<br />QuickUnionCompressedUF<br />QuickUnionCompressedUF2 |
+| Bag                     | [LinkedBag](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/linked_bag.go)<br />[ResizingArrayBag](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/resizing_array_bag.go) |
+| Stack                   | [LinkedStack](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/linked_stack.go)<br />[ResizeArrayStack](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/resizing_array_stack.go) |
+| Queue                   | [LinkedQueue](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/linked_queue.go)<br />[ResizingArrayQueue](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/resizing_array_queue.go)                  |
+| Union-find              | [QuickFindUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_find_uf.go)<br />[QuickUnionUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_uf.go)<br />[QuickUnionSizeUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_size_uf.go)<br />[QuickUnionRankUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_rank_uf.go)<br />[QuickUnionCompressedUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_compressed_uf.go)<br />[QuickUnionCompressedUF2](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_compressed_uf2.go) |
 
 
 
