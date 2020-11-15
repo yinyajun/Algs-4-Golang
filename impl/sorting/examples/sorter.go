@@ -14,7 +14,7 @@ import (
 	"Algs-4-Golang/utils"
 )
 
-// ./run.sh src/impl/sorting/examples/sorter.go Selection  < data/tiny.txt
+// go run impl/sorting/examples/sorter.go Selection  < data/tiny.txt
 // +-----------+
 // | Selection |
 // +-----------+

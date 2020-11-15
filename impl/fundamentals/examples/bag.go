@@ -14,7 +14,7 @@ import (
 	"Algs-4-Golang/utils"
 )
 
-// ./run.sh src/impl/fundamentals/examples/bag.go LinkedBag  < data/tobe.txt
+// go run impl/fundamentals/examples/bag.go LinkedBag  < data/tobe.txt
 // +-----------+
 // | LinkedBag |
 // +-----------+

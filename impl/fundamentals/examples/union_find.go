@@ -14,7 +14,7 @@ import (
 	"Algs-4-Golang/utils"
 )
 
-// ./run.sh src/impl/fundamentals/examples/union_find.go  < data/tinyUF.txt
+// go run impl/fundamentals/examples/union_find.go  < data/tinyUF.txt
 // +-------------+
 // | QuickFindUF |
 // +-------------+

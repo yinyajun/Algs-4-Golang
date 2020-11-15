@@ -18,7 +18,7 @@ import (
 
 // Dijkstra双栈算数表达式求值
 // ---------------------------------------------------------
-// ./run.sh src/impl/fundamentals/examples/evaluate.go
+// go run impl/fundamentals/examples/evaluate.go
 // ( 1 + ( ( 2 + 3 ) * ( 4 * 5 ) ) )
 // 101
 

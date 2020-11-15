@@ -14,7 +14,7 @@ import (
 	"Algs-4-Golang/utils"
 )
 
-// ./run.sh src/impl/fundamentals/examples/stack.go LinkedStack < data/tobe.txt
+// go run impl/fundamentals/examples/stack.go LinkedStack < data/tobe.txt
 // +-------------+
 // | LinkedStack |
 // +-------------+

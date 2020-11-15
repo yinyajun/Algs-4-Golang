@@ -14,7 +14,7 @@ import (
 	"Algs-4-Golang/utils"
 )
 
-// ./run.sh src/impl/fundamentals/examples/queue.go ResizingArrayQueue < data/tobe.txt
+// go run impl/fundamentals/examples/queue.go ResizingArrayQueue < data/tobe.txt
 // +--------------------+
 // | ResizingArrayQueue |
 // +--------------------+
