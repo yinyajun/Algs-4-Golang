@@ -3,6 +3,8 @@
 `Algs-4-Golang` is Golang port of the Java code in textbook [Algorithms, 4th Edition](https://algs4.cs.princeton.edu/home/)
 by Robert Sedgewick and Kevin Wayne. 
 
+It uses `go module` feature, make sure golang version >= 1.13.
+
 ## Package Structure
 `Algs-4-Golang` has clear structure.
 * `abstract`: API(interface) for abstract data structure.  
