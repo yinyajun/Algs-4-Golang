@@ -44,20 +44,20 @@ func init() {
 
 func initSorter(args ...interface{}) {
 	typ := args[0]
-	slice := args[1].([]string)
-	indexer := func(i int) interface{} { return slice[i] }
 	switch typ {
 	case Selection:
-		s = sorting.NewSelectionSorter(indexer)
+		s = sorting.NewSelection()
 	case Insertion:
-		s = sorting.NewInsertionSorter(indexer)
+		s = sorting.NewInsertion()
 	}
 }
 
 func main() {
 	a := utils.StdIn.ReadAllStrings()
-	initSorter(utils.Arg0, a)
-	s.Sort(a)
-	utils.Assert(s.IsSorted(a))
-	s.Show(a)
+	initSorter(utils.Arg0)
+	s.Sort(a, func(i, j int) bool { return utils.Less(a[i], a[j]) })
+	utils.Assert(s.IsSorted(a, func(i, j int) bool { return utils.Less(a[i], a[j]) }))
+	for i := range a {
+		utils.StdOut.Println(a[i])
+	}
 }

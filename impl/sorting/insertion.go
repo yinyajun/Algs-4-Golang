@@ -8,23 +8,24 @@
 
 package sorting
 
-import "Algs-4-Golang/abstract"
+import "reflect"
 
 type insertingSorter struct {
 	*selectionSorter
 }
 
-func NewInsertionSorter(indexer abstract.Indexer) *insertingSorter {
-	return &insertingSorter{NewSelectionSorter(indexer)}
+func NewInsertion() *insertingSorter {
+	return &insertingSorter{NewSelection()}
 }
 
-// [0, i) sorted, [i, lenght) to be sort
-func (s *insertingSorter) Sort(a interface{}) {
-	s.init(a)
+// [0, i) sorted, [i, length) to be sort
+func (s *insertingSorter) Sort(a interface{}, less func(i, j int) bool) {
+	s.length = reflect.ValueOf(a).Len()
+	s.swapper = reflect.Swapper(a)
 	for i := 1; i < s.length; i++ {
 		// 将a[i]插入到a[i-1],a[i-2]...
 		// swap in pairs
-		for j := i; j > 0 && s.Less(j, j-1); j-- {
+		for j := i; j > 0 && less(j, j-1); j-- {
 			s.Exch(j, j-1)
 		}
 	}
