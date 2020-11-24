@@ -33,8 +33,10 @@ import (
 var s abstract.Sorter
 
 const (
-	Selection = "Selection"
-	Insertion = "Insertion"
+	Selection         = "Selection"
+	Insertion         = "Insertion"
+	AdvancedInsertion = "AdvancedInsertion"
+	Shell             = "Shell"
 )
 
 func init() {
@@ -49,6 +51,12 @@ func initSorter(args ...interface{}) {
 		s = sorting.NewSelection()
 	case Insertion:
 		s = sorting.NewInsertion()
+	case AdvancedInsertion:
+		s = sorting.NewAdvancedInsertionSorter()
+	case Shell:
+		s = sorting.NewShell()
+	default:
+		utils.Panic("unsupported type")
 	}
 }
 

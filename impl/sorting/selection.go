@@ -9,39 +9,43 @@
 package sorting
 
 import (
+	"Algs-4-Golang/utils"
 	"reflect"
 )
 
-type selectionSorter struct {
-	length  int
-	swapper func(i, j int)
-}
+type selectionSorter struct{}
 
 func NewSelection() *selectionSorter { return &selectionSorter{} }
 
 func (s *selectionSorter) Sort(a interface{}, less func(i, j int) bool) {
-	s.length = reflect.ValueOf(a).Len()
-	s.swapper = reflect.Swapper(a)
+	sliceValue := reflect.ValueOf(a)
+	swapper := reflect.Swapper(a)
 	// [0, i) sorted, [i, length) unsorted
-	for i := 0; i < s.length; i++ {
+	for i := 0; i < sliceValue.Len(); i++ {
 		min_val_idx := i
-		for j := i; j < s.length; j++ {
+		for j := i + 1; j < sliceValue.Len(); j++ {
 			if less(j, min_val_idx) {
 				min_val_idx = j
 			}
 		}
 		// find min_val_idx in [i, length)
-		s.Exch(i, min_val_idx)
+		swapper(i, min_val_idx)
 	}
 }
 
-func (s *selectionSorter) Exch(i, j int) { s.swapper(i, j) }
-
 func (s *selectionSorter) IsSorted(a interface{}, less func(i, j int) bool) bool {
-	for i := 1; i < s.length; i++ {
+	sliceValue := reflect.ValueOf(a)
+	for i := 1; i < sliceValue.Len(); i++ {
 		if less(i, i-1) {
 			return false
 		}
 	}
 	return true
+}
+
+func (s *selectionSorter) Show(a interface{}) {
+	sliceValue := reflect.ValueOf(a)
+	for i := 0; i < sliceValue.Len(); i++ {
+		utils.StdOut.Println(sliceValue.Index(i))
+	}
 }

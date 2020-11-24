@@ -10,6 +10,6 @@ package abstract
 
 type Sorter interface {
 	Sort(slice interface{}, less func(i, j int) bool)
-	Exch(i, j int)
 	IsSorted(slice interface{}, less func(i, j int) bool) bool
+	Show(slice interface{})
 }
