@@ -9,7 +9,8 @@
 package abstract
 
 type Sorter interface {
-	Sort(slice interface{}, less func(i, j int) bool)
+	Sort(a interface{}, less func(i, j int) bool)
+	IndexSort(a []int, less func(i, j int) bool)
 	IsSorted(slice interface{}, less func(i, j int) bool) bool
 	Show(slice interface{})
 }

@@ -9,36 +9,46 @@
 package main
 
 import (
+	"Algs-4-Golang/abstract"
 	"Algs-4-Golang/impl/sorting"
 	"Algs-4-Golang/utils"
-
 	"math/rand"
 	"time"
 )
 
 type SortCompare struct{}
 
-func (c *SortCompare) time(alg string, a []int) time.Duration {
+func (c *SortCompare) time(alg string, a []float64) time.Duration {
+	var sorter abstract.Sorter
 	start := time.Now()
 	switch alg {
 	case "Insertion":
-		sorting.NewInsertion().Sort(a, func(i, j int) bool { return a[i] < a[j] })
+		sorter = sorting.NewInsertion()
 	case "Selection":
-		sorting.NewSelection().Sort(a, func(i, j int) bool { return a[i] < a[j] })
+		sorter = sorting.NewSelection()
 	case "AdvancedInsertion":
-		sorting.NewAdvancedInsertionSorter().Sort(a, func(i, j int) bool { return a[i] < a[j] })
+		sorter = sorting.NewAdvancedInsertion()
 	case "Shell":
-		sorting.NewShell().Sort(a, func(i, j int) bool { return a[i] < a[j] })
+		sorter = sorting.NewShell()
+	case "Merge":
+		sorter = sorting.NewMerge()
+	case "AdvancedMerge":
+		sorter = sorting.NewAdvancedMerge()
+	default:
+		panic("unsupported algs")
 	}
-	return time.Since(start)
+	sorter.Sort(a, func(i, j int) bool { return a[i] < a[j] })
+	consume := time.Since(start)
+	utils.AssertF(sorter.IsSorted(a, func(i, j int) bool { return a[i] < a[j] }), "%s is unsorted.", alg)
+	return consume
 }
 
 func (c *SortCompare) timeRandomInput(alg string, N int, T int) time.Duration {
 	var total time.Duration
-	a := make([]int, N)
+	a := make([]float64, N)
 	for t := 0; t < T; t++ {
 		for i := 0; i < N; i++ {
-			a[i] = rand.Intn(1e8)
+			a[i] = rand.Float64() + float64(rand.Intn(100))
 		}
 		total += c.time(alg, a)
 	}
@@ -47,10 +57,10 @@ func (c *SortCompare) timeRandomInput(alg string, N int, T int) time.Duration {
 
 func main() {
 	t := new(SortCompare)
-	N := 10000
+	N := 500000
 	T := 10
-	t1 := t.timeRandomInput("Insertion", N, T)
-	t2 := t.timeRandomInput("Selection", N, T)
-	t3 := t.timeRandomInput("Shell", N, T)
-	utils.StdOut.Println(t1, t2, t3)
+	for _, alg := range []string{"Merge", "AdvancedMerge"} {
+		consume := t.timeRandomInput(alg, N, T)
+		utils.StdOut.Println(alg, consume)
+	}
 }

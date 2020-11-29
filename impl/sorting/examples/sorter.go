@@ -37,6 +37,8 @@ const (
 	Insertion         = "Insertion"
 	AdvancedInsertion = "AdvancedInsertion"
 	Shell             = "Shell"
+	Merge             = "Merge"
+	AdvancedMerge     = "AdvancedMerge"
 )
 
 func init() {
@@ -52,9 +54,13 @@ func initSorter(args ...interface{}) {
 	case Insertion:
 		s = sorting.NewInsertion()
 	case AdvancedInsertion:
-		s = sorting.NewAdvancedInsertionSorter()
+		s = sorting.NewAdvancedInsertion()
 	case Shell:
 		s = sorting.NewShell()
+	case Merge:
+		s = sorting.NewMerge()
+	case AdvancedMerge:
+		s = sorting.NewAdvancedMerge()
 	default:
 		utils.Panic("unsupported type")
 	}
@@ -65,7 +71,5 @@ func main() {
 	initSorter(utils.Arg0)
 	s.Sort(a, func(i, j int) bool { return utils.Less(a[i], a[j]) })
 	utils.Assert(s.IsSorted(a, func(i, j int) bool { return utils.Less(a[i], a[j]) }))
-	for i := range a {
-		utils.StdOut.Println(a[i])
-	}
+	s.Show(a)
 }
