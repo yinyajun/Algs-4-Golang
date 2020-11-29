@@ -32,6 +32,8 @@ func (c *SortCompare) time(alg string, a []float64) time.Duration {
 		sorter = sorting.NewShell()
 	case "Merge":
 		sorter = sorting.NewMerge()
+	case "MergeBU":
+		sorter = sorting.NewMergeBU()
 	case "AdvancedMerge":
 		sorter = sorting.NewAdvancedMerge()
 	default:
@@ -59,7 +61,7 @@ func main() {
 	t := new(SortCompare)
 	N := 500000
 	T := 10
-	for _, alg := range []string{"Merge", "AdvancedMerge"} {
+	for _, alg := range []string{"Merge", "AdvancedMerge", "MergeBU"} {
 		consume := t.timeRandomInput(alg, N, T)
 		utils.StdOut.Println(alg, consume)
 	}
