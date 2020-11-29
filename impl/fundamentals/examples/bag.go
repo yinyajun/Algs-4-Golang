@@ -53,6 +53,8 @@ func initBag(args ...interface{}) {
 		b = fundamentals.NewResizingArrayBag()
 	case LinkedBag:
 		b = fundamentals.NewLinkedBag()
+	default:
+		utils.Panic("unsupported type")
 	}
 }
 

@@ -33,8 +33,12 @@ import (
 var s abstract.Sorter
 
 const (
-	Selection = "Selection"
-	Insertion = "Insertion"
+	Selection         = "Selection"
+	Insertion         = "Insertion"
+	AdvancedInsertion = "AdvancedInsertion"
+	Shell             = "Shell"
+	Merge             = "Merge"
+	AdvancedMerge     = "AdvancedMerge"
 )
 
 func init() {
@@ -44,20 +48,28 @@ func init() {
 
 func initSorter(args ...interface{}) {
 	typ := args[0]
-	slice := args[1].([]string)
-	indexer := func(i int) interface{} { return slice[i] }
 	switch typ {
 	case Selection:
-		s = sorting.NewSelectionSorter(indexer)
+		s = sorting.NewSelection()
 	case Insertion:
-		s = sorting.NewInsertionSorter(indexer)
+		s = sorting.NewInsertion()
+	case AdvancedInsertion:
+		s = sorting.NewAdvancedInsertion()
+	case Shell:
+		s = sorting.NewShell()
+	case Merge:
+		s = sorting.NewMerge()
+	case AdvancedMerge:
+		s = sorting.NewAdvancedMerge()
+	default:
+		utils.Panic("unsupported type")
 	}
 }
 
 func main() {
 	a := utils.StdIn.ReadAllStrings()
-	initSorter(utils.Arg0, a)
-	s.Sort(a)
-	utils.Assert(s.IsSorted(a))
+	initSorter(utils.Arg0)
+	s.Sort(a, func(i, j int) bool { return utils.Less(a[i], a[j]) })
+	utils.Assert(s.IsSorted(a, func(i, j int) bool { return utils.Less(a[i], a[j]) }))
 	s.Show(a)
 }

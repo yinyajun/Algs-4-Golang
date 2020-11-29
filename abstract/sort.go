@@ -9,12 +9,8 @@
 package abstract
 
 type Sorter interface {
-	Sort(slice interface{})
-	Less(i, j int) bool
-	Exch(i, j int)
+	Sort(a interface{}, less func(i, j int) bool)
+	IndexSort(a []int, less func(i, j int) bool)
+	IsSorted(slice interface{}, less func(i, j int) bool) bool
 	Show(slice interface{})
-	IsSorted(slice interface{}) bool
 }
-
-//Lack of generic type, use this to index value in a interface(slice type)
-type Indexer func(i int) interface{}

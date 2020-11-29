@@ -39,6 +39,8 @@ func initQueue(args ...interface{}) {
 		q = fundamentals.NewResizingArrayQueue()
 	case LinkedQueue:
 		q = fundamentals.NewLinkedQueue()
+	default:
+		utils.Panic("unsupported type")
 	}
 }
 
