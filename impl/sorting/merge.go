@@ -13,6 +13,10 @@ import (
 	"Algs-4-Golang/utils"
 )
 
+// ----------------------------
+// merge sort
+// ----------------------------
+
 type mergeSort struct {
 	*baseSorter
 }
@@ -66,6 +70,10 @@ func (s *mergeSort) merge(a, aux []int, lo, mid, hi int, less func(i, j int) boo
 	}
 }
 
+// ----------------------------
+// merge sort BU
+// ----------------------------
+
 type mergeBUSort struct {
 	*baseSorter
 }
@@ -111,6 +119,10 @@ func (s *mergeBUSort) merge(a, aux []int, lo, mid, hi int, less func(i, j int) b
 		}
 	}
 }
+
+// ----------------------------
+// advanced merge sort
+// ----------------------------
 
 type advancedMergeSorter struct {
 	*baseSorter

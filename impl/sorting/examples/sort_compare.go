@@ -59,7 +59,7 @@ func (c *SortCompare) timeRandomInput(alg string, N int, T int) time.Duration {
 
 func main() {
 	t := new(SortCompare)
-	N := 500000
+	N := 1000000
 	T := 10
 	for _, alg := range []string{"Merge", "AdvancedMerge", "MergeBU"} {
 		consume := t.timeRandomInput(alg, N, T)

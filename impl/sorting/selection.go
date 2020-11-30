@@ -8,6 +8,10 @@
 
 package sorting
 
+// ----------------------------
+// selection sort
+// ----------------------------
+
 type selectionSorter struct {
 	*baseSorter
 }
@@ -30,7 +34,7 @@ func (s *selectionSorter) IndexSort(a []int, less func(i, j int) bool) {
 				minValueIndex = j
 			}
 		}
-		// find min_val_idx in [i, length)
+		// find minValueIndex in [i, length)
 		Exch(a, i, minValueIndex)
 	}
 }
