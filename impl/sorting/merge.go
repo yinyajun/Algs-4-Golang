@@ -10,27 +10,32 @@ package sorting
 
 import (
 	"Algs-4-Golang/abstract"
+	"Algs-4-Golang/utils"
 )
 
-type mergesSort struct {
+// ----------------------------
+// merge sort
+// ----------------------------
+
+type mergeSort struct {
 	*baseSorter
 }
 
-func NewMerge() *mergesSort {
-	impl := &mergesSort{}
+func NewMerge() *mergeSort {
+	impl := &mergeSort{}
 	base := &baseSorter{}
 	base.impl = impl
 	impl.baseSorter = base
 	return impl
 }
 
-func (s *mergesSort) IndexSort(a []int, less func(i, j int) bool) {
+func (s *mergeSort) IndexSort(a []int, less func(i, j int) bool) {
 	n := len(a)
 	aux := make([]int, n)
 	s.sort(a, aux, 0, n-1, less)
 }
 
-func (s *mergesSort) sort(a, aux []int, lo, hi int, less func(i, j int) bool) {
+func (s *mergeSort) sort(a, aux []int, lo, hi int, less func(i, j int) bool) {
 	if lo >= hi {
 		return
 	}
@@ -41,7 +46,7 @@ func (s *mergesSort) sort(a, aux []int, lo, hi int, less func(i, j int) bool) {
 }
 
 // merge a[lo:mid], a[mid+1, hi]
-func (s *mergesSort) merge(a, aux []int, lo, mid, hi int, less func(i, j int) bool) {
+func (s *mergeSort) merge(a, aux []int, lo, mid, hi int, less func(i, j int) bool) {
 	// copy
 	for i := lo; i <= hi; i++ {
 		aux[i] = a[i]
@@ -65,31 +70,59 @@ func (s *mergesSort) merge(a, aux []int, lo, mid, hi int, less func(i, j int) bo
 	}
 }
 
-//func (s *mergesSort) merge2(a, aux []int, lo, mid, hi int, less func(i, j int) bool) {
-//	// copy
-//	for i := lo; i <= hi; i++ {
-//		aux[i] = a[i]
-//	}
-//
-//	i, j := lo, mid+1
-//	k := lo
-//	for i <= mid && j <= hi {
-//		if !less(aux[j], aux[i]) { // aux[i]<=aux[j]
-//			a[k] = aux[i]
-//			i++
-//			k++
-//		} else { // aux[i] > aux[j]
-//			a[k] = aux[j]
-//			j++
-//			k++
-//		}
-//	}
-//	for i <= mid {
-//		a[k] = aux[i]
-//		i++
-//		k++
-//	}
-//}
+// ----------------------------
+// merge sort BU
+// ----------------------------
+
+type mergeBUSort struct {
+	*baseSorter
+}
+
+func NewMergeBU() *mergeBUSort {
+	impl := &mergeBUSort{}
+	base := &baseSorter{}
+	base.impl = impl
+	impl.baseSorter = base
+	return impl
+}
+
+func (s *mergeBUSort) IndexSort(a []int, less func(i, j int) bool) {
+	n := len(a)
+	aux := make([]int, n)
+	for sz := 1; sz < n; sz *= 2 {
+		for lo := 0; lo < n-sz; lo += 2 * sz {
+			s.merge(a, aux, lo, lo+sz-1, utils.MinInt(lo+2*sz-1, n-1), less)
+		}
+	}
+}
+
+func (s *mergeBUSort) merge(a, aux []int, lo, mid, hi int, less func(i, j int) bool) {
+	// copy
+	for i := lo; i <= hi; i++ {
+		aux[i] = a[i]
+	}
+
+	i, j := lo, mid+1
+	for k := lo; k <= hi; k++ {
+		if i > mid {
+			a[k] = aux[j]
+			j++
+		} else if j > hi {
+			a[k] = aux[i]
+			i++
+		} else if less(aux[j], aux[i]) {
+			a[k] = aux[j]
+			j++
+		} else {
+			a[k] = aux[i]
+			i++
+		}
+	}
+}
+
+// ----------------------------
+// advanced merge sort
+// ----------------------------
 
 type advancedMergeSorter struct {
 	*baseSorter

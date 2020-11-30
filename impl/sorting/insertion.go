@@ -8,6 +8,10 @@
 
 package sorting
 
+// ----------------------------
+// insertion sort
+// ----------------------------
+
 type insertingSorter struct {
 	*baseSorter
 }
@@ -30,6 +34,10 @@ func (s *insertingSorter) IndexSort(a []int, less func(i, j int) bool) {
 		}
 	}
 }
+
+// ----------------------------
+// advanced insertion sort
+// ----------------------------
 
 type advancedInsertingSorter struct {
 	*baseSorter

@@ -8,6 +8,10 @@
 
 package sorting
 
+// ----------------------------
+// shell sort
+// ----------------------------
+
 type shellSorter struct {
 	*baseSorter
 }

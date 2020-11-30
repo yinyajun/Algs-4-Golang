@@ -53,3 +53,16 @@ func Leq(a, b interface{}) bool {
 func Great(a, b interface{}) bool {
 	return !Leq(a, b)
 }
+
+func MinInt(a ...int) int {
+	if len(a) == 0 {
+		Panic("invalid arguments")
+	}
+	m := a[0]
+	for i := 1; i < len(a); i++ {
+		if a[i] < m {
+			m = a[i]
+		}
+	}
+	return m
+}

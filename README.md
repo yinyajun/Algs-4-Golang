@@ -32,11 +32,22 @@ go run impl/fundamentals/examples/stack.go LinkedStack < data/tobe.txt
 
 | Abstract Data Structure | Implementation                                               |
 | ----------------------- | ------------------------------------------------------------ |
-| Bag                     | [LinkedBag](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/linked_bag.go)<br />[ResizingArrayBag](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/resizing_array_bag.go) |
-| Stack                   | [LinkedStack](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/linked_stack.go)<br />[ResizeArrayStack](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/resizing_array_stack.go) |
-| Queue                   | [LinkedQueue](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/linked_queue.go)<br />[ResizingArrayQueue](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/resizing_array_queue.go)                  |
-| Union-find              | [QuickFindUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_find_uf.go)<br />[QuickUnionUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_uf.go)<br />[QuickUnionSizeUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_size_uf.go)<br />[QuickUnionRankUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_rank_uf.go)<br />[QuickUnionCompressedUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_compressed_uf.go)<br />[QuickUnionCompressedUF2](https://github.com/yinyajun/Algs-4-Golang/blob/master/src/impl/fundamentals/quick_union_compressed_uf2.go) |
+| Bag                     | [LinkedBag](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/linked_bag.go)<br />[ResizingArrayBag](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/resizing_array_bag.go) |
+| Stack                   | [LinkedStack](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/linked_stack.go)<br />[ResizeArrayStack](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/resizing_array_stack.go) |
+| Queue                   | [LinkedQueue](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/linked_queue.go)<br />[ResizingArrayQueue](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/resizing_array_queue.go)                  |
+| Union-find              | [QuickFindUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/quick_find_uf.go)<br />[QuickUnionUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/quick_union_uf.go)<br />[QuickUnionSizeUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/quick_union_size_uf.go)<br />[QuickUnionRankUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/quick_union_rank_uf.go)<br />[QuickUnionCompressedUF](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/quick_union_compressed_uf.go)<br />[QuickUnionCompressedUF2](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/fundamentals/quick_union_compressed_uf2.go) |
 
 
 
 #### 2. Sorting
+
+| Abstract Data Structure | Implementation                                               |
+| ----------------------- | ------------------------------------------------------------ |
+| Sorter                  | [Selection](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/selection.go)<br />[Insertion](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/insertion.go)<br />[Advanced Insertion](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/insertion.go)<br />[Shell](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/shell.go) |
+| Sorter                  | [Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[MergeBU](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[Advanced Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)           |
+|                         |                                                              |
+|                         |                                                              |
+|                         |                                                              |
+|                         |                                                              |
+|                         |                                                              |
+
