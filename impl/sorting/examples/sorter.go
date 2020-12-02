@@ -39,6 +39,7 @@ const (
 	Shell             = "Shell"
 	Merge             = "Merge"
 	AdvancedMerge     = "AdvancedMerge"
+	Quick             = "Quick"
 )
 
 func init() {
@@ -61,6 +62,8 @@ func initSorter(args ...interface{}) {
 		s = sorting.NewMerge()
 	case AdvancedMerge:
 		s = sorting.NewAdvancedMerge()
+	case Quick:
+		s = sorting.NewQuick()
 	default:
 		utils.Panic("unsupported type")
 	}
