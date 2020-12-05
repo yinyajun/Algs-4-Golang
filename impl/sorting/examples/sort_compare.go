@@ -36,6 +36,12 @@ func (c *SortCompare) time(alg string, a []float64) time.Duration {
 		sorter = sorting.NewMergeBU()
 	case "AdvancedMerge":
 		sorter = sorting.NewAdvancedMerge()
+	case "Quick":
+		sorter = sorting.NewQuick()
+	case "ThreeWayQuick":
+		sorter = sorting.NewThreeWayQuick()
+	case "AdvancedQuick":
+		sorter = sorting.NewAdvancedQuick()
 	default:
 		panic("unsupported algs")
 	}
@@ -61,7 +67,7 @@ func main() {
 	t := new(SortCompare)
 	N := 1000000
 	T := 10
-	for _, alg := range []string{"Merge", "AdvancedMerge", "MergeBU"} {
+	for _, alg := range []string{"Merge", "AdvancedMerge", "MergeBU", "Quick", "ThreeWayQuick", "AdvancedQuick"} {
 		consume := t.timeRandomInput(alg, N, T)
 		utils.StdOut.Println(alg, consume)
 	}
