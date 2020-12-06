@@ -40,6 +40,9 @@ const (
 	Merge             = "Merge"
 	AdvancedMerge     = "AdvancedMerge"
 	Quick             = "Quick"
+	ThreeWayQuick     = "ThreeWayQuick"
+	AdvancedQuick     = "AdvancedQuick"
+	Heap              = "Heap"
 )
 
 func init() {
@@ -64,6 +67,12 @@ func initSorter(args ...interface{}) {
 		s = sorting.NewAdvancedMerge()
 	case Quick:
 		s = sorting.NewQuick()
+	case ThreeWayQuick:
+		s = sorting.NewThreeWayQuick()
+	case AdvancedQuick:
+		s = sorting.NewAdvancedQuick()
+	case Heap:
+		s = sorting.NewHeap()
 	default:
 		utils.Panic("unsupported type")
 	}
