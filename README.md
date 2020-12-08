@@ -43,11 +43,20 @@ go run impl/fundamentals/examples/stack.go LinkedStack < data/tobe.txt
 
 | Abstract Data Structure | Implementation                                               |
 | ----------------------- | ------------------------------------------------------------ |
-| Sorter                  | [Selection](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/selection.go)<br />[Insertion](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/insertion.go)<br />[Advanced Insertion](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/insertion.go)<br />[Shell](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/shell.go) |
-| Sorter                  | [Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[MergeBU](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[Advanced Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)           |
-|                         |                                                              |
-|                         |                                                              |
-|                         |                                                              |
-|                         |                                                              |
-|                         |                                                              |
+| Sorter(basic)           | [Selection](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/selection.go)<br />[Insertion](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/insertion.go)<br />[Advanced Insertion](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/insertion.go)<br />[Shell](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/shell.go) |
+| Sorter(advanced)        | [Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[MergeBU](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[Advanced Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[Quick]()<br />[ThreeWayQuick]()<br />[AdvancedQuick]()<br />[Heap]() |
+
+#### 3. Searching
+
+| Abstract Data Structure | Implementation           |
+| ----------------------- | ------------------------ |
+| SortedSymbolTable       | [BinarySearchST]()<br /> |
+|                         |                          |
+|                         |                          |
+
+
+
+
+
+
 
