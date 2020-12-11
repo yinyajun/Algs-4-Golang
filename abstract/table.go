@@ -15,6 +15,7 @@ type SymbolTable interface {
 	Contains(key interface{}) bool
 	IsEmpty() bool
 	Size() int
+	Keys() Iterator
 }
 
 type SortedSymbolTable interface {

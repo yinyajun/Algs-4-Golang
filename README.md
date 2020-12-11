@@ -44,15 +44,15 @@ go run impl/fundamentals/examples/stack.go LinkedStack < data/tobe.txt
 | Abstract Data Structure | Implementation                                               |
 | ----------------------- | ------------------------------------------------------------ |
 | Sorter(basic)           | [Selection](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/selection.go)<br />[Insertion](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/insertion.go)<br />[Advanced Insertion](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/insertion.go)<br />[Shell](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/shell.go) |
-| Sorter(advanced)        | [Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[MergeBU](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[Advanced Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[Quick]()<br />[ThreeWayQuick]()<br />[AdvancedQuick]()<br />[Heap]() |
+| Sorter(advanced)        | [Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[MergeBU](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[Advanced Merge](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/merge.go)<br />[Quick](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/quick.go)<br />[ThreeWayQuick](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/quick.go)<br />[AdvancedQuick](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/quick.go)<br />[Heap](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/sorting/heap.go) |
 
 #### 3. Searching
 
-| Abstract Data Structure | Implementation           |
-| ----------------------- | ------------------------ |
-| SortedSymbolTable       | [BinarySearchST]()<br /> |
-|                         |                          |
-|                         |                          |
+| Abstract Data Structure | Implementation                                               |
+| ----------------------- | ------------------------------------------------------------ |
+| SortedSymbolTable       | [BinarySearchST](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/searching/binary_search_st.go)<br /> |
+|                         |                                                              |
+|                         |                                                              |
 
 
 
