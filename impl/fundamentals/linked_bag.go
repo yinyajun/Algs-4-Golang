@@ -43,6 +43,10 @@ type Node struct {
 	next  abstract.Node
 }
 
+func NewNode(value interface{}, next abstract.Node) *Node {
+	return &Node{value, next}
+}
+
 func (n *Node) Next() abstract.Node { return n.next }
 
 func (n *Node) SetNext(node abstract.Node) { n.next = node }
