@@ -66,3 +66,12 @@ func MinInt(a ...int) int {
 	}
 	return m
 }
+
+func CompareTo(a, b interface{}) int {
+	if Less(a, b) {
+		return -1
+	} else if a == b {
+		return 0
+	}
+	return 1
+}

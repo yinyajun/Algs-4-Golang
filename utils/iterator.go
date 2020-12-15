@@ -189,7 +189,7 @@ func (i *LinkedListIterator) HasNext() bool {
 
 func (i *LinkedListIterator) Next() interface{} {
 	if i.HasNext() {
-		res := i.cur.Value()
+		res := i.cur.Key()
 		i.cur = i.cur.Next()
 		return res
 	}

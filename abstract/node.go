@@ -9,8 +9,25 @@
 package abstract
 
 type Node interface {
-	Next() Node
-	SetNext(Node)
+	Key() interface{}
 	Value() interface{}
+	Next() Node
+
+	SetNext(Node)
 	SetValue(interface{})
+	SetKey(interface{})
+}
+
+type Node2 interface {
+	Key() interface{}
+	Value() interface{}
+	Left() Node2
+	Right() Node2
+	Size() int
+
+	SetValue(interface{})
+	SetKey(interface{})
+	SetLeft(Node2)
+	SetRight(Node2)
+	SetSize(int)
 }

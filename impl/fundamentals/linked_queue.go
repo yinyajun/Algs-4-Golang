@@ -23,7 +23,7 @@ type LinkedQueue struct {
 func NewLinkedQueue() *LinkedQueue { return &LinkedQueue{} }
 
 func (q *LinkedQueue) Enqueue(item interface{}) {
-	newNode := &Node{item, nil}
+	newNode := &Node{item, nil, nil}
 	if q.last != nil {
 		q.last.SetNext(newNode)
 	} else {
@@ -35,7 +35,7 @@ func (q *LinkedQueue) Enqueue(item interface{}) {
 
 func (q *LinkedQueue) Dequeue() interface{} {
 	utils.Assert(!q.IsEmpty(), "queue underflow")
-	item := q.first.Value()
+	item := q.first.Key()
 	q.first = q.first.Next()
 	if q.first == nil {
 		q.last = q.first
@@ -50,7 +50,7 @@ func (q *LinkedQueue) Size() int { return q.n }
 
 func (q *LinkedQueue) Peek() interface{} {
 	utils.Assert(!q.IsEmpty(), "queue underflow")
-	return q.first.Value()
+	return q.first.Key()
 }
 
 func (q *LinkedQueue) Iterate() abstract.Iterator {

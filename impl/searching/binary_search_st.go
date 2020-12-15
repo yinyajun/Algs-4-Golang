@@ -162,9 +162,10 @@ func (t *binarySearchST) Rank(key interface{}) int {
 	lo, hi := 0, t.n-1
 	for lo <= hi {
 		mid := lo + (hi-lo)/2
-		if t.keys[mid] == key {
+		cmp := utils.CompareTo(t.keys[mid], key)
+		if cmp == 0 {
 			return mid
-		} else if utils.Less(key, t.keys[mid]) {
+		} else if cmp > 0 {
 			hi = mid - 1
 		} else {
 			lo = mid + 1

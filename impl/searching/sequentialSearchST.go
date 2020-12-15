@@ -19,11 +19,6 @@ type sequentialSearchST struct {
 	n     int
 }
 
-type Pair struct {
-	Key   interface{}
-	Value interface{}
-}
-
 func NewSequentialSearchST() *sequentialSearchST { return &sequentialSearchST{} }
 
 func (t *sequentialSearchST) Put(key, val interface{}) {
@@ -36,21 +31,21 @@ func (t *sequentialSearchST) Put(key, val interface{}) {
 
 	// key already exists
 	for x := t.first; x != nil; x = x.Next() {
-		if x.Value().(*Pair).Key == key {
-			x.SetValue(&Pair{key, val})
+		if x.Key() == key {
+			x.SetValue(val)
 			return
 		}
 	}
 	// a new key
-	t.first = fundamentals.NewNode(&Pair{key, val}, t.first)
+	t.first = fundamentals.NewNode(key, val, t.first)
 	t.n++
 }
 
 func (t *sequentialSearchST) Get(key interface{}) interface{} {
 	utils.AssertF(key != nil, "Key is nil")
 	for x := t.first; x != nil; x = x.Next() {
-		if x.Value().(*Pair).Key == key {
-			return x.Value().(*Pair).Value
+		if x.Key() == key {
+			return x.Value()
 		}
 	}
 	return nil
@@ -66,7 +61,7 @@ func (t *sequentialSearchST) delete(x abstract.Node, key interface{}) abstract.N
 	if x == nil {
 		return nil
 	}
-	if x.Value().(*Pair).Key == key {
+	if x.Key() == key {
 		t.n--
 		return x.Next()
 	}
@@ -87,7 +82,7 @@ func (t *sequentialSearchST) Size() int { return t.n }
 func (t *sequentialSearchST) Keys() abstract.Iterator {
 	queue := fundamentals.NewLinkedQueue()
 	for x := t.first; x != nil; x = x.Next() {
-		queue.Enqueue(x.Value().(*Pair).Key)
+		queue.Enqueue(x.Key())
 	}
 	return queue.Iterate()
 }
