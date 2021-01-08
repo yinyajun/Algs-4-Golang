@@ -14,7 +14,7 @@ import (
 )
 
 type LinkedStack struct {
-	first abstract.Node
+	first *abstract.Node
 	n     int
 }
 
@@ -23,16 +23,16 @@ func NewLinkedStack() *LinkedStack {
 }
 
 func (s *LinkedStack) Push(item interface{}) {
-	newNode := &Node{item, nil, nil}
-	newNode.next = s.first
+	newNode := &abstract.Node{Key: item}
+	newNode.Next = s.first
 	s.first = newNode
 	s.n++
 }
 
 func (s *LinkedStack) Pop() interface{} {
 	utils.Assert(!s.IsEmpty(), "stack underflow")
-	item := s.first.Key()
-	s.first = s.first.Next()
+	item := s.first.Key
+	s.first = s.first.Next
 	s.n--
 	return item
 }
@@ -43,7 +43,7 @@ func (s *LinkedStack) IsEmpty() bool { return s.first == nil }
 
 func (s *LinkedStack) Peek() interface{} {
 	utils.Assert(!s.IsEmpty(), "stack underflow")
-	return s.first.Key()
+	return s.first.Key
 }
 
 func (s *LinkedStack) Iterate() abstract.Iterator {

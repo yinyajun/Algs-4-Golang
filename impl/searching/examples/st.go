@@ -12,6 +12,7 @@ import (
 	"Algs-4-Golang/abstract"
 	"Algs-4-Golang/impl/searching"
 	"Algs-4-Golang/utils"
+	"fmt"
 )
 
 // go run impl/searching/examples/st.go BinarySearchST < data/tinyST.txt
@@ -32,6 +33,7 @@ import (
 const (
 	SequentialSearchST = "SequentialSearchST"
 	BinarySearchST     = "BinarySearchST"
+	BST                = "BST"
 )
 
 var st abstract.SymbolTable
@@ -48,20 +50,37 @@ func initST(args ...interface{}) {
 		st = searching.NewSequentialSearchST()
 	case BinarySearchST:
 		st = searching.NewBinarySearchST()
+	case BST:
+		st = searching.NewBST()
 	default:
 		utils.Panic("unsupported type")
 	}
 }
 
+//func main() {
+//	initST(utils.Arg0)
+//	for i := 0; utils.StdIn.HasNext(); i++ {
+//		key := utils.StdIn.ReadString()
+//		st.Put(key, i)
+//	}
+//	keys := st.Keys()
+//	for keys.First(); keys.HasNext(); {
+//		key := keys.Next()
+//		utils.StdOut.Println(key, st.Get(key))
+//	}
+//}
+
 func main() {
-	initST(utils.Arg0)
+	st := searching.NewBST2()
 	for i := 0; utils.StdIn.HasNext(); i++ {
 		key := utils.StdIn.ReadString()
 		st.Put(key, i)
 	}
-	keys := st.Keys()
-	for keys.First(); keys.HasNext(); {
-		key := keys.Next()
-		utils.StdOut.Println(key, st.Get(key))
-	}
+
+	fmt.Println(st.Min())
+	//keys := st.Keys()
+	//for keys.First(); keys.HasNext(); {
+	//	key := keys.Next()
+	//	utils.StdOut.Println(key, st.Get(key))
+	//}
 }

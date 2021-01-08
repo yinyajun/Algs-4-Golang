@@ -8,26 +8,18 @@
 
 package abstract
 
-type Node interface {
-	Key() interface{}
-	Value() interface{}
-	Next() Node
-
-	SetNext(Node)
-	SetValue(interface{})
-	SetKey(interface{})
+type Node struct {
+	Key, Val interface{}
+	Next     *Node
 }
 
-type Node2 interface {
-	Key() interface{}
-	Value() interface{}
-	Left() Node2
-	Right() Node2
-	Size() int
+type TreeNode struct {
+	Key, Val    interface{}
+	Left, Right *TreeNode
+	Size        int
+	LTag, RTag  bool
+}
 
-	SetValue(interface{})
-	SetKey(interface{})
-	SetLeft(Node2)
-	SetRight(Node2)
-	SetSize(int)
+func NewTreeNode(key, val interface{}) *TreeNode {
+	return &TreeNode{Key: key, Val: val, Size: 1}
 }

@@ -15,17 +15,17 @@ import (
 
 // last处push，first处pop
 type LinkedQueue struct {
-	first abstract.Node
-	last  abstract.Node
+	first *abstract.Node
+	last  *abstract.Node
 	n     int
 }
 
 func NewLinkedQueue() *LinkedQueue { return &LinkedQueue{} }
 
 func (q *LinkedQueue) Enqueue(item interface{}) {
-	newNode := &Node{item, nil, nil}
+	newNode := &abstract.Node{Key: item}
 	if q.last != nil {
-		q.last.SetNext(newNode)
+		q.last.Next = newNode
 	} else {
 		q.first = newNode
 	}
@@ -35,8 +35,8 @@ func (q *LinkedQueue) Enqueue(item interface{}) {
 
 func (q *LinkedQueue) Dequeue() interface{} {
 	utils.Assert(!q.IsEmpty(), "queue underflow")
-	item := q.first.Key()
-	q.first = q.first.Next()
+	item := q.first.Key
+	q.first = q.first.Next
 	if q.first == nil {
 		q.last = q.first
 	}
@@ -50,7 +50,7 @@ func (q *LinkedQueue) Size() int { return q.n }
 
 func (q *LinkedQueue) Peek() interface{} {
 	utils.Assert(!q.IsEmpty(), "queue underflow")
-	return q.first.Key()
+	return q.first.Key
 }
 
 func (q *LinkedQueue) Iterate() abstract.Iterator {
