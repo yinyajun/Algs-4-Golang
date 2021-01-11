@@ -169,11 +169,11 @@ func (a *ArrayIterator) Next() interface{} {
 }
 
 type LinkedListIterator struct {
-	head abstract.Node
-	cur  abstract.Node
+	head *abstract.Node
+	cur  *abstract.Node
 }
 
-func NewLinkedListIterator(node abstract.Node) *LinkedListIterator {
+func NewLinkedListIterator(node *abstract.Node) *LinkedListIterator {
 	it := &LinkedListIterator{}
 	it.head = node
 	return it
@@ -189,8 +189,8 @@ func (i *LinkedListIterator) HasNext() bool {
 
 func (i *LinkedListIterator) Next() interface{} {
 	if i.HasNext() {
-		res := i.cur.Value()
-		i.cur = i.cur.Next()
+		res := i.cur.Key
+		i.cur = i.cur.Next
 		return res
 	}
 	return nil

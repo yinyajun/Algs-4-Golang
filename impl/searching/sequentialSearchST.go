@@ -15,13 +15,8 @@ import (
 )
 
 type sequentialSearchST struct {
-	first abstract.Node // link list of key-value pair
+	first *abstract.Node // link list of key-value pair
 	n     int
-}
-
-type Pair struct {
-	Key   interface{}
-	Value interface{}
 }
 
 func NewSequentialSearchST() *sequentialSearchST { return &sequentialSearchST{} }
@@ -35,22 +30,22 @@ func (t *sequentialSearchST) Put(key, val interface{}) {
 	}
 
 	// key already exists
-	for x := t.first; x != nil; x = x.Next() {
-		if x.Value().(*Pair).Key == key {
-			x.SetValue(&Pair{key, val})
+	for x := t.first; x != nil; x = x.Next {
+		if x.Key == key {
+			x.Val = val
 			return
 		}
 	}
 	// a new key
-	t.first = fundamentals.NewNode(&Pair{key, val}, t.first)
+	t.first = &abstract.Node{Key: key, Val: val, Next: t.first}
 	t.n++
 }
 
 func (t *sequentialSearchST) Get(key interface{}) interface{} {
 	utils.AssertF(key != nil, "Key is nil")
-	for x := t.first; x != nil; x = x.Next() {
-		if x.Value().(*Pair).Key == key {
-			return x.Value().(*Pair).Value
+	for x := t.first; x != nil; x = x.Next {
+		if x.Key == key {
+			return x.Val
 		}
 	}
 	return nil
@@ -62,15 +57,15 @@ func (t *sequentialSearchST) Delete(key interface{}) {
 }
 
 // 删除以x开头的链表中的key
-func (t *sequentialSearchST) delete(x abstract.Node, key interface{}) abstract.Node {
+func (t *sequentialSearchST) delete(x *abstract.Node, key interface{}) *abstract.Node {
 	if x == nil {
 		return nil
 	}
-	if x.Value().(*Pair).Key == key {
+	if x.Key == key {
 		t.n--
-		return x.Next()
+		return x.Next
 	}
-	x.SetNext(t.delete(x.Next(), key))
+	x.Next = t.delete(x.Next, key)
 	return x
 }
 
@@ -86,8 +81,8 @@ func (t *sequentialSearchST) Size() int { return t.n }
 
 func (t *sequentialSearchST) Keys() abstract.Iterator {
 	queue := fundamentals.NewLinkedQueue()
-	for x := t.first; x != nil; x = x.Next() {
-		queue.Enqueue(x.Value().(*Pair).Key)
+	for x := t.first; x != nil; x = x.Next {
+		queue.Enqueue(x.Key)
 	}
 	return queue.Iterate()
 }

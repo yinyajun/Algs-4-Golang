@@ -32,6 +32,8 @@ import (
 const (
 	SequentialSearchST = "SequentialSearchST"
 	BinarySearchST     = "BinarySearchST"
+	BST                = "BST"
+	BSTNR              = "BSTNR"
 )
 
 var st abstract.SymbolTable
@@ -48,6 +50,10 @@ func initST(args ...interface{}) {
 		st = searching.NewSequentialSearchST()
 	case BinarySearchST:
 		st = searching.NewBinarySearchST()
+	case BST:
+		st = searching.NewBST()
+	case BSTNR:
+		st = searching.NewBSTNR()
 	default:
 		utils.Panic("unsupported type")
 	}
