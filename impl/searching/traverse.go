@@ -67,9 +67,36 @@ func PreOrderNR2(root *abstract.TreeNode) {
 	}
 }
 
+func PreOrderMorris(root *abstract.TreeNode) {
+	cur := root
+	for cur != nil {
+		if cur.Left == nil {
+			Visit(cur)
+			cur = cur.Right
+		} else {
+			// cur.left != nil
+			// 找到中序的前驱节点
+			pre := cur.Left
+			for pre.Right != nil && pre.Right != cur {
+				pre = pre.Right
+			}
+			// 构建线索
+			if pre.Right == nil {
+				Visit(cur)
+				pre.Right = cur
+				cur = cur.Left
+			} else {
+				// 取消线索
+				cur = cur.Right
+				pre.Right = nil
+			}
+		}
+	}
+}
+
 func PreOrderThread(root *abstract.TreeNode) {
-	root = BuildInOrderThread(root)
-	PreOrderThreadTraverse(root)
+	head := BuildPreOrderThread(root)
+	PreOrderThreadTraverse(head)
 }
 
 // -------------------
@@ -100,25 +127,28 @@ func InOrderNR(root *abstract.TreeNode) {
 	}
 }
 
+// 一路向左的过程中建立线索，然后回溯的时候取消线索
 func InOrderMorris(root *abstract.TreeNode) {
 	cur := root
 	for cur != nil {
-		if cur.Left != nil {
+		if cur.Left == nil {
+			Visit(cur)
+			cur = cur.Right
+		} else { // cur.Left != nil
+			// 找到当前节点的中序前驱节点（左子树的最右边节点）
 			pre := cur.Left
-			for pre.Right != nil && pre.Right != cur { //当前节点左子树的最右边那个节点
+			for pre.Right != nil && pre.Right != cur { // 右子树不为空，且不能是线索
 				pre = pre.Right
 			}
+			// 将当前节点作为前驱节点的右孩子（线索）
 			if pre.Right == nil {
 				pre.Right = cur
 				cur = cur.Left
-			} else { // pre.right == cur
+			} else { // 将线索取消
 				Visit(cur)
 				cur = cur.Right
 				pre.Right = nil
 			}
-		} else { // cur.left == nil
-			Visit(cur)
-			cur = cur.Right
 		}
 	}
 }

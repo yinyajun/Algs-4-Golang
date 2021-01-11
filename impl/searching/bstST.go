@@ -251,9 +251,9 @@ func (t *BST) delete(node *abstract.TreeNode, key interface{}) *abstract.TreeNod
 	}
 	cmp := utils.CompareTo(key, node.Key)
 	if cmp < 0 {
-		node.Left = (t.delete(node.Left, key))
+		node.Left = t.delete(node.Left, key)
 	} else if cmp > 0 {
-		node.Right = (t.delete(node.Right, key))
+		node.Right = t.delete(node.Right, key)
 	} else {
 		if node.Left == nil {
 			return node.Right
@@ -261,7 +261,7 @@ func (t *BST) delete(node *abstract.TreeNode, key interface{}) *abstract.TreeNod
 		if node.Right == nil {
 			return node.Left
 		}
-		//
+		// 用右子树中最小节点代替当前节点，右子树设为删除过最小节点的右子树，左子树设为原先节点的左子树
 		d := node
 		node = t.min(d.Right)
 		node.Right = t.deleteMin(d.Right)

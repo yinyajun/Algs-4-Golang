@@ -15,12 +15,16 @@ package main
 // | searching.PreOrder            | 1 2 4 5 3 7  |
 // | searching.PreOrderNR          | 1 2 4 5 3 7  |
 // | searching.PreOrderNR2         | 1 2 4 5 3 7  |
+// | searching.PreOrderMorris      | 1 2 4 5 3 7  |
+// | searching.PreOrderThread      | 1 2 4 5 3 7  |
 // +----------------------------------------------+
 // +----------------------------------------------+
 // | InOrder                                      |
 // +----------------------------------------------+
 // | searching.InOrder             | 4 2 5 1 3 7  |
 // | searching.InOrderNR           | 4 2 5 1 3 7  |
+// | searching.InOrderMorris       | 4 2 5 1 3 7  |
+// | searching.InOrderThread       | 4 2 5 1 3 7  |
 // +----------------------------------------------+
 // +----------------------------------------------+
 // | PostOrder                                    |
@@ -29,6 +33,7 @@ package main
 // | searching.PostOrderNR         | 4 5 2 7 3 1  |
 // | searching.PostOrderNR2        | 4 5 2 7 3 1  |
 // +----------------------------------------------+
+//
 
 import (
 	"Algs-4-Golang/impl/searching"
@@ -44,6 +49,7 @@ func main() {
 	rets.Add(tree, searching.PreOrder)
 	rets.Add(tree, searching.PreOrderNR)
 	rets.Add(tree, searching.PreOrderNR2)
+	rets.Add(tree, searching.PreOrderMorris)
 	rets.Add(searching.CloneTree(tree), searching.PreOrderThread)
 	utils.PrintInTable([]string{"PreOrder"}, *rets)
 

@@ -50,9 +50,9 @@ go run impl/fundamentals/examples/stack.go LinkedStack < data/tobe.txt
 
 | Abstract Data Structure | Implementation                                               |
 | ----------------------- | ------------------------------------------------------------ |
-| SortedSymbolTable       | [BinarySearchST](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/searching/binary_search_st.go)<br /> |
-|                         |                                                              |
-|                         |                                                              |
+| SortedSymbolTable       | [BinarySearchST](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/searching/binarySearchST.go)<br />[bstST](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/searching/bstST.go)<br />[bstST_NotRecursive](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/searching/bstSTNR.go) |
+| SymbolTable             | [SequentialSearchST](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/searching/sequentialSearchST.go)<br />[HashTableST]() |
+| Traverse                | [PreOrder](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/searching/traverse.go)<br />[InOrder](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/searching/traverse.go)<br />[PostOrder](https://github.com/yinyajun/Algs-4-Golang/blob/master/impl/searching/traverse.go) |
 
 
 

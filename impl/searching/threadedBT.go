@@ -28,37 +28,42 @@ func preOrderThread(node *abstract.TreeNode, pre **abstract.TreeNode) {
 		(*pre).Right = node
 	}
 	*pre = node
-	preOrderThread(node.Left, pre)
-	preOrderThread(node.Right, pre)
+
+	if node.LTag == false { // 这里和中序线索化不同，因为left可能是刚建好的线索
+		preOrderThread(node.Left, pre)
+	}
+	if node.RTag == false { //这里和中序线索化不同，因为right可能是刚建好的线索
+		preOrderThread(node.Right, pre)
+	}
 }
 
 func BuildPreOrderThread(root *abstract.TreeNode) *abstract.TreeNode {
-	head := abstract.NewTreeNode(nil, nil)
+	head := abstract.NewTreeNode(nil, nil) // 虚拟头结点
 	head.LTag, head.RTag = true, true
 	if root == nil {
 		head.Left, head.Right = head, head
 	}
-	head.Left = root
 	pre := head
-	preOrderThread(root, &pre)
-	pre.RTag = true
-	pre.Right = head
-	head.Right = pre
+	preOrderThread(root, &pre) // 此时head的left，pre的right没有设置
+	head.Left, pre.Right = pre, head
 	return head
 }
 
+// 前序遍历线索二叉树（根-左-右）
+// 1. 访问根节点
+// 2. 如果左子树非空，进入左子树的根节点
+// 3. 如果右子树非空，进入右子树的根节点
+// 4. 如果右子树为空（线索），进入右thread提供的后续节点（相当于回溯）
+
 func PreOrderThreadTraverse(head *abstract.TreeNode) {
-	cur := head.Left
+	cur := head.Right
 	for cur != head {
 		Visit(cur)
-		for cur.LTag == false {
+		if cur.LTag == false {
 			cur = cur.Left
-			Visit(cur)
-		}
-		for cur.RTag == true && cur.Right != head {
+		} else {
 			cur = cur.Right
 		}
-		cur = cur.Right
 	}
 }
 
@@ -90,27 +95,21 @@ func BuildInOrderThread(root *abstract.TreeNode) *abstract.TreeNode {
 		return head
 	}
 	pre := head
-	head.Left = root
-	inOrderThread(root, &pre)
-	pre.RTag = true // 注意此时最后一个节点刚变为pre，并没有线索化右节点
-	pre.Right = head
-	head.Right = pre
+	inOrderThread(root, &pre) // 此时head的left，pre的right没有设置
+	head.Left, pre.Right = pre, head
 	return head
 }
 
+// 中序遍历线索二叉树（左根右）退化为： 左（根） -右
+// 1. 初始化为最左边节点为根节点
+// 2. 访问根节点
+// 3. 如果右子树不为空，进入右子树的根节点
+// 4. 如果右子树为空（线索），进入右thread提供的后续节点（相当于回溯）
+
 func InOrderThreadTraverse(head *abstract.TreeNode) {
-	cur := head.Left
+	cur := head.Right
 	for cur != head {
-		for cur.LTag == false { // 走到左子树尽头，不可能遇到head
-			cur = cur.Left
-		}
 		Visit(cur)
-		// 先访问线索构成的后续节点（相当于pop，回到pre）
-		for cur.RTag == true && cur.Right != head {
-			cur = cur.Right
-			Visit(cur)
-		}
-		// 然后访问正常右子树节点
 		cur = cur.Right
 	}
 }
