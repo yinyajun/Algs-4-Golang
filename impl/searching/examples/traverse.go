@@ -31,7 +31,10 @@ package main
 // +----------------------------------------------+
 // | searching.PostOrder           | 4 5 2 7 3 1  |
 // | searching.PostOrderNR         | 4 5 2 7 3 1  |
+// | searching.PostOrderNR_        | 4 5 2 7 3 1  |
 // | searching.PostOrderNR2        | 4 5 2 7 3 1  |
+// | searching.PostOrderMorris     | 4 5 2 7 3 1  |
+// | searching.PostOrderMorris2    | 4 5 2 7 3 1  |
 // +----------------------------------------------+
 //
 
@@ -65,6 +68,9 @@ func main() {
 	rets = new(searching.Results)
 	rets.Add(tree, searching.PostOrder)
 	rets.Add(tree, searching.PostOrderNR)
+	rets.Add(tree, searching.PostOrderNR_)
 	rets.Add(tree, searching.PostOrderNR2)
+	rets.Add(tree, searching.PostOrderMorris)
+	rets.Add(tree, searching.PostOrderMorris2)
 	utils.PrintInTable([]string{"PostOrder"}, *rets)
 }

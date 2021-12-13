@@ -197,7 +197,7 @@ func (t *binarySearchST) RangeSize(lo, hi interface{}) int {
 	return right - left
 }
 
-// Returns all keys in this symbol table in the given range
+// RangeKeys Returns all keys in this symbol table in the given range
 func (t *binarySearchST) RangeKeys(lo, hi interface{}) abstract.Iterator {
 	utils.AssertF(lo != nil && hi != nil, "invalid lo or hi")
 
